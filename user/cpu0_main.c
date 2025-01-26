@@ -54,6 +54,7 @@ int core0_main(void)
 //        My_Key();                                                   // 按键处理函数
         Ips_show();                                                 // IPS 显示函数
         system_delay_ms(50); // 适当的刷新间隔
+
         //  pwm_set_duty(PWM1, 800);                                 // 设置电机占空比
         if (pit_state == 1)
         { 
@@ -61,11 +62,13 @@ int core0_main(void)
             encoder_clear_count(ENCODER_DIR);
             Encoder_get_speed();                                                        // 计算速度
 
-           PID_OK(sp);                                                                // 设置目标速度
+        //    PID_OK(sp);                                                                // 设置目标速度
 
             pit_state = 0;
         }
-        printf("%f,%f\n",speed,sp);
+        // printf("%f,%f\n",speed,sp);
+
+        Remote_control();                                           // 遥控逻辑
     }
 
 }

@@ -9,6 +9,7 @@
 #include "sreer.h"
 #include "ipsShow.h"
 #include "pid.h"
+#include "uartReceiver.h"
 
 void Init(void);
 
