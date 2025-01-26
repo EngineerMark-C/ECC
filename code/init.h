@@ -7,6 +7,7 @@
 #include "button.h"
 #include "motor.h"
 #include "sreer.h"
+#include "ipsShow.h"
 
 void Init(void);
 
