@@ -4,7 +4,6 @@
 
 void Button_init(void)
 {
-    key_scanner();
     key_init(10); // 初始化按键
 }
 
@@ -23,22 +22,24 @@ const char* key_state_to_string(key_state_enum state) {
 
 void My_Key(void)
 {
-    if (key_get_state(KEY_2) == KEY_SHORT_PRESS) {
+    key_scanner(); // 在主循环中调用按键扫描函数
+
+    if (key_get_state(KEY_1) == KEY_SHORT_PRESS) {
         duty1 += 1000;
         if (duty1 > 5000) {
             duty1 = 5000;
         }
         pwm_set_duty(PWM1, duty1);
-        ips114_show_string(0, 48, key_state_to_string(key_get_state(KEY_2)));
-        key_clear_state(KEY_2); // 清除按键状态
+        ips114_show_string(0, 48, key_state_to_string(key_get_state(KEY_1)));
+        key_clear_state(KEY_1); // 清除按键状态
     }
-    if (key_get_state(KEY_1) == KEY_SHORT_PRESS) {
+    if (key_get_state(KEY_2) == KEY_SHORT_PRESS) {
         duty1 -= 1000;
         if (duty1 < 0) {
             duty1 = 0;
         }
         pwm_set_duty(PWM1, duty1);
-        ips114_show_string(0, 64, key_state_to_string(key_get_state(KEY_1)));
-        key_clear_state(KEY_1); // 清除按键状态
+        ips114_show_string(0, 64, key_state_to_string(key_get_state(KEY_2)));
+        key_clear_state(KEY_2); // 清除按键状态
     }
 }
