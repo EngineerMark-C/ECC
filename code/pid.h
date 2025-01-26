@@ -1,8 +1,7 @@
 #ifndef _pid_h_
 #define _pid_h_
 
-struct PID
-{
+struct PID {
     float kp;
     float ki;
     float kd;
@@ -15,7 +14,11 @@ struct PID
     float output;
 };
 
-void PID_init(PID *pid, float kp, float ki, float kd, float target, float current);
-int PID_calc(PID *pid, float current);
+extern int output;
+extern struct PID pid;
+
+void PID_init(struct PID *pid, float kp, float ki, float kd);
+void PID_calc(struct PID *pid, float current);
+void PID_OK(float target);
 
 #endif

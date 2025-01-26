@@ -5,6 +5,7 @@
 #include "motor.h"
 #include "sreer.h"
 #include "ipsShow.h"
+#include "pid.h"
 
 
 void Init(void)
@@ -16,4 +17,5 @@ void Init(void)
     Motor_init();                   // 初始化电机
     Sreer_init();                   // 初始化舵机
     Ips_init();                     // 初始化 1.14 寸 IPS 液晶屏幕显示
+    PID_init(&pid, 30, 0, 35); // 初始化 PID 控制器
 }

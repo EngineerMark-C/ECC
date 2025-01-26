@@ -8,6 +8,7 @@
 #include "motor.h"
 #include "sreer.h"
 #include "ipsShow.h"
+#include "pid.h"
 
 void Init(void);
 

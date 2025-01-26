@@ -9,6 +9,7 @@
 #define ENCODER_PULSE_NUM				1024									// 编码器一圈的脉冲数
 #define WHEEL_PERIMETER					22.61947f								// 轮子周长，单位cm
 #define GEAR_RATIO						0.245455f								// 齿轮传动比
+#define SAMPLE_TIME						0.01f									// 采样时间
 
 int16 encoder_data_dir = 0;
 float speed = 0.0f;
@@ -16,10 +17,10 @@ float speed = 0.0f;
 void Encoder_init (void)
 {
     encoder_dir_init(ENCODER_DIR, ENCODER_DIR_PULSE, ENCODER_DIR_DIR);
-    pit_ms_init(PIT0, 100);                                                     // 初始化 PIT0 为周期中断 100ms 周
+    pit_ms_init(PIT0, 10);                                                     // 初始化 PIT0 为周期中断 100ms 周
 }
 
 void Encoder_get_speed(void)
 {
-    speed = encoder_data_dir / ENCODER_PULSE_NUM * GEAR_RATIO * WHEEL_PERIMETER / 0.1f / 100;  // 单位 m/s
+    speed = (float)encoder_data_dir / ENCODER_PULSE_NUM * GEAR_RATIO * WHEEL_PERIMETER / SAMPLE_TIME / 100;  // 单位 m/s
 }

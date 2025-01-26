@@ -6,14 +6,29 @@
 int duty1 = 0;
 int duty2 = 0;
 
+// 初始化PWM
 void Motor_init(void)
 {
     pwm_init(PWM1, 17000, 0);                                                   // 初始化 PWM 通道 频率 17KHz 初始占空比 0%
     pwm_init(PWM2, 17000, 0);                                                   // 初始化 PWM 通道 频率 17KHz 初始占空比 0%
 }
 
+// PWM限幅
+int pwm_limit(int duty, int max)
+{
+    if (duty > max)
+    {
+        duty = max;
+    }
+    return duty;
+}
+
+// 设置PWM占空比
 void Motor_set_duty(int duty1, int duty2)
 {
+    duty1 = pwm_limit(duty1, 5000);
+    duty2 = pwm_limit(duty2, 5000);
+    
     pwm_set_duty(PWM1, duty1);
     pwm_set_duty(PWM2, duty2);
 }
