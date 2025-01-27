@@ -16,10 +16,12 @@ void Speed_map(void)
     // 线性插值计算目标速度
     float target_speed;
 
-    target_speed = -(60.0 / (1824 - 1024)) * (channel_value - 1024);
+    target_speed = (10.0 / (1824 - 1024)) * (channel_value - 1024);
 
     // 设置 PID 目标速度
     PID_OK(target_speed);
+    // printf("channel_value: %d\r\n", channel_value);
+    // printf("target_angle: %f\r\n", target_speed);
 }
 
 void Angle_map(void)
@@ -34,8 +36,8 @@ void Angle_map(void)
 
     // 设置 PID 目标速度
     Sreer_set_duty(target_angle);
-//    printf("channel_value: %d\r\n", channel_value);
-//    printf("target_angle: %f\r\n", target_angle);
+    // printf("channel_value: %d\r\n", channel_value);
+    // printf("target_angle: %f\r\n", target_angle);
 }
 
 // 遥控逻辑

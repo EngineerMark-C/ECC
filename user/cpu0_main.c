@@ -59,13 +59,12 @@ int core0_main(void)
         { 
             Encoder_get_speed();                                                        // 计算速度
 
-            PID_OK(sp);                                                                // 设置目标速度
+            //PID_OK(sp);                                                               // 设置目标速度
+            Remote_control();                                                           // 遥控逻辑
 
             pit_state = 0;
         }
         printf("%f,%f\n",speed,sp);
-
-        Remote_control();                                           // 遥控逻辑
     }
 
 }

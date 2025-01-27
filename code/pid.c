@@ -37,8 +37,8 @@ void PID_calc(struct PID *pid, float current)
                  pid->kd * pid->derivative;
     
     // 输出限幅
-    if(pid->output > 5000) pid->output = 5000;
-    if(pid->output < -5000) pid->output = -5000;
+    if(pid->output > 8000) pid->output = 8000;
+    if(pid->output < -8000) pid->output = -8000;
     
     pid->error_last = pid->error;                              // 保存上次误差
 }
