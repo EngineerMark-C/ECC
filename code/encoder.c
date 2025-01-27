@@ -22,5 +22,13 @@ void Encoder_init (void)
 
 void Encoder_get_speed(void)
 {
-    speed = (float)encoder_data_dir / ENCODER_PULSE_NUM * GEAR_RATIO * WHEEL_PERIMETER / SAMPLE_TIME / 100;  // 单位 m/s
+    // 速度计算公式：
+    // encoder_data_dir：10ms内的脉冲数
+    // ENCODER_PULSE_NUM：每圈的脉冲数
+    // GEAR_RATIO：齿轮传动比
+    // WHEEL_PERIMETER：轮周长(cm)
+    // SAMPLE_TIME：采样时间(s)
+    // /100：将cm转换为m
+    // printf("encoder_data_dir: %d\n", encoder_data_dir);
+    speed = (float)encoder_data_dir / ENCODER_PULSE_NUM * GEAR_RATIO * WHEEL_PERIMETER / SAMPLE_TIME / 100.0f;
 }
