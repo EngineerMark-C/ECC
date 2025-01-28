@@ -31,4 +31,5 @@ void Encoder_get_speed(void)
     // /100：将cm转换为m
     // printf("encoder_data_dir: %d\n", encoder_data_dir);
     speed = (float)encoder_data_dir / ENCODER_PULSE_NUM * GEAR_RATIO * WHEEL_PERIMETER / SAMPLE_TIME / 100.0f;
+    //速度 = 脉冲数                  / 每圈脉冲数         * 传动比      * 轮周长          / 采样时间    / 100
 }
