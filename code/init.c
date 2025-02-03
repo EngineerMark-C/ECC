@@ -19,5 +19,5 @@ void Init(void)
     Sreer_init();                   // 初始化舵机
     Ips_init();                     // 初始化 1.14 寸 IPS 液晶屏幕显示
     UartReceiver_init();            // 初始化串口接收机
-    PID_init(&pid, 30, 0, 35); // 初始化 PID 控制器
+    PID_init(&pid_speed, 30.0, 0.0, 35.0); // 初始化 PID 控制器
 }

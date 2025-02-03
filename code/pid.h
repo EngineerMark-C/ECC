@@ -14,11 +14,10 @@ struct PID {
     float output;
 };
 
-extern int output;
-extern struct PID pid;
+extern int output_speed;
+extern struct PID pid_speed;
 
 void PID_init(struct PID *pid, float kp, float ki, float kd);
 void PID_calc(struct PID *pid, float current);
-void PID_OK(float target);
-
+void PID_speed(float target);
 #endif

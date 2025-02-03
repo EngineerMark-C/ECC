@@ -1,8 +1,8 @@
 #include "zf_common_headfile.h"
 #include "init.h"
 
-struct PID pid;
-int output = 0;
+struct PID pid_speed;
+int output_speed = 0;
 
 void PID_init(struct PID *pid, float kp, float ki, float kd)
 {
@@ -53,19 +53,20 @@ void PID_calc(struct PID *pid, float current)
 //    pid->derivative = pid->error;
 //}
 
-void PID_OK(float target)
+//
+void PID_speed(float target)
 {
-    pid.target = target;                    // 设置目标值
-    PID_calc(&pid, speed);                  // 使用当前速度作为反馈值
-    output += (int)pid.output;               // 将PID输出转换为占空比
+    pid_speed.target = target;                    // 设置目标值
+    PID_calc(&pid_speed, speed);                  // 使用当前速度作为反馈值
+    output_speed += (int)pid_speed.output;               // 将PID输出转换为占空比
     
     // 电机控制
-    if(output >= 0)
+    if(output_speed >= 0)
     {
-        Motor_set_duty(0, output);          // 正转
+        Motor_set_duty(0, output_speed);          // 正转
     }
     else
     {
-        Motor_set_duty(-output, 0);         // 反转
+        Motor_set_duty(-output_speed, 0);         // 反转
     }
 }

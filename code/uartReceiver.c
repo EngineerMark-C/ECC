@@ -19,7 +19,7 @@ void Speed_map(void)
     target_speed = (15.0 / (1824 - 1024)) * (channel_value - 1024);
 
     // 设置 PID 目标速度
-    PID_OK(target_speed);
+    PID_speed(target_speed);
     // printf("channel_value: %d\r\n", channel_value);
     // printf("target_angle: %f\r\n", target_speed);
 }

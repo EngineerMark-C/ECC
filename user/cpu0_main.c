@@ -40,6 +40,7 @@
 uint8 encoder_state = 0;
 
 float sp =1.0f;
+float an = 0.0f;
 
 // **************************** 代码区域 ****************************
 int core0_main(void)
@@ -61,13 +62,14 @@ int core0_main(void)
         { 
             Encoder_get_speed();                                                        // 计算速度
 
-            //PID_OK(sp);                                                               // 设置目标速度
+            //PID_speed(sp);                                                               // 设置目标速度
             Remote_control();                                                           // 遥控逻辑
 
             encoder_state = 0;
         }
+        Sreer_angle(an);                                                    // 设置舵机角度
         // printf("%f,%f\n",speed,sp);
-        printf("%f,%f,%f\n",pitch,roll,yaw);
+        //printf("%f,%f,%f\n",pitch,roll,yaw);
 
     }
 
@@ -91,8 +93,6 @@ IFX_INTERRUPT(cc60_pit_ch1_isr, 0, CCU6_0_CH1_ISR_PRIORITY)
 
     Imu_get_data();                                             // 获取 IMU963RA 数据
     Imu_get_quaternion();
-
-//    imu_state = 1;
 }
 
 
