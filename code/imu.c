@@ -1,10 +1,19 @@
 #include "zf_common_headfile.h"
 
+// 使用 Infineon 的 iLLD 库中的 STM 头文件
+#include "IfxStm.h"
+#include "IfxStm_reg.h"
+
 #define PIT1                            (CCU60_CH1 )                            // 使用的周期中断编号
 
 // 定义四元数和欧拉角变量
-static float q0 = 1.0f, q1 = 0.0f, q2 = 0.0f, q3 = 0.0f;    // 四元数
+static float q0 = 1.0f, q1 = 0.0f, q2 = 0.0f, q3 = 0.0f;     // 四元数
 float pitch = 0.0f, roll = 0.0f, yaw = 0.0f;                 // 欧拉角
+float yaw_mag = 0.0f;                                        // 磁力计偏航角
+
+// 添加时间测量变量
+// uint32 quaternion_time = 0;      // 四元数解算时间
+// uint32 mag_yaw_time = 0;         // 磁力计解算时间
 
 void Imu_init(void)
 {
@@ -17,11 +26,14 @@ void Imu_get_data(void)
 {
     imu963ra_get_gyro();            // 获取 IMU963RA 陀螺仪数据
     imu963ra_get_acc();             // 获取 IMU963RA 加速度计数据
+    imu963ra_get_mag();             // 获取 IMU963RA 磁力计数据
 }
 
 //四元素解算
 void Imu_get_quaternion(void)
 {
+    // uint32 start_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));   // 使用 iLLD 的 API
+    
     float norm;
     float ax, ay, az;
     float gx, gy, gz;
@@ -107,4 +119,50 @@ void Imu_get_quaternion(void)
     {
         yaw += 360.0f;
     }
+    
+    // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));     // 使用 iLLD 的 API
+    // quaternion_time = end_time - start_time;
+}
+
+void Imu_get_mag_yaw(void)
+{
+    // uint32 start_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));   // 使用 iLLD 的 API
+    
+    // 1. 获取磁力计数据并转换为物理值
+    float mx = imu963ra_mag_transition(imu963ra_mag_x);
+    float my = imu963ra_mag_transition(imu963ra_mag_y);
+    float mz = imu963ra_mag_transition(imu963ra_mag_z);
+    
+    // 2. 倾角补偿
+    float cos_roll = cos(roll * 0.0174533f);  // 度转弧度
+    float sin_roll = sin(roll * 0.0174533f);
+    float cos_pitch = cos(pitch * 0.0174533f);
+    float sin_pitch = sin(pitch * 0.0174533f);
+    
+    // 补偿后的磁力计数据
+    float mx_comp = mx * cos_pitch + my * sin_roll * sin_pitch + mz * cos_roll * sin_pitch;
+    float my_comp = my * cos_roll - mz * sin_roll;
+    
+    // 3. 计算偏航角
+    yaw_mag = atan2(-my_comp, mx_comp) * 57.3f;  // 弧度转度
+    
+    // 4. 转换为0-360度
+    if(yaw_mag < 0) 
+    {
+        yaw_mag += 360.0f;
+    }
+    
+    // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));     // 使用 iLLD 的 API
+    // mag_yaw_time = end_time - start_time;
+}
+
+// 添加一个函数用于打印执行时间
+void Print_imu_time(void)
+{
+    // STM时钟频率为100MHz时的时间换算（单位：微秒）
+    float quaternion_us = (float)quaternion_time / 100.0f;
+    float mag_yaw_us = (float)mag_yaw_time / 100.0f;
+    
+    printf("四元数解算时间: %.2f us\n", quaternion_us);
+    printf("磁力计解算时间: %.2f us\n", mag_yaw_us);
 }

@@ -10,6 +10,7 @@
 #include "ipsShow.h"
 #include "pid.h"
 #include "uartReceiver.h"
+#include "gps.h"
 
 void Init(void);
 

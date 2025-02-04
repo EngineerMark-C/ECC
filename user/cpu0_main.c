@@ -70,6 +70,7 @@ int core0_main(void)
         Sreer_angle(an);                                            // 设置舵机角度
         // printf("%f,%f\n",speed,sp);
         //printf("%f,%f,%f\n",pitch,roll,yaw);
+        printf("%f,%f\n",yaw,yaw_mag);
 
     }
 
@@ -93,6 +94,7 @@ IFX_INTERRUPT(cc60_pit_ch1_isr, 0, CCU6_0_CH1_ISR_PRIORITY)
 
         Imu_get_data();                                             // 获取 IMU963RA 数据
         Imu_get_quaternion();
+//        Imu_get_mag_yaw();
 }
 
 #pragma section all restore

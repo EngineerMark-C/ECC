@@ -3,5 +3,6 @@
 
 void Gps_init(void)
 {
-    gnss_init(1);
+    gnss_init(TAU1201);
 }
+
