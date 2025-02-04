@@ -157,12 +157,12 @@ void Imu_get_mag_yaw(void)
 }
 
 // 添加一个函数用于打印执行时间
-void Print_imu_time(void)
-{
-    // STM时钟频率为100MHz时的时间换算（单位：微秒）
-    float quaternion_us = (float)quaternion_time / 100.0f;
-    float mag_yaw_us = (float)mag_yaw_time / 100.0f;
-    
-    printf("四元数解算时间: %.2f us\n", quaternion_us);
-    printf("磁力计解算时间: %.2f us\n", mag_yaw_us);
-}
+//void Print_imu_time(void)
+//{
+//    // STM时钟频率为100MHz时的时间换算（单位：微秒）
+//    float quaternion_us = (float)quaternion_time / 100.0f;
+//    float mag_yaw_us = (float)mag_yaw_time / 100.0f;
+//
+//    printf("四元数解算时间: %.2f us\n", quaternion_us);
+//    printf("磁力计解算时间: %.2f us\n", mag_yaw_us);
+//}

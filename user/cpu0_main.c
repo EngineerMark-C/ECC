@@ -53,9 +53,9 @@ int core0_main(void)
     Init();                         // 初始化函数
     while (TRUE)
     {
-        
-//        My_Key();                                                 // 按键处理函数
+        //My_Key();                                                 // 按键处理函数
         Ips_show();                                                 // IPS 显示函数
+        //Display_Gps_Info();                                         // 显示 GPS 信息
         system_delay_ms(50);                                        // 适当的刷新间隔
 
         if (encoder_state == 1)
@@ -71,6 +71,7 @@ int core0_main(void)
         // printf("%f,%f\n",speed,sp);
         //printf("%f,%f,%f\n",pitch,roll,yaw);
         printf("%f,%f\n",yaw,yaw_mag);
+        Print_Gps_Info();                                           // 打印 GPS 信息
 
     }
 
@@ -93,8 +94,8 @@ IFX_INTERRUPT(cc60_pit_ch1_isr, 0, CCU6_0_CH1_ISR_PRIORITY)
     pit_clear_flag(CCU60_CH1);
 
         Imu_get_data();                                             // 获取 IMU963RA 数据
-        Imu_get_quaternion();
-//        Imu_get_mag_yaw();
+        //Imu_get_quaternion();
+        Imu_get_mag_yaw();
 }
 
 #pragma section all restore
