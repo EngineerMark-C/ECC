@@ -60,14 +60,14 @@ int core0_main(void)
 
         if (encoder_state == 1)
         { 
-            Encoder_get_speed();                                                        // 计算速度
+            Encoder_get_speed();                                    // 计算速度
 
-            //PID_speed(sp);                                                               // 设置目标速度
-            Remote_control();                                                           // 遥控逻辑
+            //PID_speed(sp);                                        // 设置目标速度
+            Remote_control();                                       // 遥控逻辑
 
             encoder_state = 0;
         }
-        Sreer_angle(an);                                                    // 设置舵机角度
+        Sreer_angle(an);                                            // 设置舵机角度
         // printf("%f,%f\n",speed,sp);
         //printf("%f,%f,%f\n",pitch,roll,yaw);
 
@@ -77,10 +77,10 @@ int core0_main(void)
 
 IFX_INTERRUPT(cc60_pit_ch0_isr, 0, CCU6_0_CH0_ISR_PRIORITY)
 {
-    interrupt_global_enable(0);                     // 开启中断嵌套
+    interrupt_global_enable(0);                                     // 开启中断嵌套
     pit_clear_flag(CCU60_CH0);
 
-    encoder_data_dir = encoder_get_count(ENCODER_DIR);               // 获取编码器计数
+    encoder_data_dir = encoder_get_count(ENCODER_DIR);              // 获取编码器计数
     encoder_clear_count(ENCODER_DIR);
 
     encoder_state = 1;
@@ -88,13 +88,12 @@ IFX_INTERRUPT(cc60_pit_ch0_isr, 0, CCU6_0_CH0_ISR_PRIORITY)
 
 IFX_INTERRUPT(cc60_pit_ch1_isr, 0, CCU6_0_CH1_ISR_PRIORITY)
 {
-    interrupt_global_enable(0);                     // 开启中断嵌套
+    interrupt_global_enable(0);                                     // 开启中断嵌套
     pit_clear_flag(CCU60_CH1);
 
-    Imu_get_data();                                             // 获取 IMU963RA 数据
-    Imu_get_quaternion();
+        Imu_get_data();                                             // 获取 IMU963RA 数据
+        Imu_get_quaternion();
 }
-
 
 #pragma section all restore
 // **************************** 代码区域 ****************************
