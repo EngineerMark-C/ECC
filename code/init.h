@@ -11,6 +11,7 @@
 #include "pid.h"
 #include "uartReceiver.h"
 #include "gps.h"
+#include "flash.h"
 
 void Init(void);
 

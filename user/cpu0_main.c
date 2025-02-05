@@ -76,10 +76,10 @@ int core0_main(void)
 
         Sreer_angle(an);                                            // 设置舵机角度
         //printf("%f,%f\n",speed,sp);                                 // 打印目标速度
-        printf("%f,%f,%f\n",pitch,roll,yaw);                        // 打印欧拉角
+        //printf("%f,%f,%f\n",pitch,roll,yaw);                        // 打印欧拉角
         //printf("%f,%f\n",yaw,yaw_mag);                              // 打印磁力计偏航角
-        //Print_Gps_Info();                                           // 打印 GPS 信息
-
+        Gps_data_to_flash();                                        // GPS 数据写入 Flash
+        Gps_data_from_flash();                                      // GPS 数据从 Flash 读取
     }
 
 }
