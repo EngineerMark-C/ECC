@@ -34,10 +34,15 @@
 ********************************************************************************************************************/
 #include "zf_common_headfile.h"
 #include "init.h"
+
+#include "IfxStm.h"
+#include "IfxStm_reg.h"
+
 #pragma section all "cpu0_dsram"
 // 将本语句与#pragma section all restore语句之间的全局变量都放在CPU0的RAM中
 
 uint8 encoder_state = 0;
+uint32 time = 0;
 
 float sp =1.0f;
 float an = 0.0f;
@@ -53,7 +58,7 @@ int core0_main(void)
     Init();                         // 初始化函数
     while (TRUE)
     {
-        //My_Key();                                                 // 按键处理函数
+        //My_Key();                                                    // 按键处理函数
         Ips_show();                                                 // IPS 显示函数
         //Display_Gps_Info();                                         // 显示 GPS 信息
         system_delay_ms(50);                                        // 适当的刷新间隔
@@ -62,16 +67,18 @@ int core0_main(void)
         { 
             Encoder_get_speed();                                    // 计算速度
 
-            //PID_speed(sp);                                        // 设置目标速度
+            //PID_speed(sp);                                          // 设置目标速度
             Remote_control();                                       // 遥控逻辑
 
             encoder_state = 0;
         }
+
+
         Sreer_angle(an);                                            // 设置舵机角度
-        // printf("%f,%f\n",speed,sp);
-        //printf("%f,%f,%f\n",pitch,roll,yaw);
-        printf("%f,%f\n",yaw,yaw_mag);
-        Print_Gps_Info();                                           // 打印 GPS 信息
+        //printf("%f,%f\n",speed,sp);                                 // 打印目标速度
+        printf("%f,%f,%f\n",pitch,roll,yaw);                        // 打印欧拉角
+        //printf("%f,%f\n",yaw,yaw_mag);                              // 打印磁力计偏航角
+        //Print_Gps_Info();                                           // 打印 GPS 信息
 
     }
 
@@ -93,9 +100,14 @@ IFX_INTERRUPT(cc60_pit_ch1_isr, 0, CCU6_0_CH1_ISR_PRIORITY)
     interrupt_global_enable(0);                                     // 开启中断嵌套
     pit_clear_flag(CCU60_CH1);
 
-        Imu_get_data();                                             // 获取 IMU963RA 数据
-        //Imu_get_quaternion();
-        Imu_get_mag_yaw();
+    // uint32 start_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
+    Imu_get_data();                                                 // 获取 IMU963RA 数据
+    Imu_get_quaternion();                                           // 四元数解算
+    //Imu_get_mag_yaw();                                              // 磁力计解算
+    // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
+    // time = end_time - start_time;
+    // float time_us = (float)time / 100.0f;
+    // printf("所需时间: %.2f us\n", time_us);
 }
 
 #pragma section all restore

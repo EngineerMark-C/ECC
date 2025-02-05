@@ -15,10 +15,58 @@ float yaw_mag = 0.0f;                                        // 磁力计偏航�
 // uint32 quaternion_time = 0;      // 四元数解算时间
 // uint32 mag_yaw_time = 0;         // 磁力计解算时间
 
+// 添加卡尔曼滤波和陀螺仪偏置相关变量
+static float gyro_bias[3] = {0.0f, 0.0f, 0.0f};  // 陀螺仪偏置
+static float P[3] = {1.0f, 1.0f, 1.0f};          // 卡尔曼滤波误差协方差
+static float Q = 0.001f;                          // 过程噪声协方差
+static float R = 0.03f;                           // 测量噪声协方差
+static float K[3];                                // 卡尔曼增益
+
+// 陀螺仪偏置校准函数
+void Calibrate_gyro(void)
+{
+    printf("开始陀螺仪校准，请保持IMU静止...\n");
+    const int samples = 1000;  // 采样次数
+    float sum_x = 0.0f, sum_y = 0.0f, sum_z = 0.0f;
+    
+    // 采集静止状态下的陀螺仪数据
+    for(int i = 0; i < samples; i++)
+    {
+        imu963ra_get_gyro();
+        sum_x += imu963ra_gyro_transition(imu963ra_gyro_x);
+        sum_y += imu963ra_gyro_transition(imu963ra_gyro_y);
+        sum_z += imu963ra_gyro_transition(imu963ra_gyro_z);
+        system_delay_ms(5);  // 延时5ms
+        
+        if(i % 100 == 0)  // 每100次采样打印一次进度
+        {
+            printf("校准进度：%d%%\n", i / 10);
+        }
+    }
+    
+    // 计算平均值作为偏置
+    gyro_bias[0] = sum_x / samples;
+    gyro_bias[1] = sum_y / samples;
+    gyro_bias[2] = sum_z / samples;
+    
+    printf("陀螺仪偏置值：\nX: %.2f\nY: %.2f\nZ: %.2f\n", 
+           gyro_bias[0], gyro_bias[1], gyro_bias[2]);
+}
+
+// 初始化 IMU963RA
 void Imu_init(void)
 {
-    imu963ra_init();                // 初始化 IMU963RA
-    pit_ms_init(PIT1, 5);           // 初始化 PIT1 为周期中断 5ms 周期
+    uint8_t imu_init_state = imu963ra_init();
+    if(imu_init_state != 0)
+    {
+        printf("IMU初始化失败！错误代码：%d\n", imu_init_state);
+        while(1);  // 如果初始化失败则停止运行
+    }
+    printf("IMU初始化成功！\n");
+    
+    pit_ms_init(PIT1, 5);           // 初始化PIT1为周期中断5ms周期
+    Calibrate_gyro();              // 校准陀螺仪偏置
+    printf("陀螺仪校准完成！\n");
 }
 
 // 获取 IMU963RA 数据
@@ -49,15 +97,40 @@ void Imu_get_quaternion(void)
     ax = imu963ra_acc_transition(imu963ra_acc_x);
     ay = imu963ra_acc_transition(imu963ra_acc_y);
     az = imu963ra_acc_transition(imu963ra_acc_z);
-    gx = imu963ra_gyro_transition(imu963ra_gyro_x) * 0.0174533f; // 角度转弧度
-    gy = imu963ra_gyro_transition(imu963ra_gyro_y) * 0.0174533f;
-    gz = imu963ra_gyro_transition(imu963ra_gyro_z) * 0.0174533f;
+    
+    // 获取陀螺仪数据并应用卡尔曼滤波
+    float gx_raw = imu963ra_gyro_transition(imu963ra_gyro_x);
+    float gy_raw = imu963ra_gyro_transition(imu963ra_gyro_y);
+    float gz_raw = imu963ra_gyro_transition(imu963ra_gyro_z);
+    
+    // 卡尔曼滤波更新
+    for(int i = 0; i < 3; i++)
+    {
+        float gyro_raw = (i == 0) ? gx_raw : ((i == 1) ? gy_raw : gz_raw);
+        
+        // 预测
+        P[i] = P[i] + Q;
+        
+        // 更新
+        K[i] = P[i] / (P[i] + R);
+        float gyro_filtered = gyro_raw - gyro_bias[i];
+        gyro_bias[i] = gyro_bias[i] + K[i] * (gyro_raw - gyro_filtered - gyro_bias[i]);
+        P[i] = (1 - K[i]) * P[i];
+        
+        // 更新滤波后的陀螺仪数据
+        if(i == 0) gx = (gyro_filtered) * 0.0174533f;
+        else if(i == 1) gy = (gyro_filtered) * 0.0174533f;
+        else gz = (gyro_filtered) * 0.0174533f;
+    }
     
     // 加速度计数据归一化
+    // 计算 norm 并检查是否接近零
     norm = sqrt(ax * ax + ay * ay + az * az);
-    ax = ax / norm;
-    ay = ay / norm;
-    az = az / norm;
+    if (norm > 1e-6f) {  // 避免除以零
+        ax /= norm;
+        ay /= norm;
+        az /= norm;
+    }
     
     // 估计重力方向和方向误差
     q0q0 = q0 * q0;
@@ -97,12 +170,18 @@ void Imu_get_quaternion(void)
     q2 = q2 + (q0 * gy - q1 * gz + q3 * gx) * dt * 0.5f;
     q3 = q3 + (q0 * gz + q1 * gy - q2 * gx) * dt * 0.5f;
     
-    // 四元数归一化
+    // 计算四元数的 norm 并检查是否接近零
     norm = sqrt(q0 * q0 + q1 * q1 + q2 * q2 + q3 * q3);
-    q0 = q0 / norm;
-    q1 = q1 / norm;
-    q2 = q2 / norm;
-    q3 = q3 / norm;
+    if (norm > 1e-6f) {  // 避免除以零
+        q0 /= norm;
+        q1 /= norm;
+        q2 /= norm;
+        q3 /= norm;
+    } else {
+        // 如果四元数崩溃，重置为单位四元数
+        q0 = 1.0f;
+        q1 = q2 = q3 = 0.0f;
+    }
     
     // 计算欧拉角（弧度）
     pitch = asin(2 * (q0 * q2 - q1 * q3));
