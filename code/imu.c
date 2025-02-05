@@ -23,11 +23,46 @@ static float R = 0.03f;                           // 测量噪声协方差
 static float K[3];                                // 卡尔曼增益
 
 // 陀螺仪偏置校准函数
+// void Calibrate_gyro(void)
+// {
+//     printf("开始陀螺仪校准，请保持IMU静止...\n");
+//     const int samples = 1000;  // 采样次数
+//     float sum_x = 0.0f, sum_y = 0.0f, sum_z = 0.0f;
+    
+//     // 采集静止状态下的陀螺仪数据
+//     for(int i = 0; i < samples; i++)
+//     {
+//         imu963ra_get_gyro();
+//         sum_x += imu963ra_gyro_transition(imu963ra_gyro_x);
+//         sum_y += imu963ra_gyro_transition(imu963ra_gyro_y);
+//         sum_z += imu963ra_gyro_transition(imu963ra_gyro_z);
+//         system_delay_ms(5);  // 延时5ms
+        
+//         if(i % 100 == 0)  // 每100次采样打印一次进度
+//         {
+//             printf("校准进度：%d%%\n", i / 10);
+//         }
+//     }
+    
+//     // 计算平均值作为偏置
+//     gyro_bias[0] = sum_x / samples;
+//     gyro_bias[1] = sum_y / samples;
+//     gyro_bias[2] = sum_z / samples;
+    
+//     printf("陀螺仪偏置值：\nX: %.2f\nY: %.2f\nZ: %.2f\n", 
+//            gyro_bias[0], gyro_bias[1], gyro_bias[2]);
+// }
+
+// 陀螺仪偏置校准函数
 void Calibrate_gyro(void)
 {
-    printf("开始陀螺仪校准，请保持IMU静止...\n");
+    ips114_clear();    // 清屏
+    ips114_show_string(60, 0, "Gyro Calibrating...");
+    ips114_show_string(60, 16, "Keep IMU Still");
+    
     const int samples = 1000;  // 采样次数
     float sum_x = 0.0f, sum_y = 0.0f, sum_z = 0.0f;
+    char progress_str[20];
     
     // 采集静止状态下的陀螺仪数据
     for(int i = 0; i < samples; i++)
@@ -38,9 +73,10 @@ void Calibrate_gyro(void)
         sum_z += imu963ra_gyro_transition(imu963ra_gyro_z);
         system_delay_ms(5);  // 延时5ms
         
-        if(i % 100 == 0)  // 每100次采样打印一次进度
+        if(i % 100 == 0)  // 每100次采样更新一次进度
         {
-            printf("校准进度：%d%%\n", i / 10);
+            sprintf(progress_str, "Progress:%d%%", i / 10);
+            ips114_show_string(60, 32, progress_str);
         }
     }
     
@@ -49,9 +85,28 @@ void Calibrate_gyro(void)
     gyro_bias[1] = sum_y / samples;
     gyro_bias[2] = sum_z / samples;
     
-    printf("陀螺仪偏置值：\nX: %.2f\nY: %.2f\nZ: %.2f\n", 
-           gyro_bias[0], gyro_bias[1], gyro_bias[2]);
+    // 显示校准结果
+    ips114_show_string(60, 48, "Gyro Bias:");
+    ips114_show_float(60, 64, gyro_bias[0], 6, 2);  // X
+    ips114_show_float(60, 80, gyro_bias[1], 6, 2);  // Y
+    ips114_show_float(60, 96, gyro_bias[2], 6, 2);  // Z
 }
+
+// 初始化 IMU963RA
+// void Imu_init(void)
+// {
+//     uint8_t imu_init_state = imu963ra_init();
+//     if(imu_init_state != 0)
+//     {
+//         printf("IMU初始化失败！错误代码：%d\n", imu_init_state);
+//         while(1);  // 如果初始化失败则停止运行
+//     }
+//     printf("IMU初始化成功！\n");
+    
+//     pit_ms_init(PIT1, 5);           // 初始化PIT1为周期中断5ms周期
+//     Calibrate_gyro();              // 校准陀螺仪偏置
+//     printf("陀螺仪校准完成！\n");
+// }
 
 // 初始化 IMU963RA
 void Imu_init(void)
@@ -59,14 +114,23 @@ void Imu_init(void)
     uint8_t imu_init_state = imu963ra_init();
     if(imu_init_state != 0)
     {
-        printf("IMU初始化失败！错误代码：%d\n", imu_init_state);
+        ips114_clear();
+        ips114_show_string(60, 0, "IMU Init Failed!");
+        char error_str[30];
+        sprintf(error_str, "Error Code:%d", imu_init_state);
+        ips114_show_string(60, 16, error_str);
         while(1);  // 如果初始化失败则停止运行
     }
-    printf("IMU初始化成功！\n");
+    
+    ips114_show_string(60, 0, "IMU Init OK!");
+    system_delay_ms(500);  // 显示0.5秒
     
     pit_ms_init(PIT1, 5);           // 初始化PIT1为周期中断5ms周期
     Calibrate_gyro();              // 校准陀螺仪偏置
-    printf("陀螺仪校准完成！\n");
+    
+    ips114_show_string(60, 112, "Calibration Done!");
+    system_delay_ms(1000);  // 显示1秒
+    ips114_clear();         // 清屏
 }
 
 // 获取 IMU963RA 数据
