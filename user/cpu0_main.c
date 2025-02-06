@@ -58,8 +58,8 @@ int core0_main(void)
     Init();                         // 初始化函数
     while (TRUE)
     {
-        //My_Key();                                                    // 按键处理函数
-        Ips_show();                                                 // IPS 显示函数
+        My_Key();                                                    // 按键处理函数
+        //Ips_show();                                                 // IPS 显示函数
         //Display_Gps_Info();                                         // 显示 GPS 信息
         system_delay_ms(50);                                        // 适当的刷新间隔
 
