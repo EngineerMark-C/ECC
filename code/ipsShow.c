@@ -9,7 +9,7 @@ void Ips_init(void)
     system_delay_ms(200);  // 等待屏幕稳定
 }
 
-void Ips_show(void)
+void Speed_Imu_Info(void)
 {
     // 第一列：速度相关信息
     ips114_show_string(0, 0, "Speed:");

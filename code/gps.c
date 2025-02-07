@@ -44,48 +44,58 @@ void Print_Gps_Info(void)
 
 void Display_Gps_Info(void)
 {
-    // 添加基本显示，即使没有GPS数据也能看到
-    ips114_show_string(0, 0, "GPS Status:");
+    // 始终显示标题
+    ips114_show_string(0, 0, "GPS:");
+    ips114_show_string(40, 0, gnss.state ? "Valid" : "No Fix");
     
     if(gnss_flag)
     {
         // 解析GPS数据
         if(0 == gnss_data_parse())
         {
-            // 显示GPS信息
-            ips114_show_string(0, 0, "GPS:");
-            ips114_show_string(40, 0, gnss.state ? "Valid" : "Invalid");
-            
-            if(gnss.state)  // 如果GPS定位有效
+            if(gnss.state)
             {
-                // 显示位置信息
-                ips114_show_float(0, 16, gnss.longitude, 8, 4);    // 经度
-                ips114_show_char(90, 16, gnss.ew);                 // 东/西
+                // Location data
+                ips114_show_string(0, 16, "LON:");
+                ips114_show_float(30, 16, gnss.longitude, 8, 4);
+                ips114_show_char(110, 16, gnss.ew);
                 
-                ips114_show_float(0, 32, gnss.latitude, 8, 4);     // 纬度
-                ips114_show_char(90, 32, gnss.ns);                 // 南/北
+                ips114_show_string(0, 32, "LAT:");
+                ips114_show_float(30, 32, gnss.latitude, 8, 4);
+                ips114_show_char(110, 32, gnss.ns);
                 
-                ips114_show_float(0, 48, gnss.height, 6, 1);       // 海拔
+                ips114_show_string(0, 48, "ALT:");
+                ips114_show_float(30, 48, gnss.height, 6, 1);
                 ips114_show_string(90, 48, "m");
                 
-                // 显示运动信息
-                ips114_show_float(0, 64, gnss.speed, 6, 1);        // 速度
+                // Movement data
+                ips114_show_string(0, 64, "SPD:");
+                ips114_show_float(30, 64, gnss.speed, 5, 1);
                 ips114_show_string(90, 64, "km/h");
                 
-                ips114_show_float(0, 80, gnss.direction, 6, 1);    // 航向角
+                ips114_show_string(0, 80, "DIR:");
+                ips114_show_float(30, 80, gnss.direction, 5, 1);
+                ips114_show_string(90, 80, "deg");
                 
-                // 显示卫星信息
-                ips114_show_int(0, 96, gnss.satellite_used, 3);    // 卫星数
+                // System info
+                ips114_show_string(0, 96, "SAT:");
+                ips114_show_int(30, 96, gnss.satellite_used, 2);
                 
-                // 显示时间
-                ips114_show_int(0, 112, gnss.time.hour, 2);
-                ips114_show_string(20, 112, ":");
-                ips114_show_int(30, 112, gnss.time.minute, 2);
-                ips114_show_string(50, 112, ":");
-                ips114_show_int(60, 112, gnss.time.second, 2);
+                // Time display
+                ips114_show_string(0, 112, "UTC:");
+                ips114_show_int(30, 112, gnss.time.hour, 2);
+                ips114_show_string(46, 112, ":");
+                ips114_show_int(54, 112, gnss.time.minute, 2);
+                ips114_show_string(70, 112, ":");
+                ips114_show_int(78, 112, gnss.time.second, 2);
+            }
+            else
+            {
+                // Show waiting message when GPS is invalid
+                ips114_show_string(0, 48, "Waiting for signal...");
             }
             
-            system_delay_ms(10);  // 短暂延时确保显示稳定
+            system_delay_ms(10);
         }
         gnss_flag = 0;
     }

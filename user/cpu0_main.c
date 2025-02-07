@@ -58,8 +58,8 @@ int core0_main(void)
     Init();                         // 初始化函数
     while (TRUE)
     {
-        My_Key();                                                    // 按键处理函数
-        //Ips_show();                                                 // IPS 显示函数
+        Menu();                                                     // 菜单逻辑
+        //Speed_Imu_Info();                                           // 显示速度和 IMU 信息
         //Display_Gps_Info();                                         // 显示 GPS 信息
         system_delay_ms(50);                                        // 适当的刷新间隔
 
@@ -74,12 +74,12 @@ int core0_main(void)
         }
 
 
-        Sreer_angle(an);                                            // 设置舵机角度
+        //Sreer_angle(an);                                            // 设置舵机角度
         //printf("%f,%f\n",speed,sp);                                 // 打印目标速度
         //printf("%f,%f,%f\n",pitch,roll,yaw);                        // 打印欧拉角
         //printf("%f,%f\n",yaw,yaw_mag);                              // 打印磁力计偏航角
-        Gps_data_to_flash();                                        // GPS 数据写入 Flash
-        Gps_data_from_flash();                                      // GPS 数据从 Flash 读取
+        //Gps_data_to_flash();                                        // GPS 数据写入 Flash
+        //Gps_data_from_flash();                                      // GPS 数据从 Flash 读取
     }
 
 }

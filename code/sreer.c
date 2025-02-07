@@ -8,6 +8,8 @@
 #define PWM_STEER_MAX_L_SMALL					1250                                            // L-Small车舵机PWM左极限
 #define MAX_ANGLE_L_SMALL						22.0f                                           // L-Small车舵机最大转角
 
+int duty_sreer = 0;
+
 void Sreer_init(void)
 {
     pwm_init(SREER, 50, PWM_STEER_MIDDLE_L_SMALL);

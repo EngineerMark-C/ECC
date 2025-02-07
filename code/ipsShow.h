@@ -2,6 +2,6 @@
 #define _ipsShow_h_
 
 void Ips_init(void);
-void Ips_show(void);
+void Speed_Imu_Info(void);
 
 #endif
