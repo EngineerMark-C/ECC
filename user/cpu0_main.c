@@ -41,7 +41,6 @@
 #pragma section all "cpu0_dsram"
 // 将本语句与#pragma section all restore语句之间的全局变量都放在CPU0的RAM中
 
-uint8 encoder_state = 0;
 uint32 time = 0;
 
 float sp =1.0f;
@@ -58,30 +57,25 @@ int core0_main(void)
     Init();                         // 初始化函数
     while (TRUE)
     {
+        // uint32 start_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
+
         Menu();                                                     // 菜单逻辑
         //Speed_Imu_Info();                                           // 显示速度和 IMU 信息
         //Display_Gps_Info();                                         // 显示 GPS 信息
         system_delay_ms(50);                                        // 适当的刷新间隔
+        Remote_control();                                               // 遥控逻辑
 
-        if (encoder_state == 1)
-        { 
-            Encoder_get_speed();                                    // 计算速度
-
-            //PID_speed(sp);                                          // 设置目标速度
-            Remote_control();                                       // 遥控逻辑
-
-            encoder_state = 0;
-        }
-
-
-        //Sreer_angle(an);                                            // 设置舵机角度
         //printf("%f,%f\n",speed,sp);                                 // 打印目标速度
         //printf("%f,%f,%f\n",pitch,roll,yaw);                        // 打印欧拉角
         //printf("%f,%f\n",yaw,yaw_mag);                              // 打印磁力计偏航角
         //Gps_data_to_flash();                                        // GPS 数据写入 Flash
         //Gps_data_from_flash();                                      // GPS 数据从 Flash 读取
-    }
 
+        // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
+        // time = end_time - start_time;
+        // float time_us = (float)time / 100.0f;
+        // printf("所需时间: %.2f us\n", time_us);
+    }
 }
 
 IFX_INTERRUPT(cc60_pit_ch0_isr, 0, CCU6_0_CH0_ISR_PRIORITY)
@@ -89,10 +83,16 @@ IFX_INTERRUPT(cc60_pit_ch0_isr, 0, CCU6_0_CH0_ISR_PRIORITY)
     interrupt_global_enable(0);                                     // 开启中断嵌套
     pit_clear_flag(CCU60_CH0);
 
+    // uint32 start_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
     encoder_data_dir = encoder_get_count(ENCODER_DIR);              // 获取编码器计数
     encoder_clear_count(ENCODER_DIR);
+    Encoder_get_speed();                                            // 计算速度
 
-    encoder_state = 1;
+    //PID_speed(sp);                                                // 设置目标速度
+    // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
+    // time = end_time - start_time;
+    // float time_us = (float)time / 100.0f;
+    // printf("所需时间: %.2f us\n", time_us);
 }
 
 IFX_INTERRUPT(cc60_pit_ch1_isr, 0, CCU6_0_CH1_ISR_PRIORITY)
@@ -104,6 +104,7 @@ IFX_INTERRUPT(cc60_pit_ch1_isr, 0, CCU6_0_CH1_ISR_PRIORITY)
     Imu_get_data();                                                 // 获取 IMU963RA 数据
     Imu_get_quaternion();                                           // 四元数解算
     //Imu_get_mag_yaw();                                              // 磁力计解算
+    //Sreer_angle(an);                                            // 设置舵机角度
     // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
     // time = end_time - start_time;
     // float time_us = (float)time / 100.0f;
