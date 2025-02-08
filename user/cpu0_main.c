@@ -64,8 +64,8 @@ int core0_main(void)
         //Display_Gps_Info();                                         // 显示 GPS 信息
         system_delay_ms(50);                                        // 适当的刷新间隔
         Remote_control();                                               // 遥控逻辑
-        //Collection_GPS_Point();                                         // 收集 GPS 数据
-        Print_Gps_Info();                                               // 打印 GPS 信息
+        Collection_GPS_Point();                                         // 收集 GPS 数据
+        //Print_Gps_Info();                                               // 打印 GPS 信息
         //printf("%f,%f\n",speed,target_speed);                       // 打印目标速度
         //printf("%f,%f,%f\n",pitch,roll,yaw);                        // 打印欧拉角
         //printf("%f,%f\n",yaw,yaw_mag);                              // 打印磁力计偏航角

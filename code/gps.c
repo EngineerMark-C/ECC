@@ -20,8 +20,8 @@ void Print_Gps_Info(void)
             if(gnss.state)  // 如果GPS定位有效
             {
                 // 打印位置信息
-                printf("经度: %.15f°%c\n", gnss.longitude, gnss.ew);
-                printf("纬度: %.15f°%c\n", gnss.latitude, gnss.ns);
+                printf("经度: %.15g°%c\n", gnss.longitude, gnss.ew);
+                printf("纬度: %.15g°%c\n", gnss.latitude, gnss.ns);
                 printf("海拔: %.6fm\n", gnss.height);
                 
                 // 打印运动信息

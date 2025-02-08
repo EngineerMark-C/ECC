@@ -51,6 +51,7 @@
 
 typedef union                                                                   // 固定的数据缓冲单元格式
 {
+    double  double_type;                                                        // double 类型                          现在是64位了!!!!
     float   float_type;                                                         // float  类型
     uint32  uint32_type;                                                        // uint32 类型
     int32   int32_type;                                                         // int32  类型

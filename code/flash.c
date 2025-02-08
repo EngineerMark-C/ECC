@@ -95,8 +95,8 @@ void Gps_data_to_flash(void)
             if(gnss.state)  // 如果GPS定位有效
             {
                 flash_buffer_clear();                                                       // 清空缓冲区
-                flash_union_buffer[0].float_type  = gnss.longitude;                        // 向缓冲区第 0 个位置写入 float  数据
-                flash_union_buffer[1].float_type  = gnss.latitude;                         // 向缓冲区第 1 个位置写入 float  数据
+                flash_union_buffer[0].double_type  = gnss.longitude;                        // 向缓冲区第 0 个位置写入 float  数据
+                flash_union_buffer[1].double_type  = gnss.latitude;                         // 向缓冲区第 1 个位置写入 float  数据
                 flash_union_buffer[2].float_type  = gnss.height;                           // 向缓冲区第 2 个位置写入 float  数据
                 flash_union_buffer[3].float_type  = gnss.speed;                            // 向缓冲区第 3 个位置写入 float  数据
                 flash_union_buffer[4].float_type  = gnss.direction;                        // 向缓冲区第 4 个位置写入 float  数据
@@ -116,8 +116,8 @@ void Gps_data_to_flash(void)
 void Gps_data_from_flash(void)
 {
     flash_read_page_to_buffer(FLASH_SECTION_INDEX, FLASH_GPS_DATA_INDEX);           // 将数据从 flash 读取到缓冲区
-    printf("longitude: %.6f\n", flash_union_buffer[0].float_type);
-    printf("latitude: %.6f\n", flash_union_buffer[1].float_type);
+    printf("longitude: %.6f\n", flash_union_buffer[0].double_type);
+    printf("latitude: %.6f\n", flash_union_buffer[1].double_type);
     printf("height: %.2f\n", flash_union_buffer[2].float_type);
     printf("speed: %.2f\n", flash_union_buffer[3].float_type);
     printf("direction: %.2f\n", flash_union_buffer[4].float_type);
@@ -136,8 +136,8 @@ void Collection_GPS_Point(void)
             {
                 flash_buffer_clear();                                                       // 清空缓冲区
                 flash_union_buffer[GPS_point_index].uint8_type  = GPS_point_index;           //
-                flash_union_buffer[GPS_point_index + 1].float_type  = gnss.longitude;
-                flash_union_buffer[GPS_point_index + 2].float_type  = gnss.latitude;
+                flash_union_buffer[GPS_point_index + 1].double_type  = gnss.longitude;
+                flash_union_buffer[GPS_point_index + 2].double_type  = gnss.latitude;
                 if(flash_check(FLASH_SECTION_INDEX, FLASH_PAGE_INDEX))                      // 判断是否有数据
                     flash_erase_page(FLASH_SECTION_INDEX, FLASH_PAGE_INDEX);                // 擦除这一页
                 flash_write_page_from_buffer(FLASH_SECTION_INDEX, FLASH_GPS_DATA_INDEX);        // 向指定 Flash 扇区的页码写入缓冲区数据
@@ -152,6 +152,6 @@ void Display_GPS_Point(void)
     flash_read_page_to_buffer(FLASH_SECTION_INDEX, FLASH_GPS_DATA_INDEX);           // 将数据从 flash 读取到缓冲区
     for(uint8_t i = 0; i < 3; i++)
     {
-        printf("point: %d, longitude: %.6f, latitude: %.6f\n", flash_union_buffer[i * 3].uint8_type, flash_union_buffer[i * 3 + 1].float_type, flash_union_buffer[i * 3 + 2].float_type);
+        printf("point: %d, longitude: %.9f, latitude: %.9f\n", flash_union_buffer[i * 3].uint8_type, flash_union_buffer[i * 3 + 1].double_type, flash_union_buffer[i * 3 + 2].double_type);
     }
 }
