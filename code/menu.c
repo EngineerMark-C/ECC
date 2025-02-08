@@ -108,8 +108,8 @@ void display_menu(void) {
             break;
             
         case MENU_GPS:
-            //Display_Gps_Info();
-            Print_Gps_Info();
+            Display_Gps_Info();
+            //Print_Gps_Info();
             break;
 
         case Menu_GPS_Point:
@@ -187,17 +187,13 @@ void Menu(void) {
             
         case MENU_SPEED_IMU:
         case MENU_GPS:
-            if(key4_state == KEY_SHORT_PRESS) {
-                menu_state = MENU_MAIN;
-                key_clear_state(KEY_4);
-            }
-            break;
         case Menu_GPS_Point:
             if(key4_state == KEY_SHORT_PRESS) {
                 menu_state = MENU_MAIN;
                 key_clear_state(KEY_4);
             }
             break;
+
     }
     
     // 更新显示

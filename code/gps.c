@@ -57,12 +57,12 @@ void Display_Gps_Info(void)
             {
                 // Location data
                 ips114_show_string(0, 16, "LON:");
-                ips114_show_float(30, 16, gnss.longitude, 8, 4);
-                ips114_show_char(110, 16, gnss.ew);
+                ips114_show_double(30, 16, gnss.longitude, 4, 8);
+                ips114_show_char(130, 16, gnss.ew);
                 
                 ips114_show_string(0, 32, "LAT:");
-                ips114_show_float(30, 32, gnss.latitude, 8, 4);
-                ips114_show_char(110, 32, gnss.ns);
+                ips114_show_double(30, 32, gnss.latitude, 4, 8);
+                ips114_show_char(130, 32, gnss.ns);
                 
                 ips114_show_string(0, 48, "ALT:");
                 ips114_show_float(30, 48, gnss.height, 6, 1);
@@ -94,8 +94,7 @@ void Display_Gps_Info(void)
                 // Show waiting message when GPS is invalid
                 ips114_show_string(0, 48, "Waiting for signal...");
             }
-            
-            system_delay_ms(10);
+            system_delay_ms(50);  // Refresh interval
         }
         gnss_flag = 0;
     }

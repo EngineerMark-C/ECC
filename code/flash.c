@@ -134,12 +134,13 @@ void Collection_GPS_Point(void)
         {
             if(gnss.state)  // 如果GPS定位有效
             {
-                flash_buffer_clear();                                                       // 清空缓冲区
-                flash_union_buffer[GPS_point_index].uint8_type  = GPS_point_index;           //
+                flash_buffer_clear();                                                           // 清空缓冲区
+                if(flash_check(FLASH_SECTION_INDEX, FLASH_PAGE_INDEX))                          // 判断是否有数据
+                    flash_read_page_to_buffer(FLASH_SECTION_INDEX, FLASH_GPS_DATA_INDEX);       // 将数据从 flash 读取到缓冲区
+                flash_union_buffer[GPS_point_index].uint8_type  = GPS_point_index;
                 flash_union_buffer[GPS_point_index + 1].double_type  = gnss.longitude;
                 flash_union_buffer[GPS_point_index + 2].double_type  = gnss.latitude;
-                if(flash_check(FLASH_SECTION_INDEX, FLASH_PAGE_INDEX))                      // 判断是否有数据
-                    flash_erase_page(FLASH_SECTION_INDEX, FLASH_PAGE_INDEX);                // 擦除这一页
+                flash_erase_page(FLASH_SECTION_INDEX, FLASH_PAGE_INDEX);                        // 擦除这一页
                 flash_write_page_from_buffer(FLASH_SECTION_INDEX, FLASH_GPS_DATA_INDEX);        // 向指定 Flash 扇区的页码写入缓冲区数据
             }
         }
