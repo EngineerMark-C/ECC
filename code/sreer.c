@@ -35,6 +35,10 @@ void Sreer_set_angle(float angle)
     {
         angle = MAX_ANGLE_L_SMALL;
     }
+    if (angle < -MAX_ANGLE_L_SMALL)
+    {
+        angle = -MAX_ANGLE_L_SMALL;
+    }
     int duty = (int)(PWM_STEER_MIDDLE_L_SMALL + (angle / MAX_ANGLE_L_SMALL) * (PWM_STEER_MAX_L_SMALL - PWM_STEER_MIDDLE_L_SMALL));
 
     // 限制舵机PWM范围

@@ -43,8 +43,8 @@
 
 uint32 time = 0;
 
-float sp =1.0f;
-float an = 0.0f;
+float target_speed =1.0f;
+float target_angle = 0.0f;
 
 // **************************** 代码区域 ****************************
 int core0_main(void)
@@ -64,8 +64,9 @@ int core0_main(void)
         //Display_Gps_Info();                                         // 显示 GPS 信息
         system_delay_ms(50);                                        // 适当的刷新间隔
         Remote_control();                                               // 遥控逻辑
-
-        //printf("%f,%f\n",speed,sp);                                 // 打印目标速度
+        //Collection_GPS_Point();                                         // 收集 GPS 数据
+        Print_Gps_Info();                                               // 打印 GPS 信息
+        //printf("%f,%f\n",speed,target_speed);                       // 打印目标速度
         //printf("%f,%f,%f\n",pitch,roll,yaw);                        // 打印欧拉角
         //printf("%f,%f\n",yaw,yaw_mag);                              // 打印磁力计偏航角
         //Gps_data_to_flash();                                        // GPS 数据写入 Flash
@@ -104,7 +105,7 @@ IFX_INTERRUPT(cc60_pit_ch1_isr, 0, CCU6_0_CH1_ISR_PRIORITY)
     Imu_get_data();                                                 // 获取 IMU963RA 数据
     Imu_get_quaternion();                                           // 四元数解算
     //Imu_get_mag_yaw();                                              // 磁力计解算
-    //Sreer_angle(an);                                            // 设置舵机角度
+    //Sreer_angle(target_angle);                                      // 设置舵机角度
     // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
     // time = end_time - start_time;
     // float time_us = (float)time / 100.0f;

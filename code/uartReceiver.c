@@ -21,7 +21,7 @@ void Speed_map(void)
     // 设置 PID 目标速度
     PID_speed(target_speed);
     // printf("channel_value: %d\r\n", channel_value);
-    // printf("target_angle: %f\r\n", target_speed);
+    // printf("target_speed: %f\r\n", target_speed);
 }
 
 void Angle_map(void)

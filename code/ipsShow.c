@@ -27,6 +27,8 @@ void Speed_Imu_Info(void)
     ips114_show_float(110, 96, roll, 6, 2);              // roll
     ips114_show_string(0, 112, "Y:");
     ips114_show_float(20, 112, yaw, 6, 2);               // yaw
+    ips114_show_string(90, 112, "YM:");
+    ips114_show_float(110, 112, yaw_mag, 6, 2);          // yaw_mag
 
     system_delay_ms(10);  // 短暂延时确保显示稳定
 }

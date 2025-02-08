@@ -34,7 +34,8 @@ typedef enum {
     MENU_MAIN,           // 主菜单状态
     MENU_STEER,          // 舵机调节状态
     MENU_SPEED_IMU,      // 速度和IMU信息显示状态
-    MENU_GPS            // GPS信息显示状态
+    MENU_GPS,             // GPS信息显示状态
+    Menu_GPS_Point       // GPS点位显示状态
 } MenuState;
 
 // 主菜单项定义
@@ -55,7 +56,8 @@ typedef struct {
 MainMenuItem main_menu_items[] = {
     {"Steer Control"},
     {"Speed & IMU"},
-    {"GPS Info"}
+    {"GPS Info"},
+    {"GPS Point"}
 };
 
 // 舵机菜单项
@@ -106,7 +108,12 @@ void display_menu(void) {
             break;
             
         case MENU_GPS:
-            Display_Gps_Info();
+            //Display_Gps_Info();
+            Print_Gps_Info();
+            break;
+
+        case Menu_GPS_Point:
+            Display_GPS_Point();
             break;
     }
 }
@@ -137,6 +144,7 @@ void Menu(void) {
                     case 0: menu_state = MENU_STEER; break;
                     case 1: menu_state = MENU_SPEED_IMU; break;
                     case 2: menu_state = MENU_GPS; break;
+                    case 3: menu_state = Menu_GPS_Point; break;
                 }
                 key_clear_state(KEY_3);
             }
@@ -179,6 +187,12 @@ void Menu(void) {
             
         case MENU_SPEED_IMU:
         case MENU_GPS:
+            if(key4_state == KEY_SHORT_PRESS) {
+                menu_state = MENU_MAIN;
+                key_clear_state(KEY_4);
+            }
+            break;
+        case Menu_GPS_Point:
             if(key4_state == KEY_SHORT_PRESS) {
                 menu_state = MENU_MAIN;
                 key_clear_state(KEY_4);

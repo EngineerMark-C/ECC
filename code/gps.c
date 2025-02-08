@@ -20,13 +20,13 @@ void Print_Gps_Info(void)
             if(gnss.state)  // 如果GPS定位有效
             {
                 // 打印位置信息
-                printf("经度: %.6f°%c\n", gnss.longitude, gnss.ew);
-                printf("纬度: %.6f°%c\n", gnss.latitude, gnss.ns);
-                printf("海拔: %.2fm\n", gnss.height);
+                printf("经度: %.15f°%c\n", gnss.longitude, gnss.ew);
+                printf("纬度: %.15f°%c\n", gnss.latitude, gnss.ns);
+                printf("海拔: %.6fm\n", gnss.height);
                 
                 // 打印运动信息
-                printf("速度: %.2fkm/h\n", gnss.speed);
-                printf("航向: %.2f°\n", gnss.direction);
+                printf("速度: %.6fkm/h\n", gnss.speed);
+                printf("航向: %.6f°\n", gnss.direction);
                 
                 // 打印卫星信息
                 printf("使用卫星数: %d\n", gnss.satellite_used);
@@ -99,42 +99,4 @@ void Display_Gps_Info(void)
         }
         gnss_flag = 0;
     }
-}
-
-void Gps_data_to_flash(void)
-{
-    if(gnss_flag)
-    {
-        // 解析GPS数据
-        if(0 == gnss_data_parse())
-        {
-            if(gnss.state)  // 如果GPS定位有效
-            {
-                flash_buffer_clear();                                                       // 清空缓冲区
-                flash_union_buffer[0].float_type  = gnss.longitude;                        // 向缓冲区第 0 个位置写入 float  数据
-                flash_union_buffer[1].float_type  = gnss.latitude;                         // 向缓冲区第 1 个位置写入 float  数据
-                flash_union_buffer[2].float_type  = gnss.height;                           // 向缓冲区第 2 个位置写入 float  数据
-                flash_union_buffer[3].float_type  = gnss.speed;                            // 向缓冲区第 3 个位置写入 float  数据
-                flash_union_buffer[4].float_type  = gnss.direction;                        // 向缓冲区第 4 个位置写入 float  数据
-                flash_union_buffer[5].uint8_type  = gnss.satellite_used;                   // 向缓冲区第 5 个位置写入 uint8  数据
-                flash_union_buffer[6].uint8_type  = gnss.time.hour;                        // 向缓冲区第 6 个位置写入 uint8  数据
-                flash_union_buffer[7].uint8_type  = gnss.time.minute;                      // 向缓冲区第 7 个位置写入 uint8  数据
-                flash_union_buffer[8].uint8_type  = gnss.time.second;                      // 向缓冲区第 8 个位置写入 uint8  数据
-                flash_write_page_from_buffer(FLASH_SECTION_INDEX, FLASH_PAGE_INDEX);        // 向指定 Flash 扇区的页码写入缓冲区数据
-            }
-        }
-        gnss_flag = 0;
-    }
-}
-
-void Gps_data_from_flash(void)
-{
-    flash_read_page_to_buffer(FLASH_SECTION_INDEX, FLASH_PAGE_INDEX);           // 将数据从 flash 读取到缓冲区
-    printf("longitude: %.6f\n", flash_union_buffer[0].float_type);
-    printf("latitude: %.6f\n", flash_union_buffer[1].float_type);
-    printf("height: %.2f\n", flash_union_buffer[2].float_type);
-    printf("speed: %.2f\n", flash_union_buffer[3].float_type);
-    printf("direction: %.2f\n", flash_union_buffer[4].float_type);
-    printf("satellite_used: %d\n", flash_union_buffer[5].uint8_type);
-    printf("time: %02d:%02d:%02d\n", flash_union_buffer[6].uint8_type, flash_union_buffer[7].uint8_type, flash_union_buffer[8].uint8_type);
 }
