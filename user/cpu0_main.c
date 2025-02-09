@@ -43,9 +43,6 @@
 
 uint32 time = 0;
 
-float target_speed =1.0f;
-float target_angle = 0.0f;
-
 // **************************** 代码区域 ****************************
 int core0_main(void)
 {
@@ -64,7 +61,7 @@ int core0_main(void)
         //Display_Gps_Info();                                         // 显示 GPS 信息
         system_delay_ms(50);                                        // 适当的刷新间隔
         Remote_control();                                               // 遥控逻辑
-        Collection_GPS_Point();                                         // 收集 GPS 数据
+        //Collection_GPS_Point();                                         // 收集 GPS 数据
         //Print_Gps_Info();                                               // 打印 GPS 信息
         //printf("%f,%f\n",speed,target_speed);                       // 打印目标速度
         //printf("%f,%f,%f\n",pitch,roll,yaw);                        // 打印欧拉角
@@ -89,7 +86,7 @@ IFX_INTERRUPT(cc60_pit_ch0_isr, 0, CCU6_0_CH0_ISR_PRIORITY)
     encoder_clear_count(ENCODER_DIR);
     Encoder_get_speed();                                            // 计算速度
 
-    //PID_speed(sp);                                                // 设置目标速度
+    //PID_speed(target_speed);                                                // 设置目标速度
     // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
     // time = end_time - start_time;
     // float time_us = (float)time / 100.0f;

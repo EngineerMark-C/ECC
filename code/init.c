@@ -9,6 +9,7 @@
 #include "uartReceiver.h"
 #include "gps.h"
 #include "flash.h"
+#include "control.h"
 
 
 void Init(void)

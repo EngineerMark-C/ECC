@@ -55,24 +55,22 @@ void Sreer_set_angle(float angle)
 
 void Sreer_angle(float angle)
 {
-    int angleYaw;
-    if (yaw > 180)
-    {
-        angleYaw = yaw - 360;
-    }
-    else
-    {
-        angleYaw = yaw;
-    }
-    angle = angleYaw- angle;
-    if (angleYaw - angle >MAX_ANGLE_L_SMALL)
-    {
-        angle = MAX_ANGLE_L_SMALL;
-    }
-    if (angleYaw - angle < -MAX_ANGLE_L_SMALL)
-    {
-        angle = MAX_ANGLE_L_SMALL;
-    }
-    angle = -angle;
-    Sreer_set_angle(angle);
+    float error;
+    float current_yaw = yaw;
+    
+    // 计算角度差
+    error = current_yaw - angle;
+    
+    // 将角度差规范化到 -180 到 180 度
+    while(error > 180.0f) error -= 360.0f;
+    while(error < -180.0f) error += 360.0f;
+    
+    // 限制舵机打角范围
+    if(error > MAX_ANGLE_L_SMALL)
+        error = MAX_ANGLE_L_SMALL;
+    if(error < -MAX_ANGLE_L_SMALL)
+        error = -MAX_ANGLE_L_SMALL;
+        
+    // 设置舵机角度
+    Sreer_set_angle(-error);
 }
