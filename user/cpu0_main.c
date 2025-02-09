@@ -58,12 +58,21 @@ int core0_main(void)
 
         Menu();                                                     // 菜单逻辑
         system_delay_ms(50);                                        // 适当的刷新间隔
-        Remote_control();                                               // 遥控逻辑
-        Collection_GPS_Point();                                         // 收集 GPS 数据
-        Print_Gps_Info();                                               // 打印 GPS 信息
-        //printf("%f,%f\n",speed,target_speed);                       // 打印目标速度
-        //printf("%f,%f,%f\n",pitch,roll,yaw);                        // 打印欧拉角
-        //printf("%f,%f\n",yaw,yaw_mag);                              // 打印磁力计偏航角
+        Remote_control();                                           // 遥控逻辑
+
+        Get_Now_Location();                                         // 获取当前位置
+        Save_GPS_Point();                                           // 保存 GPS 点位
+        printf("longitude: %.6f\n", GPS_Point[0][0]); // 打印经度
+        printf("latitude: %.6f\n", GPS_Point[0][1]);   // 打印纬度
+        Print_GPS_Point_From_Memory();                              // 打印 GPS 点位
+        Print_GPS_Point_From_Flash();                               // 打印 GPS 点位
+        // Gps_data_to_flash();                                        // 保存 GPS 数据到 Flash
+        // Gps_data_from_flash();
+
+        // Print_Gps_Info();                                           // 打印 GPS 信息
+        // printf("%f,%f\n",speed,target_speed);                       // 打印目标速度
+        // printf("%f,%f,%f\n",pitch,roll,yaw);                        // 打印欧拉角
+        // printf("%f,%f\n",yaw,yaw_mag);                              // 打印磁力计偏航角
 
         // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
         // time = end_time - start_time;

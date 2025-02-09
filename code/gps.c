@@ -1,9 +1,28 @@
 #include "zf_common_headfile.h"
 #include "init.h"
 
+struct Now_gnss NOW_location;
+
 void Gps_init(void)
 {
     gnss_init(TAU1201);
+}
+
+void Get_Now_Location(void)
+{
+    if(gnss_flag)
+    {
+        // 解析GPS数据
+        if(0 == gnss_data_parse())
+        {
+            if(gnss.state)
+            {
+                NOW_location.latitude = gnss.latitude;
+                NOW_location.longitude = gnss.longitude;
+            }
+        }
+        gnss_flag = 0;
+    }
 }
 
 // 打印GPS信息到串口

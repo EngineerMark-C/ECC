@@ -8,8 +8,8 @@ uint8_t First_GPS_Point = 0;                                             // ç¬¬ä
 
 void Point_to_Point(void)
 {
-    double angle = get_two_points_azimuth(gnss.latitude, gnss.longitude, GPS_Point[GPS_Point_Index][0], GPS_Point[GPS_Point_Index][1]);
-    double distance = get_two_points_distance(gnss.latitude, gnss.longitude, GPS_Point[GPS_Point_Index][0], GPS_Point[GPS_Point_Index][1]);
+    double angle = get_two_points_azimuth(NOW_location.latitude, NOW_location.longitude, GPS_Point[GPS_Point_Index][0], GPS_Point[GPS_Point_Index][1]);
+    double distance = get_two_points_distance(NOW_location.latitude, NOW_location.longitude, GPS_Point[GPS_Point_Index][0], GPS_Point[GPS_Point_Index][1]);
     target_speed = 1.0f;
     target_angle = angle;
     if (distance < 1.0f)

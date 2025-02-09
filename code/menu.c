@@ -20,21 +20,12 @@ const char* key_state_to_string(key_state_enum state) {
     }
 }
 
-// 定义菜单项结构
-typedef struct {
-    const char* name;
-    int value;
-    int min;
-    int max;
-    int step;
-} MenuItem;
-
 // 定义菜单状态
 typedef enum {
     MENU_MAIN,           // 主菜单状态
     MENU_STEER,          // 舵机调节状态
     MENU_SPEED_IMU,      // 速度和IMU信息显示状态
-    MENU_GPS,             // GPS信息显示状态
+    MENU_GPS,            // GPS信息显示状态
     Menu_GPS_Point       // GPS点位显示状态
 } MenuState;
 
@@ -113,7 +104,7 @@ void display_menu(void) {
             break;
 
         case Menu_GPS_Point:
-            Display_GPS_Point();
+            Print_GPS_Point_From_Flash();
             break;
     }
 }
