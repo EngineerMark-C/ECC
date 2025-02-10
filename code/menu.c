@@ -104,7 +104,7 @@ void display_menu(void) {
             break;
 
         case Menu_GPS_Point:
-            Print_GPS_Point_From_Flash();
+            Save_GPS_Point();
             break;
     }
 }
