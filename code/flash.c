@@ -246,6 +246,7 @@ void GPS_Points_Init(void)
     }
 }
 
+// 擦除 GPS 数据
 void Erase_GPS_Points(void)
 {
     flash_erase_page(FLASH_SECTION_INDEX, FLASH_GPS_DATA_INDEX);
