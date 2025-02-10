@@ -227,9 +227,19 @@ void Menu(void) {
             }
             if(key3_state == KEY_SHORT_PRESS) {
                 Save_GPS_Point();
-                // 保存后自动滚动到新位置
-                if(GPS_Point_Index >= start_index + visible_items)
-                    start_index = GPS_Point_Index - visible_items + 1;
+                // 保存后自动跳转到下一个点位并调整显示
+                if(GPS_Point_Index < MAX_GPS_POINTS - 1) {
+                    GPS_Point_Index++;  // 自动跳到下一个点位
+                    // 滚动显示逻辑
+                    if(GPS_Point_Index >= start_index + visible_items) {
+                        start_index = GPS_Point_Index - visible_items + 1;
+                    }
+                }
+                // GPS_Point_Index = (GPS_Point_Index + 1) % MAX_GPS_POINTS;
+                // // 滚动显示逻辑
+                // if(GPS_Point_Index >= start_index + visible_items || GPS_Point_Index < start_index) {
+                // start_index = (GPS_Point_Index / visible_items) * visible_items;
+                // }
                 key_clear_state(KEY_3);
             }
             if(key4_state == KEY_SHORT_PRESS) {

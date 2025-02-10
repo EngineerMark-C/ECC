@@ -6,11 +6,11 @@
 #define FLASH_GPS_DATA_INDEX      (5)                                // 存储 GPS 数据用的页码  第7页好像死了
 #define FLASH_BASIC_DATA_INDEX    (6)                                // 存储基础数据用的页码
 
-#define MAX_GPS_POINTS            (10)                               // 最大 GPS 点位数
+#define MAX_GPS_POINTS            (16)                               // 最大 GPS 点位数
 #define GPS_DATA_SIZE             (3)                                // GPS 数据大小
 
 uint8_t GPS_Point_Index = 0;                                         // GPS 数据索引
-double GPS_Point[10][2];                                             // GPS 数据
+double GPS_Point[MAX_GPS_POINTS][2];                                             // GPS 数据
 
 // 例程测试
 void Flash_test(void)
