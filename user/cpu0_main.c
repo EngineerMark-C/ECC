@@ -90,7 +90,7 @@ IFX_INTERRUPT(cc60_pit_ch0_isr, 0, CCU6_0_CH0_ISR_PRIORITY)
     encoder_clear_count(ENCODER_DIR);
     Encoder_get_speed();                                            // 计算速度
 
-    PID_speed(target_speed);                                                // 设置目标速度
+    Motor_PID_Control(target_speed);                                // 电机 PID 控制
     // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
     // time = end_time - start_time;
     // float time_us = (float)time / 100.0f;
@@ -106,7 +106,7 @@ IFX_INTERRUPT(cc60_pit_ch1_isr, 0, CCU6_0_CH1_ISR_PRIORITY)
     Imu_get_data();                                                 // 获取 IMU963RA 数据
     Imu_get_quaternion();                                           // 四元数解算
     //Imu_get_mag_yaw();                                              // 磁力计解算
-    Sreer_angle(target_angle);                                      // 设置舵机角度
+    Sreer_PID_Control(target_angle);                                // 舵机 PID 控制
     // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
     // time = end_time - start_time;
     // float time_us = (float)time / 100.0f;
