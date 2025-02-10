@@ -66,6 +66,9 @@ SteerMenuItem steer_menu = {
 static int current_item = 0;    // 当前选中的菜单项
 static MenuState menu_state = MENU_MAIN;  // 当前菜单状态
 static bool edit_mode = false;  // 舵机编辑模式标志
+extern uint8_t GPS_Point_Index;
+static uint8_t start_index = 0;      // 新增：当前显示起始索引
+static const uint8_t visible_items = 6; // 一屏显示6个条目（16px/item）
 
 void display_menu(void) {
     ips114_clear();    // 清屏
@@ -104,7 +107,26 @@ void display_menu(void) {
             break;
 
         case Menu_GPS_Point:
-            Save_GPS_Point();
+            // 显示GPS点位管理界面
+            ips114_show_string(0, 0, "GPS Points Management");
+            
+            // 显示当前可见范围的点位（Y轴间隔16像素）
+            for(uint8_t i = 0; i < visible_items; i++) {
+                uint8_t point_num = start_index + i;
+                if(point_num >= MAX_GPS_POINTS) break;
+                
+                char point_info[32];
+                sprintf(point_info, "%sP%d:%.6f,%.6f",
+                    (point_num == GPS_Point_Index) ? ">" : " ",
+                    point_num,
+                    GPS_Point[point_num][0],
+                    GPS_Point[point_num][1]);
+                ips114_show_string(0, 16 + i*16, point_info);
+            }
+            // 底部提示信息
+            char index_info[32];
+            sprintf(index_info, "Idx:%02d KEY3:Save KEY4:Back", GPS_Point_Index);
+            ips114_show_string(0, 112, index_info);  // 正确传参：x, y, 字符串
             break;
     }
 }
@@ -178,13 +200,43 @@ void Menu(void) {
             
         case MENU_SPEED_IMU:
         case MENU_GPS:
-        case Menu_GPS_Point:
             if(key4_state == KEY_SHORT_PRESS) {
                 menu_state = MENU_MAIN;
                 key_clear_state(KEY_4);
             }
             break;
 
+        case Menu_GPS_Point:
+            if(key1_state == KEY_SHORT_PRESS) { // 上
+                if(GPS_Point_Index > 0) {
+                    GPS_Point_Index--;
+                    // 滚动逻辑：当当前索引小于起始索引时调整显示范围
+                    if(GPS_Point_Index < start_index)
+                        start_index = GPS_Point_Index;
+                }
+                key_clear_state(KEY_1);
+            }
+            if(key2_state == KEY_SHORT_PRESS) { // 下
+                if(GPS_Point_Index < MAX_GPS_POINTS - 1) {
+                    GPS_Point_Index++;
+                    // 滚动逻辑：当当前索引超过显示范围时调整显示范围
+                    if(GPS_Point_Index >= start_index + visible_items)
+                        start_index = GPS_Point_Index - visible_items + 1;
+                }
+                key_clear_state(KEY_2);
+            }
+            if(key3_state == KEY_SHORT_PRESS) {
+                Save_GPS_Point();
+                // 保存后自动滚动到新位置
+                if(GPS_Point_Index >= start_index + visible_items)
+                    start_index = GPS_Point_Index - visible_items + 1;
+                key_clear_state(KEY_3);
+            }
+            if(key4_state == KEY_SHORT_PRESS) {
+                menu_state = MENU_MAIN;
+                key_clear_state(KEY_4);
+            }
+            break;
     }
     
     // 更新显示

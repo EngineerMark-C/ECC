@@ -64,7 +64,7 @@ int core0_main(void)
         //Save_GPS_Point();                                           // 保存 GPS 点位
         //rintf("longitude: %.6f\n", GPS_Point[0][0]); // 打印经度
         //printf("latitude: %.6f\n", GPS_Point[0][1]);   // 打印纬度
-        //Print_GPS_Point_From_Memory();                              // 打印 GPS 点位
+        Print_GPS_Point_From_Memory();                              // 打印 GPS 点位
         Print_GPS_Point_From_Flash();                               // 打印 GPS 点位
         // Gps_data_to_flash();                                        // 保存 GPS 数据到 Flash
         // Gps_data_from_flash();
