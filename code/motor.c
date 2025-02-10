@@ -3,8 +3,8 @@
 #define PWM1                    (ATOM0_CH4_P02_4)
 #define PWM2                    (ATOM0_CH5_P02_5)
 
-int duty1 = 0;
-int duty2 = 0;
+int16_t duty1 = 0;
+int16_t duty2 = 0;
 
 // 初始化PWM
 void Motor_init(void)

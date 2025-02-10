@@ -4,16 +4,29 @@
 float target_speed = 0.0f;
 float target_angle = 0.0f;
 
-uint8_t First_GPS_Point = 0;                                             // 第一个 GPS 数据标志
+uint8_t Start_GPS_Point = 0;                                             // 第一个 GPS 数据索引
+uint8_t End_GPS_Point = 1;                                               // 最后一个 GPS 数据索引
 
-void Point_to_Point(void)
+void Point_to_Point(uint8_t i)
 {
-    double angle = get_two_points_azimuth(NOW_location.latitude, NOW_location.longitude, GPS_Point[GPS_Point_Index][0], GPS_Point[GPS_Point_Index][1]);
-    double distance = get_two_points_distance(NOW_location.latitude, NOW_location.longitude, GPS_Point[GPS_Point_Index][0], GPS_Point[GPS_Point_Index][1]);
+    double angle = get_two_points_azimuth(NOW_location.latitude, NOW_location.longitude, GPS_Point[i][0], GPS_Point[i][1]);
+    double distance = get_two_points_distance(NOW_location.latitude, NOW_location.longitude, GPS_Point[i][0], GPS_Point[i][1]);
     target_speed = 1.0f;
     target_angle = angle;
     if (distance < 1.0f)
     {
         target_speed = 0.0f;
+    }
+}
+
+void One_By_One(void)
+{
+    if (Start_GPS_Point < End_GPS_Point)
+    {
+        Point_to_Point(Start_GPS_Point);
+        if (target_speed == 0.0f)
+        {
+            Start_GPS_Point = (Start_GPS_Point + 1) % End_GPS_Point;
+        }
     }
 }

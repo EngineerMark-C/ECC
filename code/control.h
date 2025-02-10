@@ -4,6 +4,9 @@
 extern float target_speed;
 extern float target_angle;
 
-void Point_to_Point(void);
+extern uint8_t Start_GPS_Point;
+extern uint8_t End_GPS_Point;
+
+void One_By_One(void);
 
 #endif
