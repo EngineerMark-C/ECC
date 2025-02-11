@@ -5,14 +5,20 @@ float target_speed = 0.0f;
 float target_angle = 0.0f;
 
 uint8_t Start_GPS_Point = 0;                                             // 第一个 GPS 数据索引
-uint8_t End_GPS_Point = 1;                                               // 最后一个 GPS 数据索引
+uint8_t End_GPS_Point = 2;                                               // 最后一个 GPS 数据索引
 
 void Point_to_Point(uint8_t i)
 {
+    char str[20];
+    sprintf(str, "go to %d", i);
+    ips114_show_string(0, 112, str);
     double angle = get_two_points_azimuth(NOW_location.latitude, NOW_location.longitude, GPS_Point[i][0], GPS_Point[i][1]);
     double distance = get_two_points_distance(NOW_location.latitude, NOW_location.longitude, GPS_Point[i][0], GPS_Point[i][1]);
-    target_speed = 1.0f;
-    target_angle = angle;
+
+    target_speed = 2.0f;
+    target_angle = (float)angle;
+    ips114_show_float(0, 96, target_angle, 5, 1);
+    ips114_show_float(90, 96, (float)distance, 5, 1);
     if (distance < 1.0f)
     {
         target_speed = 0.0f;

@@ -250,7 +250,7 @@ void Imu_get_quaternion(void)
     // 计算欧拉角（弧度）
     pitch = asin(2 * (q0 * q2 - q1 * q3));
     roll = atan2(2 * (q0 * q1 + q2 * q3), 1 - 2 * (q1 * q1 + q2 * q2));
-    yaw = atan2(2 * (q0 * q3 + q1 * q2), 1 - 2 * (q2 * q2 + q3 * q3));
+    yaw = -atan2(2 * (q0 * q3 + q1 * q2), 1 - 2 * (q2 * q2 + q3 * q3));
     
     // 转换为角度
     pitch *= 57.3f;  // 弧度转角度
@@ -261,6 +261,10 @@ void Imu_get_quaternion(void)
     if (yaw < 0)
     {
         yaw += 360.0f;
+    }
+    else if (yaw >= 360.0f)  // 添加安全限制
+    {
+        yaw -= 360.0f;
     }
     
     // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));     // 使用 iLLD 的 API
@@ -290,7 +294,7 @@ void Imu_get_mag_yaw(void)
     yaw_mag = atan2(-my_comp, mx_comp) * 57.3f;  // 弧度转度
     
     // 4. 转换为0-360度
-    if(yaw_mag < 0) 
+    if(yaw_mag < 0)
     {
         yaw_mag += 360.0f;
     }

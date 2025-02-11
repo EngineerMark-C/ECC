@@ -77,7 +77,7 @@ void PID_Angle_Calc(struct PID *pid, float current)
     pid->current = current;
     
     // 计算误差
-    pid->error = pid->target - pid->current;
+    pid->error = pid->current - pid->target;
     
     // 将误差规范化到 -180 到 180 度范围
     while(pid->error > 180.0f) pid->error -= 360.0f;
@@ -94,9 +94,9 @@ void PID_Angle_Calc(struct PID *pid, float current)
     pid->derivative = pid->error - pid->error_last;
     
     // 计算PID输出
-    pid->output = pid->kp * pid->error + 
+    pid->output = (pid->kp * pid->error + 
                  pid->ki * pid->integral + 
-                 pid->kd * pid->derivative;
+                 pid->kd * pid->derivative);
     
     // 输出限幅,防止舵机打角过大(根据实际舵机限位调整)
     if(pid->output > MAX_ANGLE_L_SMALL) 

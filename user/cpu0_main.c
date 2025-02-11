@@ -60,6 +60,7 @@ int core0_main(void)
         system_delay_ms(50);                                        // 适当的刷新间隔
         Remote_control();                                           // 遥控逻辑
         Get_Now_Location();                                         // 获取当前位置
+        One_By_One();
         // Save_GPS_Point();                                           // 保存 GPS 点位
         // printf("longitude: %.6f\n", GPS_Point[0][0]); // 打印经度
         // printf("latitude: %.6f\n", GPS_Point[0][1]);   // 打印纬度
@@ -105,7 +106,7 @@ IFX_INTERRUPT(cc60_pit_ch1_isr, 0, CCU6_0_CH1_ISR_PRIORITY)
     // uint32 start_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
     Imu_get_data();                                                 // 获取 IMU963RA 数据
     Imu_get_quaternion();                                           // 四元数解算
-    //Imu_get_mag_yaw();                                              // 磁力计解算
+    // Imu_get_mag_yaw();                                              // 磁力计解算
     Sreer_PID_Control(target_angle);                                // 舵机 PID 控制
     // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
     // time = end_time - start_time;
