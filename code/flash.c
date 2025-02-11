@@ -253,3 +253,28 @@ void Erase_GPS_Points(void)
     ips114_show_string(60, 32, "GPS Points Erased.");
     system_delay_ms(500);
 }
+
+void Save_GPS_Path(void)
+{
+    flash_buffer_clear();
+
+    flash_union_buffer[0].uint8_type = Start_GPS_Point;
+    flash_union_buffer[1].uint8_type = End_GPS_Point;
+
+    // 2. 擦除并写入Flash
+    flash_erase_page(FLASH_SECTION_INDEX, FLASH_BASIC_DATA_INDEX);
+    flash_write_page_from_buffer(FLASH_SECTION_INDEX, FLASH_BASIC_DATA_INDEX);
+    ips114_show_string(60, 32, "GPS Path Saved.");
+    system_delay_ms(500);
+}
+
+void GPS_Path_Init(void)
+{
+    flash_read_page_to_buffer(FLASH_SECTION_INDEX, FLASH_BASIC_DATA_INDEX);
+
+    Start_GPS_Point = flash_union_buffer[0].uint8_type;
+    End_GPS_Point = flash_union_buffer[1].uint8_type;
+
+    ips114_show_string(60, 32, "GPS Path Loaded.");
+    system_delay_ms(500);
+}

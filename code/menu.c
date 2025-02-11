@@ -26,7 +26,8 @@ typedef enum {
     MENU_STEER,          // 舵机调节状态
     MENU_SPEED_IMU,      // 速度和IMU信息显示状态
     MENU_GPS,            // GPS信息显示状态
-    Menu_GPS_Point       // GPS点位显示状态
+    Menu_GPS_Point,      // GPS点位显示状态
+    MENU_GPS_PATH        // 新增：路径设置状态
 } MenuState;
 
 // 主菜单项定义
@@ -43,12 +44,18 @@ typedef struct {
     int step;
 } SteerMenuItem;
 
+typedef struct {
+    const char* name;
+    uint8_t num;
+} GPSPathMenuItem;
+
 // 主菜单项
 MainMenuItem main_menu_items[] = {
     {"Steer Control"},
     {"Speed & IMU"},
     {"GPS Info"},
-    {"GPS Point"}
+    {"GPS Point"},
+    {"GPS Path Setup"}
 };
 
 // 舵机菜单项
@@ -58,6 +65,11 @@ SteerMenuItem steer_menu = {
     PWM_STEER_MIN_L_SMALL,
     PWM_STEER_MAX_L_SMALL,
     5
+};
+
+GPSPathMenuItem gps_path_menu[] = {
+    {"Start Point"},
+    {"End Point"}
 };
 
 #define MAIN_MENU_ITEMS_COUNT (sizeof(main_menu_items)/sizeof(MainMenuItem))
@@ -128,6 +140,19 @@ void display_menu(void) {
             sprintf(index_info, "Idx:%02d KEY3:Save KEY4:Back", GPS_Point_Index);
             ips114_show_string(0, 112, index_info);  // 正确传参：x, y, 字符串
             break;
+
+        case MENU_GPS_PATH:
+            // 显示路径设置界面
+            ips114_show_string(0, 0, "GPS Path Setting");
+            for (int i = 0; i < 2; i++) {
+                char buffer[32];
+                sprintf(buffer, "%s%s: %d",
+                    (i == current_item) ? "> " : "  ",  // 只在编辑模式下显示光标
+                    gps_path_menu[i].name,
+                    (i == 0) ? Start_GPS_Point : End_GPS_Point);
+                ips114_show_string(0, 16 + i * 16, buffer);
+            }
+            break;
     }
 }
 
@@ -158,6 +183,7 @@ void Menu(void) {
                     case 1: menu_state = MENU_SPEED_IMU; break;
                     case 2: menu_state = MENU_GPS; break;
                     case 3: menu_state = Menu_GPS_Point; break;
+                    case 4: menu_state = MENU_GPS_PATH; break;
                 }
                 key_clear_state(KEY_3);
             }
@@ -245,6 +271,52 @@ void Menu(void) {
             if(key4_state == KEY_SHORT_PRESS) {
                 menu_state = MENU_MAIN;
                 key_clear_state(KEY_4);
+            }
+            break;
+
+        case MENU_GPS_PATH:
+            if(edit_mode) {
+                // 编辑模式处理
+                if(key1_state == KEY_SHORT_PRESS) {
+                    if (current_item == 0) {
+                        Start_GPS_Point = (Start_GPS_Point + 1) % MAX_GPS_POINTS;
+                    } else {
+                        End_GPS_Point = (End_GPS_Point + 1) % MAX_GPS_POINTS;
+                    }
+                    key_clear_state(KEY_1);
+                }
+                if(key2_state == KEY_SHORT_PRESS) {
+                    if (current_item == 0) {
+                        Start_GPS_Point = (Start_GPS_Point - 1 + MAX_GPS_POINTS) % MAX_GPS_POINTS;
+                    } else {
+                        End_GPS_Point = (End_GPS_Point - 1 + MAX_GPS_POINTS) % MAX_GPS_POINTS;
+                    }
+                    key_clear_state(KEY_2);
+                }
+                if(key3_state == KEY_SHORT_PRESS || key4_state == KEY_SHORT_PRESS) {
+                    edit_mode = false;
+                    key_clear_state(KEY_3);
+                    key_clear_state(KEY_4);
+                }
+                } else {
+                // 非编辑模式处理
+                if(key1_state == KEY_SHORT_PRESS) {
+                    if(current_item > 0) current_item--;
+                    key_clear_state(KEY_1);
+                }
+                if(key2_state == KEY_SHORT_PRESS) {
+                    if(current_item < 1) current_item++;
+                    key_clear_state(KEY_2);
+                }
+                if(key3_state == KEY_SHORT_PRESS) {
+                    edit_mode = true;
+                    key_clear_state(KEY_3);
+                }
+                if(key4_state == KEY_SHORT_PRESS) {
+                    menu_state = MENU_MAIN;
+                    Save_GPS_Path();
+                    key_clear_state(KEY_4);
+                }
             }
             break;
     }
