@@ -6,11 +6,20 @@
 #define FLASH_GPS_DATA_INDEX      (5)                                // 存储 GPS 数据用的页码  第7页好像死了
 #define FLASH_BASIC_DATA_INDEX    (6)                                // 存储基础数据用的页码
 
-#define MAX_GPS_POINTS            (10)                               // 最大 GPS 点位数
-#define GPS_DATA_SIZE             (3)                                // GPS 数据大小
+#define MAX_GPS_POINTS            (16)                               // 最大 GPS 点位数
+#define GPS_DATA_SIZE             (5)                                // 5个存储单元（索引+纬度高低位+经度高低位）
 
 uint8_t GPS_Point_Index = 0;                                         // GPS 数据索引
-double GPS_Point[10][2];                                             // GPS 数据
+double GPS_Point[MAX_GPS_POINTS][2];                                             // GPS 数据
+
+// 修改存储结构
+typedef union {
+    struct {
+        uint32_t high;
+        uint32_t low;
+    } parts;
+    double value;
+} double_convert;
 
 // 例程测试
 void Flash_test(void)
@@ -138,10 +147,19 @@ void Print_GPS_Point_From_Flash(void)
         // 检查数据是否有效
         if (flash_union_buffer[i * GPS_DATA_SIZE].uint8_type == i)
         {
-            printf("Point %d: Latitude = %.9f, longitude= %.9f\n",
-                   flash_union_buffer[i * GPS_DATA_SIZE].uint8_type,
-                   flash_union_buffer[i * GPS_DATA_SIZE + 1].float_type,
-                   flash_union_buffer[i * GPS_DATA_SIZE + 2].float_type);
+            double_convert lat, lon;
+            lat.parts.high = flash_union_buffer[i * GPS_DATA_SIZE + 1].uint32_type;
+            lat.parts.low = flash_union_buffer[i * GPS_DATA_SIZE + 2].uint32_type;
+            lon.parts.high = flash_union_buffer[i * GPS_DATA_SIZE + 3].uint32_type;
+            lon.parts.low = flash_union_buffer[i * GPS_DATA_SIZE + 4].uint32_type;
+            
+            GPS_Point[i][0] = lat.value;
+            GPS_Point[i][1] = lon.value;
+            
+            printf("Point %d: latitude = %.9f, longitude= %.9f\n",
+                    flash_union_buffer[i * GPS_DATA_SIZE].uint8_type,
+                    GPS_Point[i][0],  // 直接从内存读取已重组的数据
+                    GPS_Point[i][1]);
         }
         else
         {
@@ -157,8 +175,8 @@ void Print_GPS_Point_From_Memory(void)
     {
         printf("point: %d, latitude: %.9f, longitude: %.9f\n", 
                 i,                  // i 点位序号
-                GPS_Point[i][1],    // GPS_Point[i][1] 存储经度
-                GPS_Point[i][0]);   // GPS_Point[i][0] 存储纬度
+                GPS_Point[i][0],    // GPS_Point[i][0] 存储纬度
+                GPS_Point[i][1]);   // GPS_Point[i][1] 存储经度
     }
 }
 
@@ -176,55 +194,87 @@ void Save_GPS_Point(void)
         // 2.1 写入所有内存中的点位数据(包括新点位)
         for(uint8_t i = 0; i < MAX_GPS_POINTS; i++)
         {
+            double_convert lat, lon;
+            lat.value = GPS_Point[i][0];
+            lon.value = GPS_Point[i][1];
+            
             flash_union_buffer[i * GPS_DATA_SIZE].uint8_type = i;
-            flash_union_buffer[i * GPS_DATA_SIZE + 1].float_type = GPS_Point[i][0];
-            flash_union_buffer[i * GPS_DATA_SIZE + 2].float_type = GPS_Point[i][1];
+            flash_union_buffer[i * GPS_DATA_SIZE + 1].uint32_type = lat.parts.high;
+            flash_union_buffer[i * GPS_DATA_SIZE + 2].uint32_type = lat.parts.low;
+            flash_union_buffer[i * GPS_DATA_SIZE + 3].uint32_type = lon.parts.high;
+            flash_union_buffer[i * GPS_DATA_SIZE + 4].uint32_type = lon.parts.low;
         }
         
         // 2.2 擦除并写入Flash
-            flash_erase_page(FLASH_SECTION_INDEX, FLASH_GPS_DATA_INDEX);
+        flash_erase_page(FLASH_SECTION_INDEX, FLASH_GPS_DATA_INDEX);
         flash_write_page_from_buffer(FLASH_SECTION_INDEX, FLASH_GPS_DATA_INDEX);
         ips114_show_string(60, 32, "GPS Point Saved.");
+        system_delay_ms(500);
     }
 }
 
 // 上电初始化时调用
 void GPS_Points_Init(void)
 {
-    char progress_str[20];  // 添加缓冲区存储格式化后的字符串
-    
     ips114_show_string(60, 32, "Loading GPS Points...");
-    if (flash_check(FLASH_SECTION_INDEX, FLASH_GPS_DATA_INDEX) != 1)  // 使用更严格的检查
+    
+    flash_read_page_to_buffer(FLASH_SECTION_INDEX, FLASH_GPS_DATA_INDEX);
+
+    if(flash_union_buffer[0].uint8_type != 0xFF)  // 检查首字节是否有效
     {
-        ips114_show_string(60, 48, "No GPS Points Found.");
+        for(uint8_t i = 0; i < MAX_GPS_POINTS; i++)
+        {        
+            if(flash_union_buffer[i * GPS_DATA_SIZE].uint8_type == i)
+            {
+                double_convert lat, lon;
+                lat.parts.high = flash_union_buffer[i * GPS_DATA_SIZE + 1].uint32_type;
+                lat.parts.low = flash_union_buffer[i * GPS_DATA_SIZE + 2].uint32_type;
+                lon.parts.high = flash_union_buffer[i * GPS_DATA_SIZE + 3].uint32_type;
+                lon.parts.low = flash_union_buffer[i * GPS_DATA_SIZE + 4].uint32_type;
+                
+                GPS_Point[i][0] = lat.value;
+                GPS_Point[i][1] = lon.value;
+            }
+            else
+            {
+                continue;
+            }
+        }
+        ips114_show_string(60, 32, "GPS Points Loaded.");
         system_delay_ms(1000);  // 显示1秒
         ips114_clear();         // 清屏
-        return;
     }
-    else
-    {
-        flash_read_page_to_buffer(FLASH_SECTION_INDEX, FLASH_GPS_DATA_INDEX);
-        // 增加数据完整性校验
-        if(flash_union_buffer[0].uint8_type != 0xFF)  // 检查首字节是否有效
-        {
-            for(uint8_t i = 0; i < MAX_GPS_POINTS; i++)
-            {        
-                if(flash_union_buffer[i * GPS_DATA_SIZE].uint8_type == i)
-                {
-                sprintf(progress_str, "Point %d", i);
-                ips114_show_string(60, 48, progress_str);
-                system_delay_ms(100);  // 显示0.1秒
-                GPS_Point[i][0] = flash_union_buffer[i * GPS_DATA_SIZE + 1].float_type;
-                GPS_Point[i][1] = flash_union_buffer[i * GPS_DATA_SIZE + 2].float_type;
-                }
-                else
-                {
-                    continue;
-                }
-            }
-            ips114_show_string(60, 32, "GPS Points Loaded.");
-            system_delay_ms(1000);  // 显示1秒
-            ips114_clear();         // 清屏
-        }
-    }
+}
+
+// 擦除 GPS 数据
+void Erase_GPS_Points(void)
+{
+    flash_erase_page(FLASH_SECTION_INDEX, FLASH_GPS_DATA_INDEX);
+    ips114_show_string(60, 32, "GPS Points Erased.");
+    system_delay_ms(500);
+}
+
+void Save_GPS_Path(void)
+{
+    flash_buffer_clear();
+
+    flash_union_buffer[0].uint8_type = Start_GPS_Point;
+    flash_union_buffer[1].uint8_type = End_GPS_Point;
+
+    // 2. 擦除并写入Flash
+    flash_erase_page(FLASH_SECTION_INDEX, FLASH_BASIC_DATA_INDEX);
+    flash_write_page_from_buffer(FLASH_SECTION_INDEX, FLASH_BASIC_DATA_INDEX);
+    ips114_show_string(60, 32, "GPS Path Saved.");
+    system_delay_ms(500);
+}
+
+void GPS_Path_Init(void)
+{
+    flash_read_page_to_buffer(FLASH_SECTION_INDEX, FLASH_BASIC_DATA_INDEX);
+
+    Start_GPS_Point = flash_union_buffer[0].uint8_type;
+    End_GPS_Point = flash_union_buffer[1].uint8_type;
+
+    ips114_show_string(60, 32, "GPS Path Loaded.");
+    system_delay_ms(500);
 }

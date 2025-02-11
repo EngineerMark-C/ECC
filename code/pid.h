@@ -16,8 +16,10 @@ struct PID {
 
 extern int output_speed;
 extern struct PID pid_speed;
+extern struct PID pid_sreer;
 
 void PID_init(struct PID *pid, float kp, float ki, float kd);
-void PID_calc(struct PID *pid, float current);
-void PID_speed(float target);
+void Motor_PID_Control(float target);
+void Sreer_PID_Control(float target);
+
 #endif

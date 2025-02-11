@@ -2,9 +2,10 @@
 
 #define PWM1                    (ATOM0_CH4_P02_4)
 #define PWM2                    (ATOM0_CH5_P02_5)
+#define DUTY_MAX                (8000)                                          // 最大占空比
 
-int duty1 = 0;
-int duty2 = 0;
+int16_t duty1 = 0;
+int16_t duty2 = 0;
 
 // 初始化PWM
 void Motor_init(void)
@@ -16,6 +17,22 @@ void Motor_init(void)
 // 设置PWM占空比
 void Motor_set_duty(int duty1, int duty2)
 {
+    if (duty1 > DUTY_MAX)
+    {
+        duty1 = DUTY_MAX;
+    }
+    else if (duty1 < -DUTY_MAX)
+    {
+        duty1 = -DUTY_MAX;
+    }
+    if (duty2 > DUTY_MAX)
+    {
+        duty2 = DUTY_MAX;
+    }
+    else if (duty2 < -DUTY_MAX)
+    {
+        duty2 = -DUTY_MAX;
+    }
     pwm_set_duty(PWM1, duty1);
     pwm_set_duty(PWM2, duty2);
 }

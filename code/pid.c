@@ -2,6 +2,7 @@
 #include "init.h"
 
 struct PID pid_speed;
+struct PID pid_sreer;
 int output_speed = 0;
 
 void PID_init(struct PID *pid, float kp, float ki, float kd)
@@ -19,7 +20,7 @@ void PID_init(struct PID *pid, float kp, float ki, float kd)
 }
 
 // 位置式 PID
-void PID_calc(struct PID *pid, float current)
+void PID_Speed_Calc(struct PID *pid, float current)
 {
     pid->current = current;
     pid->error = pid->target - pid->current;                    // 计算当前误差
@@ -37,8 +38,8 @@ void PID_calc(struct PID *pid, float current)
                  pid->kd * pid->derivative;
     
     // 输出限幅
-    if(pid->output > 8000) pid->output = 8000;
-    if(pid->output < -8000) pid->output = -8000;
+    if(pid->output > DUTY_MAX) pid->output = DUTY_MAX;
+    if(pid->output < -DUTY_MAX) pid->output = -DUTY_MAX;
     
     pid->error_last = pid->error;                              // 保存上次误差
 }
@@ -54,10 +55,10 @@ void PID_calc(struct PID *pid, float current)
 //}
 
 //
-void PID_speed(float target)
+void Motor_PID_Control(float target)
 {
     pid_speed.target = target;                    // 设置目标值
-    PID_calc(&pid_speed, speed);                  // 使用当前速度作为反馈值
+    PID_Speed_Calc(&pid_speed, speed);                  // 使用当前速度作为反馈值
     output_speed += (int)pid_speed.output;               // 将PID输出转换为占空比
     
     // 电机控制
@@ -69,4 +70,47 @@ void PID_speed(float target)
     {
         Motor_set_duty(-output_speed, 0);         // 反转
     }
+}
+
+void PID_Angle_Calc(struct PID *pid, float current)
+{
+    pid->current = current;
+    
+    // 计算误差
+    pid->error = pid->current - pid->target;
+    
+    // 将误差规范化到 -180 到 180 度范围
+    while(pid->error > 180.0f) pid->error -= 360.0f;
+    while(pid->error < -180.0f) pid->error += 360.0f;
+    
+    // 计算积分项
+    pid->integral += pid->error;
+    
+    // 积分限幅,防止积分饱和(根据实际调试修改限幅值)
+    if(pid->integral > 100.0f) pid->integral = 100.0f;
+    if(pid->integral < -100.0f) pid->integral = -100.0f;
+    
+    // 计算微分项
+    pid->derivative = pid->error - pid->error_last;
+    
+    // 计算PID输出
+    pid->output = (pid->kp * pid->error + 
+                 pid->ki * pid->integral + 
+                 pid->kd * pid->derivative);
+    
+    // 输出限幅,防止舵机打角过大(根据实际舵机限位调整)
+    if(pid->output > MAX_ANGLE_L_SMALL) 
+        pid->output = MAX_ANGLE_L_SMALL;
+    if(pid->output < -MAX_ANGLE_L_SMALL) 
+        pid->output = -MAX_ANGLE_L_SMALL;
+    
+    // 保存上次误差
+    pid->error_last = pid->error;
+}
+
+void Sreer_PID_Control(float target_angle)
+{
+    pid_sreer.target = target_angle;  // 设置目标角度
+    PID_Angle_Calc(&pid_sreer, yaw);  // 使用当前偏航角作为反馈
+    Sreer_set_angle(pid_sreer.output);// 设置舵机角度
 }

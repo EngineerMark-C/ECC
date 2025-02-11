@@ -59,13 +59,13 @@ int core0_main(void)
         Menu();                                                     // 菜单逻辑
         system_delay_ms(50);                                        // 适当的刷新间隔
         Remote_control();                                           // 遥控逻辑
-
         Get_Now_Location();                                         // 获取当前位置
-        //Save_GPS_Point();                                           // 保存 GPS 点位
-        //rintf("longitude: %.6f\n", GPS_Point[0][0]); // 打印经度
-        //printf("latitude: %.6f\n", GPS_Point[0][1]);   // 打印纬度
-        //Print_GPS_Point_From_Memory();                              // 打印 GPS 点位
-        Print_GPS_Point_From_Flash();                               // 打印 GPS 点位
+        One_By_One();
+        // Save_GPS_Point();                                           // 保存 GPS 点位
+        // printf("longitude: %.6f\n", GPS_Point[0][0]); // 打印经度
+        // printf("latitude: %.6f\n", GPS_Point[0][1]);   // 打印纬度
+        // Print_GPS_Point_From_Memory();                              // 打印 GPS 点位
+        // Print_GPS_Point_From_Flash();                               // 打印 GPS 点位
         // Gps_data_to_flash();                                        // 保存 GPS 数据到 Flash
         // Gps_data_from_flash();
 
@@ -91,7 +91,7 @@ IFX_INTERRUPT(cc60_pit_ch0_isr, 0, CCU6_0_CH0_ISR_PRIORITY)
     encoder_clear_count(ENCODER_DIR);
     Encoder_get_speed();                                            // 计算速度
 
-    PID_speed(target_speed);                                                // 设置目标速度
+    Motor_PID_Control(target_speed);                                // 电机 PID 控制
     // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
     // time = end_time - start_time;
     // float time_us = (float)time / 100.0f;
@@ -106,8 +106,8 @@ IFX_INTERRUPT(cc60_pit_ch1_isr, 0, CCU6_0_CH1_ISR_PRIORITY)
     // uint32 start_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
     Imu_get_data();                                                 // 获取 IMU963RA 数据
     Imu_get_quaternion();                                           // 四元数解算
-    //Imu_get_mag_yaw();                                              // 磁力计解算
-    Sreer_angle(target_angle);                                      // 设置舵机角度
+    // Imu_get_mag_yaw();                                              // 磁力计解算
+    Sreer_PID_Control(target_angle);                                // 舵机 PID 控制
     // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
     // time = end_time - start_time;
     // float time_us = (float)time / 100.0f;
