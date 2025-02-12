@@ -71,7 +71,7 @@ void Calibrate_gyro(void)
         sum_x += imu963ra_gyro_transition(imu963ra_gyro_x);
         sum_y += imu963ra_gyro_transition(imu963ra_gyro_y);
         sum_z += imu963ra_gyro_transition(imu963ra_gyro_z);
-        system_delay_ms(10);  // 10ms,与实际采样周期一致
+        system_delay_ms(5);  // 5ms,与实际采样周期一致
         
         if(i % 100 == 0)  // 每100次采样更新一次进度
         {

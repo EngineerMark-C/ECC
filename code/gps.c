@@ -1,11 +1,13 @@
 #include "zf_common_headfile.h"
 #include "init.h"
 
+#define PIT2                            (CCU61_CH0 )                            // 使用的周期中断编号
 struct Now_gnss NOW_location;
 
 void Gps_init(void)
 {
     gnss_init(TAU1201);
+    pit_ms_init(PIT2, 100);  // 初始化PIT2为周期中断100ms周期
 }
 
 void Get_Now_Location(void)
