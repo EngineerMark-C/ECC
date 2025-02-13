@@ -267,6 +267,9 @@ void Imu_get_quaternion(void)
         yaw -= 360.0f;
     }
     
+    // printf("%d, %d, %d, %d, %d, %d\n", imu963ra_acc_x, imu963ra_acc_y, imu963ra_acc_z, imu963ra_gyro_x, imu963ra_gyro_y, imu963ra_gyro_z);
+    printf("%.2f, %.2f, %.2f, %.2f, %.2f, %.2f\n", ax, ay, az, gx, gy, gz);
+    
     // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));     // 使用 iLLD 的 API
     // quaternion_time = end_time - start_time;
 }
@@ -298,6 +301,7 @@ void Imu_get_mag_yaw(void)
     {
         yaw_mag += 360.0f;
     }
+    // printf("%.2f, %.2f, %.2f, %.2f\n", mx, my, mz, yaw_mag);
     
     // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));     // 使用 iLLD 的 API
     // mag_yaw_time = end_time - start_time;

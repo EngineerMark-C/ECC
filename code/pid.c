@@ -80,6 +80,7 @@ void Motor_PID_Control(float target)
     }
 }
 
+// 角度式 PID
 void PID_Angle_Calc(struct PID *pid, float current)
 {
     pid->current = current;
@@ -116,6 +117,7 @@ void PID_Angle_Calc(struct PID *pid, float current)
     pid->error_last = pid->error;
 }
 
+// 舵机 PID 控制
 void Sreer_PID_Control(float target_angle)
 {
     pid_sreer.target = target_angle;  // 设置目标角度

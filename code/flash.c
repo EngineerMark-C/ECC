@@ -99,29 +99,25 @@ if(flash_check(FLASH_SECTION_INDEX, FLASH_PAGE_INDEX))                      // �
 
 void Gps_data_to_flash(void)
 {
-    if(gnss_flag)
+    // 解析GPS数据
+    if(0 == gnss_data_parse())
     {
-        // 解析GPS数据
-        if(0 == gnss_data_parse())
+        if(gnss.state)  // 如果GPS定位有效
         {
-            if(gnss.state)  // 如果GPS定位有效
-            {
-                flash_buffer_clear();                                                       // 清空缓冲区
-                flash_union_buffer[0].float_type  = gnss.longitude;                        // 向缓冲区第 0 个位置写入 float  数据
-                flash_union_buffer[1].float_type  = gnss.latitude;                         // 向缓冲区第 1 个位置写入 float  数据
-                flash_union_buffer[2].float_type  = gnss.height;                           // 向缓冲区第 2 个位置写入 float  数据
-                flash_union_buffer[3].float_type  = gnss.speed;                            // 向缓冲区第 3 个位置写入 float  数据
-                flash_union_buffer[4].float_type  = gnss.direction;                        // 向缓冲区第 4 个位置写入 float  数据
-                flash_union_buffer[5].uint8_type  = gnss.satellite_used;                   // 向缓冲区第 5 个位置写入 uint8  数据
-                flash_union_buffer[6].uint8_type  = gnss.time.hour;                        // 向缓冲区第 6 个位置写入 uint8  数据
-                flash_union_buffer[7].uint8_type  = gnss.time.minute;                      // 向缓冲区第 7 个位置写入 uint8  数据
-                flash_union_buffer[8].uint8_type  = gnss.time.second;                      // 向缓冲区第 8 个位置写入 uint8  数据
-                if(flash_check(FLASH_SECTION_INDEX, FLASH_GPS_DATA_INDEX))                      // 判断是否有数据
-                    flash_erase_page(FLASH_SECTION_INDEX, FLASH_GPS_DATA_INDEX);                // 擦除这一页
-                flash_write_page_from_buffer(FLASH_SECTION_INDEX, FLASH_GPS_DATA_INDEX);        // 向指定 Flash 扇区的页码写入缓冲区数据
-            }
+            flash_buffer_clear();                                                       // 清空缓冲区
+            flash_union_buffer[0].float_type  = gnss.longitude;                        // 向缓冲区第 0 个位置写入 float  数据
+            flash_union_buffer[1].float_type  = gnss.latitude;                         // 向缓冲区第 1 个位置写入 float  数据
+            flash_union_buffer[2].float_type  = gnss.height;                           // 向缓冲区第 2 个位置写入 float  数据
+            flash_union_buffer[3].float_type  = gnss.speed;                            // 向缓冲区第 3 个位置写入 float  数据
+            flash_union_buffer[4].float_type  = gnss.direction;                        // 向缓冲区第 4 个位置写入 float  数据
+            flash_union_buffer[5].uint8_type  = gnss.satellite_used;                   // 向缓冲区第 5 个位置写入 uint8  数据
+            flash_union_buffer[6].uint8_type  = gnss.time.hour;                        // 向缓冲区第 6 个位置写入 uint8  数据
+            flash_union_buffer[7].uint8_type  = gnss.time.minute;                      // 向缓冲区第 7 个位置写入 uint8  数据
+            flash_union_buffer[8].uint8_type  = gnss.time.second;                      // 向缓冲区第 8 个位置写入 uint8  数据
+            if(flash_check(FLASH_SECTION_INDEX, FLASH_GPS_DATA_INDEX))                      // 判断是否有数据
+                flash_erase_page(FLASH_SECTION_INDEX, FLASH_GPS_DATA_INDEX);                // 擦除这一页
+            flash_write_page_from_buffer(FLASH_SECTION_INDEX, FLASH_GPS_DATA_INDEX);        // 向指定 Flash 扇区的页码写入缓冲区数据
         }
-        gnss_flag = 0;
     }
 }
 
@@ -185,8 +181,18 @@ void Save_GPS_Point(void)
     if(GPS_Point_Index < MAX_GPS_POINTS)
     {
         // 1. 保存到内存
-        GPS_Point[GPS_Point_Index][0] = NOW_location.latitude;
-        GPS_Point[GPS_Point_Index][1] = NOW_location.longitude;
+        //多次取值求平均
+        double LATSUM = 0;
+        double LONSUM = 0;
+        for (uint8_t j = 0; j < 10; j++)
+        {
+            gnss_data_parse();
+            LATSUM += NOW_location.latitude;
+            LONSUM += NOW_location.longitude;
+            system_delay_ms(100);
+        }
+        GPS_Point[GPS_Point_Index][0] = LATSUM / 10;
+        GPS_Point[GPS_Point_Index][1] = LONSUM / 10;
         
         // 2. 同步到Flash
         flash_buffer_clear();
