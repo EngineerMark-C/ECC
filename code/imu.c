@@ -126,7 +126,7 @@ void Imu_init(void)
     system_delay_ms(500);  // 显示0.5秒
     
     pit_ms_init(PIT1, 5);           // 初始化PIT1为周期中断5ms周期
-    // Calibrate_gyro();              // 校准陀螺仪偏置
+    Calibrate_gyro();              // 校准陀螺仪偏置
     
     ips114_show_string(60, 112, "Calibration Done!");
     system_delay_ms(1000);  // 显示1秒

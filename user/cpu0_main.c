@@ -41,7 +41,7 @@
 #pragma section all "cpu0_dsram"
 // 将本语句与#pragma section all restore语句之间的全局变量都放在CPU0的RAM中
 
-uint32 time = 0;
+// uint32 time = 0;
 
 // **************************** 代码区域 ****************************
 int core0_main(void)
@@ -59,8 +59,8 @@ int core0_main(void)
         Menu();                                                     // 菜单逻辑
         system_delay_ms(50);                                        // 适当的刷新间隔
         Remote_control();                                           // 遥控逻辑
-        //Imu_get_mag_yaw();                                          // 磁力计解算
-        Imu_get_quaternion();                                       // 四元数解算
+        // Imu_get_mag_yaw();                                          // 磁力计解算
+        // Imu_get_quaternion();                                       // 四元数解算
         // Save_GPS_Point();                                           // 保存 GPS 点位
         // printf("longitude: %.6f\n", GPS_Point[0][0]); // 打印经度
         // printf("latitude: %.6f\n", GPS_Point[0][1]);   // 打印纬度
@@ -71,7 +71,7 @@ int core0_main(void)
 
         // Print_Gps_Info();                                           // 打印 GPS 信息
         // printf("%f,%f\n",speed,target_speed);                       // 打印目标速度
-        printf("%f,%f,%f\n",pitch,roll,yaw);                        // 打印欧拉角
+        // printf("%f,%f,%f\n",pitch,roll,yaw);                        // 打印欧拉角
         // printf("%f,%f\n",yaw,yaw_mag);                              // 打印磁力计偏航角
 
         // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
@@ -105,7 +105,7 @@ IFX_INTERRUPT(cc60_pit_ch1_isr, 0, CCU6_0_CH1_ISR_PRIORITY)
 
     // uint32 start_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
     Imu_get_data();                                                 // 获取 IMU963RA 数据
-    // Imu_get_quaternion();                                           // 四元数解算
+    Imu_get_quaternion();                                           // 四元数解算
     // Imu_get_mag_yaw();                                              // 磁力计解算
     Sreer_PID_Control(target_angle);                                // 舵机 PID 控制
     // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
