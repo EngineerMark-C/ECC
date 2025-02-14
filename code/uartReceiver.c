@@ -1,6 +1,10 @@
 #include "zf_common_headfile.h"
 #include "init.h"
 
+#define   RECEIVER_MIDDLE      1024   // 遥控器中位值
+#define   RECEIVER_CHANGE      800    // 遥控器变化范围
+
+
 // 初始化函数
 void UartReceiver_init(void)
 {
@@ -13,7 +17,7 @@ void Speed_map(void)
     // 假设 uart_receiver.channel[1] 的值在 224 到 1824 之间
     int16 channel_value = uart_receiver.channel[1];
 
-    target_speed = (15.0 / (1824 - 1024)) * (channel_value - 1024);
+    target_speed = (15.0 / (RECEIVER_CHANGE)) * (channel_value - RECEIVER_MIDDLE);
 
 //     printf("channel_value: %d\r\n", channel_value);
 //     printf("target_speed: %f\r\n", target_speed);
@@ -24,7 +28,7 @@ void Angle_map(void)
     // 假设 uart_receiver.channel[0] 的值在 224 到 1824 之间
     int16 channel_value = uart_receiver.channel[0];
 
-    target_angle = (22.0 / (1824 - 1024)) * (channel_value - 1024);
+    target_angle = (MAX_ANGLE_L_SMALL / (RECEIVER_CHANGE)) * (channel_value - RECEIVER_MIDDLE);
 
     // printf("channel_value: %d\r\n", channel_value);
     // printf("target_angle: %f\r\n", target_angle);

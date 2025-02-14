@@ -71,7 +71,7 @@ void Calibrate_gyro(void)
         sum_x += imu963ra_gyro_transition(imu963ra_gyro_x);
         sum_y += imu963ra_gyro_transition(imu963ra_gyro_y);
         sum_z += imu963ra_gyro_transition(imu963ra_gyro_z);
-        system_delay_ms(10);  // 10ms,与实际采样周期一致
+        system_delay_ms(5);  // 5ms,与实际采样周期一致
         
         if(i % 100 == 0)  // 每100次采样更新一次进度
         {
@@ -126,7 +126,7 @@ void Imu_init(void)
     system_delay_ms(500);  // 显示0.5秒
     
     pit_ms_init(PIT1, 5);           // 初始化PIT1为周期中断5ms周期
-    // Calibrate_gyro();              // 校准陀螺仪偏置
+    Calibrate_gyro();              // 校准陀螺仪偏置
     
     ips114_show_string(60, 112, "Calibration Done!");
     system_delay_ms(1000);  // 显示1秒
@@ -267,6 +267,9 @@ void Imu_get_quaternion(void)
         yaw -= 360.0f;
     }
     
+    // printf("%d, %d, %d, %d, %d, %d\n", imu963ra_acc_x, imu963ra_acc_y, imu963ra_acc_z, imu963ra_gyro_x, imu963ra_gyro_y, imu963ra_gyro_z);
+    // printf("%.2f, %.2f, %.2f, %.2f, %.2f, %.2f\n", ax, ay, az, gx, gy, gz);
+    
     // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));     // 使用 iLLD 的 API
     // quaternion_time = end_time - start_time;
 }
@@ -298,6 +301,7 @@ void Imu_get_mag_yaw(void)
     {
         yaw_mag += 360.0f;
     }
+    // printf("%.2f, %.2f, %.2f, %.2f\n", mx, my, mz, yaw_mag);
     
     // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));     // 使用 iLLD 的 API
     // mag_yaw_time = end_time - start_time;

@@ -41,7 +41,7 @@
 #pragma section all "cpu0_dsram"
 // 将本语句与#pragma section all restore语句之间的全局变量都放在CPU0的RAM中
 
-uint32 time = 0;
+// uint32 time = 0;
 
 // **************************** 代码区域 ****************************
 int core0_main(void)
@@ -59,8 +59,8 @@ int core0_main(void)
         Menu();                                                     // 菜单逻辑
         system_delay_ms(50);                                        // 适当的刷新间隔
         Remote_control();                                           // 遥控逻辑
-        Get_Now_Location();                                         // 获取当前位置
-        One_By_One();
+        // Imu_get_mag_yaw();                                          // 磁力计解算
+        // Imu_get_quaternion();                                       // 四元数解算
         // Save_GPS_Point();                                           // 保存 GPS 点位
         // printf("longitude: %.6f\n", GPS_Point[0][0]); // 打印经度
         // printf("latitude: %.6f\n", GPS_Point[0][1]);   // 打印纬度
@@ -114,6 +114,20 @@ IFX_INTERRUPT(cc60_pit_ch1_isr, 0, CCU6_0_CH1_ISR_PRIORITY)
     // printf("所需时间: %.2f us\n", time_us);
 }
 
+IFX_INTERRUPT(cc61_pit_ch0_isr, 0, CCU6_1_CH0_ISR_PRIORITY)
+{
+    interrupt_global_enable(0);                                     // 开启中断嵌套
+    pit_clear_flag(CCU61_CH0);
+
+    // uint32 start_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
+    Get_Now_Location();                                             // 获取当前位置
+    One_By_One();                                                   // 逐个点导航
+
+    // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
+    // time = end_time - start_time;
+    // float time_us = (float)time / 100.0f;
+    // printf("所需时间: %.2f us\n", time_us);
+}
 #pragma section all restore
 // **************************** 代码区域 ****************************
 

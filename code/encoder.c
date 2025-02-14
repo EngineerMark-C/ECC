@@ -30,9 +30,9 @@ void Encoder_get_speed(void)
     // SAMPLE_TIME：采样时间(s)
     // /100：将cm转换为m
     // printf("encoder_data_dir: %d\n", encoder_data_dir);
-    static float filtered_speed = 0;
+    // static float filtered_speed = 0;
     speed = (float)encoder_data_dir / ENCODER_PULSE_NUM * GEAR_RATIO * WHEEL_PERIMETER / SAMPLE_TIME / 100.0f;
     //速度 = 脉冲数                  / 每圈脉冲数         * 传动比      * 轮周长          / 采样时间    / 100
-    filtered_speed = 0.8f * filtered_speed + 0.2f * speed;  // 一阶低通滤波
-    speed = filtered_speed;
+    // filtered_speed = 0.8f * filtered_speed + 0.2f * speed;  // 一阶低通滤波
+    // speed = filtered_speed;
 }

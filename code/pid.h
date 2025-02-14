@@ -14,7 +14,7 @@ struct PID {
     float output;
 };
 
-extern int output_speed;
+extern uint16_t output_speed;
 extern struct PID pid_speed;
 extern struct PID pid_sreer;
 
