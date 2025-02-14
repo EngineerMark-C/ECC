@@ -71,7 +71,7 @@ int core0_main(void)
 
         // Print_Gps_Info();                                           // 打印 GPS 信息
         // printf("%f,%f\n",speed,target_speed);                       // 打印目标速度
-        // printf("%f,%f,%f\n",pitch,roll,yaw);                        // 打印欧拉角
+        printf("%f,%f,%f\n",pitch,roll,yaw);                        // 打印欧拉角
         // printf("%f,%f\n",yaw,yaw_mag);                              // 打印磁力计偏航角
 
         // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));

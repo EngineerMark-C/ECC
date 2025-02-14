@@ -268,7 +268,7 @@ void Imu_get_quaternion(void)
     }
     
     // printf("%d, %d, %d, %d, %d, %d\n", imu963ra_acc_x, imu963ra_acc_y, imu963ra_acc_z, imu963ra_gyro_x, imu963ra_gyro_y, imu963ra_gyro_z);
-    printf("%.2f, %.2f, %.2f, %.2f, %.2f, %.2f\n", ax, ay, az, gx, gy, gz);
+    // printf("%.2f, %.2f, %.2f, %.2f, %.2f, %.2f\n", ax, ay, az, gx, gy, gz);
     
     // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));     // 使用 iLLD 的 API
     // quaternion_time = end_time - start_time;
