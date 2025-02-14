@@ -18,11 +18,11 @@ void Init(void)
     Button_init();                              // 初始化按键
     Motor_init();                               // 初始化电机
     Sreer_init();                               // 初始化舵机
-    Ips_init();                                 // 初始化 1.14 寸 IPS 液晶屏幕显示
+    IPS_Init();                                 // 初始化 1.14 寸 IPS 液晶屏幕显示
     Imu_init();                                 // 初始化 IMU963RA
     UartReceiver_init();                        // 初始化串口接收机
     Gps_init();                                 // 初始化 GPS
-    PID_init(&pid_speed, 30.0, 0.0, 40.0);      // 初始化 PID 控制器
+    PID_init(&pid_speed, 10.0, 0.0, 0.0);      // 初始化 PID 控制器
     PID_init(&pid_sreer, 1.0f, 0.0f, 0.3f);     // 初始化 PID 控制器
     GPS_Points_Init();                          // 初始化 GPS 点位
     GPS_Path_Init();                            // 初始化 GPS 路径
