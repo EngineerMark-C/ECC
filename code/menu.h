@@ -11,10 +11,12 @@ void Display_Speed_Imu_Info(void);
 void Display_Gps_Info(void);
 void Display_GPS_Point(void);
 void Display_GPS_Path(void);
+void Display_Motor_Menu(void);
 
 void Main_Menu_Key_Process(void);
 void Steer_Menu_Key_Process(void);
 void GPS_Point_Menu_Key_Process(void);
 void GPS_Path_Menu_Key_Process(void);
+void Motor_Menu_Key_Process(void);
 
 #endif

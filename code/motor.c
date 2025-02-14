@@ -3,6 +3,7 @@
 #define PWM1                    (ATOM0_CH4_P02_4)
 #define PWM2                    (ATOM0_CH5_P02_5)
 #define DUTY_MAX                (8000)                                          // 最大占空比
+#define MAX_SPEED               (15.0f)                                         // 最大速度
 
 int16_t duty1 = 0;
 int16_t duty2 = 0;

@@ -7,11 +7,12 @@
 // 定义菜单状态
 typedef enum {
     MENU_MAIN,           // 主菜单状态
-    MENU_STEER,          // 舵机调节状态
+    MENU_GPS_Point,      // GPS点位显示状态
+    MENU_GPS_PATH,        // 路径设置状态
+    MENU_GPS_INFO,       // GPS信息显示状态
     MENU_SPEED_IMU,      // 速度和IMU信息显示状态
-    MENU_GPS,            // GPS信息显示状态
-    Menu_GPS_Point,      // GPS点位显示状态
-    MENU_GPS_PATH        // 新增：路径设置状态
+    MENU_STEER,          // 舵机调节状态
+    MENU_MOTOR           // 电机调节状态
 } MenuState;
 
 // 主菜单项定义
@@ -22,11 +23,19 @@ typedef struct {
 // 舵机菜单项定义
 typedef struct {
     const char* name;
-    int value;
-    int min;
-    int max;
-    int step;
+    uint16_t value;
+    uint16_t min;
+    uint16_t max;
+    uint16_t step;
 } SteerMenuItem;
+
+// 电机菜单项定义
+typedef struct {
+    const char* name;
+    float min;
+    float max;
+    float step;
+} MotorMenuItem;
 
 // GPS路径设置菜单项定义
 typedef struct {
@@ -36,11 +45,18 @@ typedef struct {
 
 // 主菜单项
 MainMenuItem main_menu_items[] = {
-    {"Steer Control"},
-    {"Speed & IMU"},
-    {"GPS Info"},
     {"GPS Point"},
-    {"GPS Path Setup"}
+    {"GPS Path Setup"},
+    {"GPS Info"},
+    {"Speed & IMU"},
+    {"Steer Control"},
+    {"Motor Control"}
+};
+
+// 路径设置菜单项
+GPSPathMenuItem gps_path_menu[] = {
+    {"Start Point"},
+    {"End Point"}
 };
 
 // 舵机菜单项
@@ -52,10 +68,12 @@ SteerMenuItem steer_menu = {
     5
 };
 
-// 路径设置菜单项
-GPSPathMenuItem gps_path_menu[] = {
-    {"Start Point"},
-    {"End Point"}
+// 电机菜单项
+MotorMenuItem motor_menu = {
+    "Motor Speed",
+    0.0f,
+    MAX_SPEED,
+    0.1f
 };
 
 // 菜单全局变量
@@ -77,10 +95,12 @@ void Button_init(void)
     key_init(10); // 初始化按键
 }
 
-void Display_Menu(void) {
+void Display_Menu(void) 
+{
     ips114_clear();    // 清屏
     
-    switch(menu_state) {
+    switch(menu_state) 
+    {
         case MENU_MAIN:
             Display_Main_Menu();
             break;
@@ -93,21 +113,25 @@ void Display_Menu(void) {
             Display_Speed_Imu_Info();
             break;
             
-        case MENU_GPS:
+        case MENU_GPS_INFO:
             Display_Gps_Info();
             break;
 
-        case Menu_GPS_Point:
+        case MENU_GPS_Point:
             Display_GPS_Point();
             break;
 
         case MENU_GPS_PATH:
             Display_GPS_Path();
             break;
+        case MENU_MOTOR:
+            Display_Motor_Menu();
+            break;
     }
 }
 
-void Menu(void) {
+void Menu(void) 
+{
     key_scanner();  // 按键扫描
     
     // 获取所有按键状态
@@ -116,7 +140,8 @@ void Menu(void) {
     key3_state = key_get_state(KEY_3);  // 确认/编辑
     key4_state = key_get_state(KEY_4);  // 返回
     
-    switch(menu_state) {
+    switch(menu_state) 
+    {
         case MENU_MAIN:
             Main_Menu_Key_Process();
             break;
@@ -125,15 +150,20 @@ void Menu(void) {
             Steer_Menu_Key_Process();
             break;
             
-        case Menu_GPS_Point:
+        case MENU_GPS_Point:
             GPS_Point_Menu_Key_Process();
             break;
 
         case MENU_GPS_PATH:
             GPS_Path_Menu_Key_Process();
             break;
+
+        case MENU_MOTOR:
+            Motor_Menu_Key_Process();
+            break;
+
         case MENU_SPEED_IMU:
-        case MENU_GPS:
+        case MENU_GPS_INFO:
             if(key4_state == KEY_SHORT_PRESS) 
             {
                 menu_state = MENU_MAIN;
@@ -145,7 +175,8 @@ void Menu(void) {
     Display_Menu();
 }
 
-const char* key_state_to_string(key_state_enum state) {
+const char* key_state_to_string(key_state_enum state) 
+{
     switch (state) {
         case KEY_RELEASE:
             return "KEY_RELEASE";
@@ -161,7 +192,8 @@ const char* key_state_to_string(key_state_enum state) {
 // 显示主菜单
 void Display_Main_Menu(void)
 {
-    for(int i = 0; i < MAIN_MENU_ITEMS_COUNT; i++) {
+    for(int i = 0; i < MAIN_MENU_ITEMS_COUNT; i++) 
+    {
         char buffer[32];
         sprintf(buffer, "%s%s", 
             (i == current_item) ? "> " : "  ",
@@ -179,7 +211,7 @@ void Display_Steer_Menu(void)
         edit_mode ? "> " : "  ",
         steer_menu.value);
     ips114_show_string(0, 16, buffer);
-    ips114_show_string(0, 48, "Press KEY3 to edit");
+    ips114_show_string(0, 48, edit_mode ? "KEY1:+  KEY2:-" : "KEY3:Edit");
     ips114_show_string(0, 64, "Press KEY4 to return");
 }
 
@@ -265,7 +297,8 @@ void Display_GPS_Point(void)
 {
     ips114_show_string(0, 0, "GPS Points Management");
     // 显示当前可见范围的点位（Y轴间隔16像素）
-    for(uint8_t i = 0; i < visible_items; i++) {
+    for(uint8_t i = 0; i < visible_items; i++) 
+    {
         uint8_t point_num = start_index + i;
         if(point_num >= MAX_GPS_POINTS) break;
         
@@ -287,35 +320,54 @@ void Display_GPS_Point(void)
 void Display_GPS_Path(void)
 {
     ips114_show_string(0, 0, "GPS Path Setting");
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 2; i++) 
+    {
         char buffer[32];
         sprintf(buffer, "%s%s: %d",
             (i == current_item) ? "> " : "  ",  // 只在编辑模式下显示光标
             gps_path_menu[i].name,
             (i == 0) ? Start_GPS_Point : End_GPS_Point);
         ips114_show_string(0, 16 + i * 16, buffer);
+        ips114_show_string(0, 48, edit_mode ? "KEY1:+  KEY2:-" : "KEY3:Edit");
+        ips114_show_string(0, 64, "Press KEY4 to return");
     }
+}
+
+// 显示电机调节界面
+void Display_Motor_Menu(void)
+{
+    ips114_show_string(0, 0, "Motor Control");
+    char buffer[32];
+    sprintf(buffer, "Speed: %.1f", target_speed);
+    ips114_show_string(0, 16, buffer);
+    ips114_show_string(0, 48, edit_mode ? "KEY1:+  KEY2:-" : "KEY3:Edit");
+    ips114_show_string(0, 64, "Press KEY4 to return");
 }
 
 // 主菜单按键处理
 void Main_Menu_Key_Process(void)
 {
-    if(key1_state == KEY_SHORT_PRESS) {
+    if(key1_state == KEY_SHORT_PRESS) 
+    {
         if(current_item > 0) current_item--;
         key_clear_state(KEY_1);
     }
-    if(key2_state == KEY_SHORT_PRESS) {
+    if(key2_state == KEY_SHORT_PRESS) 
+    {
         if(current_item < MAIN_MENU_ITEMS_COUNT - 1) current_item++;
         key_clear_state(KEY_2);
     }
-    if(key3_state == KEY_SHORT_PRESS) {
+    if(key3_state == KEY_SHORT_PRESS) 
+    {
         // 进入选中的子菜单
-        switch(current_item) {
-            case 0: menu_state = MENU_STEER; break;
-            case 1: menu_state = MENU_SPEED_IMU; break;
-            case 2: menu_state = MENU_GPS; break;
-            case 3: menu_state = Menu_GPS_Point; break;
-            case 4: menu_state = MENU_GPS_PATH; break;
+        switch(current_item) 
+        {
+            case 0: menu_state = MENU_GPS_Point; break;
+            case 1: menu_state = MENU_GPS_PATH; break;
+            case 2: menu_state = MENU_GPS_INFO; break;
+            case 3: menu_state = MENU_SPEED_IMU; break;
+            case 4: menu_state = MENU_STEER; break;
+            case 5: menu_state = MENU_MOTOR; break;
         }
         key_clear_state(KEY_3);
     }
@@ -368,8 +420,10 @@ void Steer_Menu_Key_Process(void)
 // GPS点位管理按键处理
 void GPS_Point_Menu_Key_Process(void)
 {
-    if(key1_state == KEY_SHORT_PRESS) { // 上
-        if(GPS_Point_Index > 0) {
+    if(key1_state == KEY_SHORT_PRESS) 
+    {
+        if(GPS_Point_Index > 0) 
+        {
             GPS_Point_Index--;
             // 滚动逻辑：当当前索引小于起始索引时调整显示范围
             if(GPS_Point_Index < start_index)
@@ -377,8 +431,10 @@ void GPS_Point_Menu_Key_Process(void)
         }
         key_clear_state(KEY_1);
     }
-    if(key2_state == KEY_SHORT_PRESS) { // 下
-        if(GPS_Point_Index < MAX_GPS_POINTS - 1) {
+    if(key2_state == KEY_SHORT_PRESS) 
+    {
+        if(GPS_Point_Index < MAX_GPS_POINTS - 1) 
+        {
             GPS_Point_Index++;
             // 滚动逻辑：当当前索引超过显示范围时调整显示范围
             if(GPS_Point_Index >= start_index + visible_items)
@@ -386,24 +442,25 @@ void GPS_Point_Menu_Key_Process(void)
         }
         key_clear_state(KEY_2);
     }
-    if(key3_state == KEY_SHORT_PRESS) {
+    if(key3_state == KEY_SHORT_PRESS) 
+    {
         Save_GPS_Point();
         // 保存后自动跳转到下一个点位并调整显示
-        if(GPS_Point_Index < MAX_GPS_POINTS - 1) {
+        if(GPS_Point_Index < MAX_GPS_POINTS - 1) 
+        {
             GPS_Point_Index++;  // 自动跳到下一个点位
             // 滚动显示逻辑
-            if(GPS_Point_Index >= start_index + visible_items) {
+            if(GPS_Point_Index >= start_index + visible_items) 
                 start_index = GPS_Point_Index - visible_items + 1;
-            }
         }
         // GPS_Point_Index = (GPS_Point_Index + 1) % MAX_GPS_POINTS;
         // // 滚动显示逻辑
-        // if(GPS_Point_Index >= start_index + visible_items || GPS_Point_Index < start_index) {
-        // start_index = (GPS_Point_Index / visible_items) * visible_items;
-        // }
+        // if(GPS_Point_Index >= start_index + visible_items || GPS_Point_Index < start_index) 
+        //     start_index = (GPS_Point_Index / visible_items) * visible_items;
         key_clear_state(KEY_3);
     }
-    if(key4_state == KEY_SHORT_PRESS) {
+    if(key4_state == KEY_SHORT_PRESS) 
+    {
         menu_state = MENU_MAIN;
         key_clear_state(KEY_4);
     }
@@ -414,44 +471,88 @@ void GPS_Path_Menu_Key_Process(void)
 {
     if(edit_mode) {
         // 编辑模式处理
-        if(key1_state == KEY_SHORT_PRESS) {
-            if (current_item == 0) {
+        if(key1_state == KEY_SHORT_PRESS) 
+        {
+            if (current_item == 0)
                 Start_GPS_Point = (Start_GPS_Point + 1) % MAX_GPS_POINTS;
-            } else {
+            else
                 End_GPS_Point = (End_GPS_Point + 1) % MAX_GPS_POINTS;
-            }
             key_clear_state(KEY_1);
         }
-        if(key2_state == KEY_SHORT_PRESS) {
-            if (current_item == 0) {
+        if(key2_state == KEY_SHORT_PRESS) 
+        {
+            if (current_item == 0)
                 Start_GPS_Point = (Start_GPS_Point - 1 + MAX_GPS_POINTS) % MAX_GPS_POINTS;
-            } else {
+            else
                 End_GPS_Point = (End_GPS_Point - 1 + MAX_GPS_POINTS) % MAX_GPS_POINTS;
-            }
             key_clear_state(KEY_2);
         }
-        if(key3_state == KEY_SHORT_PRESS || key4_state == KEY_SHORT_PRESS) {
+        if(key3_state == KEY_SHORT_PRESS || key4_state == KEY_SHORT_PRESS) 
+        {
             edit_mode = false;
             key_clear_state(KEY_3);
             key_clear_state(KEY_4);
         }
         } else {
         // 非编辑模式处理
-        if(key1_state == KEY_SHORT_PRESS) {
+        if(key1_state == KEY_SHORT_PRESS) 
+        {
             if(current_item > 0) current_item--;
             key_clear_state(KEY_1);
         }
-        if(key2_state == KEY_SHORT_PRESS) {
+        if(key2_state == KEY_SHORT_PRESS) 
+        {
             if(current_item < 1) current_item++;
             key_clear_state(KEY_2);
         }
-        if(key3_state == KEY_SHORT_PRESS) {
+        if(key3_state == KEY_SHORT_PRESS) 
+        {
             edit_mode = true;
             key_clear_state(KEY_3);
         }
-        if(key4_state == KEY_SHORT_PRESS) {
+        if(key4_state == KEY_SHORT_PRESS) 
+        {
             menu_state = MENU_MAIN;
             Save_GPS_Path();
+            key_clear_state(KEY_4);
+        }
+    }
+}
+
+// 电机调节按键处理
+void Motor_Menu_Key_Process(void)
+{
+    if(edit_mode) 
+    {
+        if(key1_state == KEY_SHORT_PRESS) 
+        {
+            if(target_speed < motor_menu.max) 
+                target_speed += motor_menu.step;
+            key_clear_state(KEY_1);
+        }
+        if(key2_state == KEY_SHORT_PRESS) 
+        {
+            if(target_speed > motor_menu.min) 
+                target_speed -= motor_menu.step;
+            key_clear_state(KEY_2);
+        }
+        if(key3_state == KEY_SHORT_PRESS || key4_state == KEY_SHORT_PRESS)
+        {
+            edit_mode = false;
+            key_clear_state(KEY_3);
+            key_clear_state(KEY_4);
+        }
+    } 
+    else 
+    {
+        if(key3_state == KEY_SHORT_PRESS) 
+        {
+            edit_mode = true;
+            key_clear_state(KEY_3);
+        }
+        if(key4_state == KEY_SHORT_PRESS) 
+        {
+            menu_state = MENU_MAIN;
             key_clear_state(KEY_4);
         }
     }

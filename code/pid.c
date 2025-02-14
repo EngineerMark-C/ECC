@@ -3,7 +3,7 @@
 
 struct PID pid_speed;
 struct PID pid_sreer;
-int output_speed = 0;
+uint16_t output_speed = 0;
 
 void PID_init(struct PID *pid, float kp, float ki, float kd)
 {
@@ -69,6 +69,10 @@ void Motor_PID_Control(float target)
     PID_Speed_Calc(&pid_speed, speed);                  // 使用当前速度作为反馈值
     output_speed += (int)pid_speed.output;               // 将PID输出转换为占空比
     
+    // 输出限幅
+    if(output_speed > DUTY_MAX) output_speed = DUTY_MAX;
+    if(output_speed < -DUTY_MAX) output_speed = -DUTY_MAX;
+
     // 电机控制
     if(output_speed >= 0)
     {
