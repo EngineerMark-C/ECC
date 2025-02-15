@@ -12,7 +12,8 @@ typedef enum {
     MENU_GPS_INFO,       // GPS信息显示状态
     MENU_SPEED_IMU,      // 速度和IMU信息显示状态
     MENU_STEER,          // 舵机调节状态
-    MENU_MOTOR           // 电机调节状态
+    MENU_MOTOR,          // 电机调节状态
+    MENU_Calibrate_Gyro  // 陀螺仪校准状态
 } MenuState;
 
 // 主菜单项定义
@@ -50,7 +51,8 @@ MainMenuItem main_menu_items[] = {
     {"GPS Info"},
     {"Speed & IMU"},
     {"Steer Control"},
-    {"Motor Control"}
+    {"Motor Control"},
+    {"Calibrate Gyro"}
 };
 
 // 路径设置菜单项
@@ -127,6 +129,9 @@ void Display_Menu(void)
         case MENU_MOTOR:
             Display_Motor_Menu();
             break;
+        case MENU_Calibrate_Gyro:
+            Display_Calibrate_Gyro();
+            break;
     }
 }
 
@@ -153,15 +158,19 @@ void Menu(void)
         case MENU_GPS_Point:
             GPS_Point_Menu_Key_Process();
             break;
-
+            
         case MENU_GPS_PATH:
             GPS_Path_Menu_Key_Process();
             break;
-
+            
         case MENU_MOTOR:
             Motor_Menu_Key_Process();
             break;
-
+            
+        case MENU_Calibrate_Gyro:
+            Calibrate_Gyro_Menu_Key_Process();
+            break;
+            
         case MENU_SPEED_IMU:
         case MENU_GPS_INFO:
             if(key4_state == KEY_SHORT_PRESS) 
@@ -344,6 +353,13 @@ void Display_Motor_Menu(void)
     ips114_show_string(0, 64, "Press KEY4 to return");
 }
 
+// 显示陀螺仪校准界面
+void Display_Calibrate_Gyro(void)
+{
+    ips114_show_string(60, 0, "Gyro Calibrating...");
+    ips114_show_string(60, 16, "Keep IMU Still");
+}
+
 // 主菜单按键处理
 void Main_Menu_Key_Process(void)
 {
@@ -368,6 +384,7 @@ void Main_Menu_Key_Process(void)
             case 3: menu_state = MENU_SPEED_IMU; break;
             case 4: menu_state = MENU_STEER; break;
             case 5: menu_state = MENU_MOTOR; break;
+            case 6: menu_state = MENU_Calibrate_Gyro; break;
         }
         key_clear_state(KEY_3);
     }
@@ -556,5 +573,20 @@ void Motor_Menu_Key_Process(void)
             Save_Basic_Data();
             key_clear_state(KEY_4);
         }
+    }
+}
+
+void Calibrate_Gyro_Menu_Key_Process(void)
+{
+    if(key3_state == KEY_SHORT_PRESS) 
+    {
+        Calibrate_Gyro();
+        key_clear_state(KEY_3);
+    }
+    if(key4_state == KEY_SHORT_PRESS) 
+    {
+        menu_state = MENU_MAIN;
+        Save_Basic_Data();
+        key_clear_state(KEY_4);
     }
 }

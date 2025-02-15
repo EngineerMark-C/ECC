@@ -266,6 +266,9 @@ void Erase_GPS_Points(void)
 //                     | 0    | uint8      | Start_GPS_Point      |
 //                     | 1    | uint8      | End_GPS_Point        |
 //                     | 2    | float      | target_speed         |
+//                     | 3    | float      | gyro_bias[0]         |
+//                     | 4    | float      | gyro_bias[1]         |
+//                     | 5    | float      | gyro_bias[2]         |
 
 void Save_Basic_Data(void)
 {
@@ -274,6 +277,9 @@ void Save_Basic_Data(void)
     flash_union_buffer[0].uint8_type = Start_GPS_Point;
     flash_union_buffer[1].uint8_type = End_GPS_Point;
     flash_union_buffer[2].float_type = target_speed;
+    flash_union_buffer[3].float_type = gyro_bias[0];
+    flash_union_buffer[4].float_type = gyro_bias[1];
+    flash_union_buffer[5].float_type = gyro_bias[2];
 
     // 擦除并写入Flash
     flash_erase_page(FLASH_SECTION_INDEX, FLASH_BASIC_DATA_INDEX);
@@ -289,6 +295,9 @@ void Basic_Data_Init(void)
     Start_GPS_Point = flash_union_buffer[0].uint8_type;
     End_GPS_Point = flash_union_buffer[1].uint8_type;
     target_speed = flash_union_buffer[2].float_type;
+    gyro_bias[0] = flash_union_buffer[3].float_type;
+    gyro_bias[1] = flash_union_buffer[4].float_type;
+    gyro_bias[2] = flash_union_buffer[5].float_type;
 
     ips114_show_string(60, 32, "Basic Data Loaded.");
     system_delay_ms(500);
