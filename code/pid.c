@@ -2,8 +2,8 @@
 #include "init.h"
 
 struct PID pid_speed;
-struct PID pid_sreer;
-uint16_t output_speed = 0;
+struct PID pid_steer;
+int16_t output_speed;
 
 void PID_init(struct PID *pid, float kp, float ki, float kd)
 {
@@ -19,55 +19,55 @@ void PID_init(struct PID *pid, float kp, float ki, float kd)
     pid->output = 0;
 }
 
-// 位置式 PID
-// void PID_Speed_Calc(struct PID *pid, float current)
-// {
-//     pid->current = current;
-//     pid->error = pid->target - pid->current;                    // 计算当前误差
-    
-//     pid->integral += pid->error;                               // 累积误差积分
-//     pid->derivative = pid->error - pid->error_last;            // 计算误差微分
-    
-//     // 积分限幅，防止积分饱和
-//     if(pid->integral > 10000) pid->integral = 10000;
-//     if(pid->integral < -10000) pid->integral = -10000;
-    
-//     // 计算PID输出
-//     pid->output = pid->kp * pid->error + 
-//                  pid->ki * pid->integral + 
-//                  pid->kd * pid->derivative;
-    
-//     // 输出限幅
-//     if(pid->output > DUTY_MAX) pid->output = DUTY_MAX;
-//     if(pid->output < -DUTY_MAX) pid->output = -DUTY_MAX;
-    
-//     pid->error_last = pid->error;                              // 保存上次误差
-// }
-
-// 增量式 PID
+//位置式 PID
 void PID_Speed_Calc(struct PID *pid, float current)
 {
     pid->current = current;
-    pid->error = pid->target - pid->current;
-
-    pid->output += pid->kp * (pid->error - pid->error_last) + 
-                  pid->ki * pid->error + 
-                  pid->kd * (pid->error - 2 * pid->error_last + pid->derivative);
+    pid->error = pid->target - pid->current;                    // 计算当前误差
+    
+    pid->integral += pid->error;                               // 累积误差积分
+    pid->derivative = pid->error - pid->error_last;            // 计算误差微分
+    
+    // 积分限幅，防止积分饱和
+    if(pid->integral > 10000) pid->integral = 10000;
+    if(pid->integral < -10000) pid->integral = -10000;
+    
+    // 计算PID输出
+    pid->output = pid->kp * pid->error + 
+                 pid->ki * pid->integral + 
+                 pid->kd * pid->derivative;
     
     // 输出限幅
     if(pid->output > DUTY_MAX) pid->output = DUTY_MAX;
     if(pid->output < -DUTY_MAX) pid->output = -DUTY_MAX;
-
-    pid->derivative = pid->error_last;
-    pid->error_last = pid->error;
+    
+    pid->error_last = pid->error;                              // 保存上次误差
 }
+
+// 增量式 PID
+// void PID_Speed_Calc(struct PID *pid, float current)
+// {
+//     pid->current = current;
+//     pid->error = pid->target - pid->current;
+
+//     pid->output += pid->kp * (pid->error - pid->error_last) + 
+//                   pid->ki * pid->error + 
+//                   pid->kd * (pid->error - 2 * pid->error_last + pid->derivative);
+    
+//     // 输出限幅
+//     if(pid->output > DUTY_MAX) pid->output = DUTY_MAX;
+//     if(pid->output < -DUTY_MAX) pid->output = -DUTY_MAX;
+
+//     pid->derivative = pid->error_last;
+//     pid->error_last = pid->error;
+// }
 
 // 电机 PID 控制
 void Motor_PID_Control(float target)
 {
     pid_speed.target = target;                    // 设置目标值
     PID_Speed_Calc(&pid_speed, speed);                  // 使用当前速度作为反馈值
-    output_speed += (int)pid_speed.output;               // 将PID输出转换为占空比
+    output_speed += (int16_t)pid_speed.output;               // 将PID输出转换为占空比
     
     // 输出限幅
     if(output_speed > DUTY_MAX) output_speed = DUTY_MAX;
@@ -122,9 +122,9 @@ void PID_Angle_Calc(struct PID *pid, float current)
 }
 
 // 舵机 PID 控制
-void Sreer_PID_Control(float target_angle)
+void Steer_PID_Control(float target_angle)
 {
-    pid_sreer.target = target_angle;  // 设置目标角度
-    PID_Angle_Calc(&pid_sreer, yaw);  // 使用当前偏航角作为反馈
-    Sreer_set_angle(pid_sreer.output);// 设置舵机角度
+    pid_steer.target = target_angle;  // 设置目标角度
+    PID_Angle_Calc(&pid_steer, yaw);  // 使用当前偏航角作为反馈
+    Steer_set_angle(pid_steer.output);// 设置舵机角度
 }

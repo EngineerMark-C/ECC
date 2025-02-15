@@ -393,7 +393,7 @@ void Steer_Menu_Key_Process(void)
         if(key3_state == KEY_SHORT_PRESS) 
         {
             // 保存舵机PWM值
-            Sreer_set_duty(steer_menu.value);
+            Steer_set_duty(steer_menu.value);
             key_clear_state(KEY_3);
         }
         if(key4_state == KEY_SHORT_PRESS) 
