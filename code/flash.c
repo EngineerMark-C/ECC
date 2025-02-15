@@ -10,7 +10,7 @@
 #define GPS_DATA_SIZE             (5)                                // 5个存储单元（索引+纬度高低位+经度高低位）
 
 uint8_t GPS_Point_Index = 0;                                         // GPS 数据索引
-double GPS_Point[MAX_GPS_POINTS][2];                                             // GPS 数据
+double GPS_Point[MAX_GPS_POINTS][2];                                 // GPS 数据
 
 // 修改存储结构
 typedef union {
@@ -260,27 +260,36 @@ void Erase_GPS_Points(void)
     system_delay_ms(500);
 }
 
-void Save_GPS_Path(void)
+//************************************基本参数存储****************************************//
+//                     | 索引 | 数据类型    | 说明                  |
+//                     |------|------------|----------------------|
+//                     | 0    | uint8      | Start_GPS_Point      |
+//                     | 1    | uint8      | End_GPS_Point        |
+//                     | 2    | float      | target_speed         |
+
+void Save_Basic_Data(void)
 {
     flash_buffer_clear();
 
     flash_union_buffer[0].uint8_type = Start_GPS_Point;
     flash_union_buffer[1].uint8_type = End_GPS_Point;
+    flash_union_buffer[2].float_type = target_speed;
 
-    // 2. 擦除并写入Flash
+    // 擦除并写入Flash
     flash_erase_page(FLASH_SECTION_INDEX, FLASH_BASIC_DATA_INDEX);
     flash_write_page_from_buffer(FLASH_SECTION_INDEX, FLASH_BASIC_DATA_INDEX);
-    ips114_show_string(60, 32, "GPS Path Saved.");
+    ips114_show_string(60, 32, "Saved.");
     system_delay_ms(500);
 }
 
-void GPS_Path_Init(void)
+void Basic_Data_Init(void)
 {
     flash_read_page_to_buffer(FLASH_SECTION_INDEX, FLASH_BASIC_DATA_INDEX);
 
     Start_GPS_Point = flash_union_buffer[0].uint8_type;
     End_GPS_Point = flash_union_buffer[1].uint8_type;
+    target_speed = flash_union_buffer[2].float_type;
 
-    ips114_show_string(60, 32, "GPS Path Loaded.");
+    ips114_show_string(60, 32, "Basic Data Loaded.");
     system_delay_ms(500);
 }

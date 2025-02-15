@@ -22,8 +22,8 @@ void Init(void)
     Imu_init();                                 // 初始化 IMU963RA
     UartReceiver_init();                        // 初始化串口接收机
     Gps_init();                                 // 初始化 GPS
-    PID_init(&pid_speed, 10.0, 0.0, 0.0);      // 初始化 PID 控制器
+    PID_init(&pid_speed, 10.0, 0.0, 0.0);       // 初始化 PID 控制器
     PID_init(&pid_sreer, 1.0f, 0.0f, 0.3f);     // 初始化 PID 控制器
     GPS_Points_Init();                          // 初始化 GPS 点位
-    GPS_Path_Init();                            // 初始化 GPS 路径
+    Basic_Data_Init();                          // 初始化基础数据
 }

@@ -8,7 +8,7 @@
 typedef enum {
     MENU_MAIN,           // 主菜单状态
     MENU_GPS_Point,      // GPS点位显示状态
-    MENU_GPS_PATH,        // 路径设置状态
+    MENU_GPS_PATH,       // 路径设置状态
     MENU_GPS_INFO,       // GPS信息显示状态
     MENU_SPEED_IMU,      // 速度和IMU信息显示状态
     MENU_STEER,          // 舵机调节状态
@@ -513,7 +513,7 @@ void GPS_Path_Menu_Key_Process(void)
         if(key4_state == KEY_SHORT_PRESS) 
         {
             menu_state = MENU_MAIN;
-            Save_GPS_Path();
+            Save_Basic_Data();
             key_clear_state(KEY_4);
         }
     }
@@ -553,6 +553,7 @@ void Motor_Menu_Key_Process(void)
         if(key4_state == KEY_SHORT_PRESS) 
         {
             menu_state = MENU_MAIN;
+            Save_Basic_Data();
             key_clear_state(KEY_4);
         }
     }

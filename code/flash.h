@@ -23,7 +23,7 @@ void Save_GPS_Point(void);
 void GPS_Points_Init(void);
 void Erase_GPS_Points(void);
 
-void Save_GPS_Path(void);
-void GPS_Path_Init(void);
+void Save_Basic_Data(void);
+void Basic_Data_Init(void);
 
 #endif

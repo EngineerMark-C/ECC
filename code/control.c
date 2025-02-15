@@ -1,7 +1,7 @@
 #include "zf_common_headfile.h"
 #include "init.h"
 
-float target_speed = 0.0f;
+float target_speed;
 float target_angle = 0.0f;
 
 uint8_t Start_GPS_Point;                                             // 第一个 GPS 数据索引
