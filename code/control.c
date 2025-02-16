@@ -7,7 +7,10 @@ float target_angle = 0.0f;
 uint8_t Start_GPS_Point;                                             // 第一个 GPS 数据索引
 uint8_t End_GPS_Point;                                               // 最后一个 GPS 数据索引
 
-void Point_to_Point(uint8_t i)
+uint8_t Start_INS_Point;                                             // 第一个 INS 数据索引
+uint8_t End_INS_Point;                                               // 最后一个 INS 数据索引
+
+void GPS_Point_to_Point(uint8_t i)
 {
     // char str[20];
     // sprintf(str, "go to %d", i);
@@ -25,14 +28,40 @@ void Point_to_Point(uint8_t i)
     }
 }
 
-void One_By_One(void)
+void GPS_One_By_One(void)
 {
     if (Start_GPS_Point < End_GPS_Point)
     {
-        Point_to_Point(Start_GPS_Point);
+        GPS_Point_to_Point(Start_GPS_Point);
         if (target_speed == 0.0f)
         {
             Start_GPS_Point = (Start_GPS_Point + 1) % End_GPS_Point;
+        }
+    }
+}
+
+void INS_Point_to_Point(uint8_t i)
+{
+    float angle = get_two_points_azimuth(position[0], position[1], INS_Point[i][0], INS_Point[i][1]);
+
+    float distance = get_two_points_distance(position[0], position[1], INS_Point[i][0], INS_Point[i][1]);
+
+    target_angle = angle;
+
+    if (distance < 0.1f)
+    {
+        target_speed = 0.0f;
+    }
+}
+
+void INS_One_By_One(void)
+{
+    if (Start_INS_Point < End_INS_Point)
+    {
+        INS_Point_to_Point(Start_INS_Point);
+        if (target_speed == 0.0f)
+        {
+            Start_INS_Point = (Start_INS_Point + 1) % End_INS_Point;
         }
     }
 }

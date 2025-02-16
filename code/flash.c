@@ -347,7 +347,10 @@ void INS_Points_Init(void)
 //                     | 3    | float      | gyro_bias[0]         |
 //                     | 4    | float      | gyro_bias[1]         |
 //                     | 5    | float      | gyro_bias[2]         |
+//                     | 6    | uint8      | Start_INS_Point      |
+//                     | 7    | uint8      | End_INS_Point        |
 
+// 保存基础数据
 void Save_Basic_Data(void)
 {
     flash_buffer_clear();
@@ -358,6 +361,8 @@ void Save_Basic_Data(void)
     flash_union_buffer[3].float_type = gyro_bias[0];
     flash_union_buffer[4].float_type = gyro_bias[1];
     flash_union_buffer[5].float_type = gyro_bias[2];
+    flash_union_buffer[6].uint8_type = Start_INS_Point;
+    flash_union_buffer[7].uint8_type = End_INS_Point;
 
     // 擦除并写入Flash
     flash_erase_page(FLASH_SECTION_INDEX, FLASH_BASIC_DATA_INDEX);
@@ -376,6 +381,8 @@ void Basic_Data_Init(void)
     gyro_bias[0] = flash_union_buffer[3].float_type;
     gyro_bias[1] = flash_union_buffer[4].float_type;
     gyro_bias[2] = flash_union_buffer[5].float_type;
+    Start_INS_Point = flash_union_buffer[6].uint8_type;
+    End_INS_Point = flash_union_buffer[7].uint8_type;
 
     ips114_show_string(60, 32, "Basic Data Loaded.");
     system_delay_ms(500);

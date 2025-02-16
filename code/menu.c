@@ -42,8 +42,8 @@ typedef struct {
 // GPS路径设置菜单项定义
 typedef struct {
     const char* name;
-    uint8_t num;
-} GPSPathMenuItem;
+    uint8_t* num;
+} GPSINSPathMenuItem;
 
 // 主菜单项
 MainMenuItem main_menu_items[] = {
@@ -58,9 +58,11 @@ MainMenuItem main_menu_items[] = {
 };
 
 // 路径设置菜单项
-GPSPathMenuItem gps_path_menu[] = {
-    {"Start Point"},
-    {"End Point"}
+GPSINSPathMenuItem gps_ins_path_menu[] = {
+    {"Start GPS Point", &Start_GPS_Point},
+    {"End GPS Point", &End_GPS_Point},
+    {"Start INS Point", &Start_INS_Point},
+    {"End INS Point", &End_INS_Point}
 };
 
 // 舵机菜单项
@@ -115,13 +117,13 @@ void Display_Menu(void)
             Display_Speed_Imu_Info();
             break;
         case MENU_GPS_INFO:
-            Display_Gps_Info();
+            Display_GPS_Info();
             break;
         case MENU_GPS_Point:
             Display_GPS_Point();
             break;
         case MENU_GPS_PATH:
-            Display_GPS_Path();
+            Display_GPS_INS_Path();
             break;
         case MENU_MOTOR:
             Display_Motor_Menu();
@@ -157,7 +159,7 @@ void Menu(void)
             GPS_Point_Menu_Key_Process();
             break;
         case MENU_GPS_PATH:
-            GPS_Path_Menu_Key_Process();
+            GPS_INS_Path_Menu_Key_Process();
             break;
         case MENU_MOTOR:
             Motor_Menu_Key_Process();
@@ -244,7 +246,7 @@ void Display_Speed_Imu_Info(void)
 }
 
 // 显示GPS信息
-void Display_Gps_Info(void)
+void Display_GPS_Info(void)
 {
     // 始终显示标题
     ips114_show_string(0, 0, "GPS:");
@@ -322,20 +324,20 @@ void Display_GPS_Point(void)
     ips114_show_string(0, 112, buffer);
 }
 
-// 显示GPS路径设置界面
-void Display_GPS_Path(void)
+// 显示GPS INS路径设置界面
+void Display_GPS_INS_Path(void)
 {
     ips114_show_string(0, 0, "GPS Path Setting");
-    for (int i = 0; i < 2; i++) 
+    for (int i = 0; i < 4; i++) 
     {
         char buffer[32];
         sprintf(buffer, "%s%s: %d",
-            (i == current_item) ? "> " : "  ",  // 只在编辑模式下显示光标
-            gps_path_menu[i].name,
-            (i == 0) ? Start_GPS_Point : End_GPS_Point);
+            (i == current_item) ? "> " : "  ",
+            gps_ins_path_menu[i].name,
+            *gps_ins_path_menu[i].num);
         ips114_show_string(0, 16 + i * 16, buffer);
-        ips114_show_string(0, 48, edit_mode ? "KEY1:+  KEY2:-" : "KEY3:Edit");
-        ips114_show_string(0, 64, "Press KEY4 to return");
+        ips114_show_string(0, 80, edit_mode ? "KEY1:+  KEY2:-" : "KEY3:Edit");
+        ips114_show_string(0, 96, "Press KEY4 to return");
     }
 }
 
@@ -508,24 +510,30 @@ void GPS_Point_Menu_Key_Process(void)
 }
 
 // GPS路径设置按键处理
-void GPS_Path_Menu_Key_Process(void)
+void GPS_INS_Path_Menu_Key_Process(void)
 {
     if(edit_mode) {
         // 编辑模式处理
         if(key1_state == KEY_SHORT_PRESS) 
         {
-            if (current_item == 0)
-                Start_GPS_Point = (Start_GPS_Point + 1) % MAX_GPS_POINTS;
-            else
-                End_GPS_Point = (End_GPS_Point + 1) % MAX_GPS_POINTS;
+            switch(current_item) 
+            {
+                case 0: Start_GPS_Point = (Start_GPS_Point + 1) % MAX_GPS_POINTS; break;
+                case 1: End_GPS_Point = (End_GPS_Point + 1) % MAX_GPS_POINTS; break;
+                case 2: Start_INS_Point = (Start_INS_Point + 1) % MAX_INS_POINTS; break;
+                case 3: End_INS_Point = (End_INS_Point + 1) % MAX_INS_POINTS; break;
+            }
             key_clear_state(KEY_1);
         }
         if(key2_state == KEY_SHORT_PRESS) 
         {
-            if (current_item == 0)
-                Start_GPS_Point = (Start_GPS_Point - 1 + MAX_GPS_POINTS) % MAX_GPS_POINTS;
-            else
-                End_GPS_Point = (End_GPS_Point - 1 + MAX_GPS_POINTS) % MAX_GPS_POINTS;
+            switch(current_item) 
+            {
+                case 0: Start_GPS_Point = (Start_GPS_Point + MAX_GPS_POINTS - 1) % MAX_GPS_POINTS; break;
+                case 1: End_GPS_Point = (End_GPS_Point + MAX_GPS_POINTS - 1) % MAX_GPS_POINTS; break;
+                case 2: Start_INS_Point = (Start_INS_Point + MAX_INS_POINTS - 1) % MAX_INS_POINTS; break;
+                case 3: End_INS_Point = (End_INS_Point + MAX_INS_POINTS - 1) % MAX_INS_POINTS; break;
+            }
             key_clear_state(KEY_2);
         }
         if(key3_state == KEY_SHORT_PRESS || key4_state == KEY_SHORT_PRESS) 
@@ -543,7 +551,7 @@ void GPS_Path_Menu_Key_Process(void)
         }
         if(key2_state == KEY_SHORT_PRESS) 
         {
-            if(current_item < 1) current_item++;
+            if(current_item < 3) current_item++;
             key_clear_state(KEY_2);
         }
         if(key3_state == KEY_SHORT_PRESS) 
