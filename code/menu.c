@@ -7,13 +7,14 @@
 // 定义菜单状态
 typedef enum {
     MENU_MAIN,           // 主菜单状态
+    MENU_Calibrate_Gyro, // 陀螺仪校准状态
     MENU_GPS_Point,      // GPS点位显示状态
+    MENU_INS_Point,       // INS点位显示状态
     MENU_GPS_PATH,       // 路径设置状态
+    MENU_MOTOR,          // 电机调节状态
     MENU_GPS_INFO,       // GPS信息显示状态
     MENU_SPEED_IMU,      // 速度和IMU信息显示状态
-    MENU_STEER,          // 舵机调节状态
-    MENU_MOTOR,          // 电机调节状态
-    MENU_Calibrate_Gyro  // 陀螺仪校准状态
+    MENU_STEER          // 舵机调节状态
 } MenuState;
 
 // 主菜单项定义
@@ -46,13 +47,14 @@ typedef struct {
 
 // 主菜单项
 MainMenuItem main_menu_items[] = {
+    {"Calibrate Gyro"},
     {"GPS Point"},
+    {"INS Point"},
     {"GPS Path Setup"},
+    {"Motor Control"},
     {"GPS Info"},
     {"Speed & IMU"},
-    {"Steer Control"},
-    {"Motor Control"},
-    {"Calibrate Gyro"}
+    {"Steer Control"}
 };
 
 // 路径设置菜单项
@@ -106,23 +108,18 @@ void Display_Menu(void)
         case MENU_MAIN:
             Display_Main_Menu();
             break;
-            
         case MENU_STEER:
             Display_Steer_Menu();
             break;
-            
         case MENU_SPEED_IMU:
             Display_Speed_Imu_Info();
             break;
-            
         case MENU_GPS_INFO:
             Display_Gps_Info();
             break;
-
         case MENU_GPS_Point:
             Display_GPS_Point();
             break;
-
         case MENU_GPS_PATH:
             Display_GPS_Path();
             break;
@@ -131,6 +128,9 @@ void Display_Menu(void)
             break;
         case MENU_Calibrate_Gyro:
             Display_Calibrate_Gyro();
+            break;
+        case MENU_INS_Point:
+            Display_INS_Point();
             break;
     }
 }
@@ -150,27 +150,24 @@ void Menu(void)
         case MENU_MAIN:
             Main_Menu_Key_Process();
             break;
-            
         case MENU_STEER:
             Steer_Menu_Key_Process();
             break;
-            
         case MENU_GPS_Point:
             GPS_Point_Menu_Key_Process();
             break;
-            
         case MENU_GPS_PATH:
             GPS_Path_Menu_Key_Process();
             break;
-            
         case MENU_MOTOR:
             Motor_Menu_Key_Process();
             break;
-            
         case MENU_Calibrate_Gyro:
             Calibrate_Gyro_Menu_Key_Process();
             break;
-            
+        case MENU_INS_Point:
+            INS_Point_Menu_Key_Process();
+            break;
         case MENU_SPEED_IMU:
         case MENU_GPS_INFO:
             if(key4_state == KEY_SHORT_PRESS) 
@@ -360,6 +357,32 @@ void Display_Calibrate_Gyro(void)
     ips114_show_string(60, 16, "Keep IMU Still");
 }
 
+//显示INS点位管理界面
+void Display_INS_Point(void)
+{
+    ips114_show_string(0, 0, "INS Points");
+    ips114_show_float(120, 0, position[0], 6, 2);
+    ips114_show_float(150, 0, position[1], 6, 2);
+    // 显示当前可见范围的点位（Y轴间隔16像素）
+    for(uint8_t i = 0; i < visible_items; i++) 
+    {
+        uint8_t point_num = start_index + i;
+        if(point_num >= MAX_INS_POINTS) break;
+        
+        char point_info[32];
+        sprintf(point_info, "%sP%d:%.6f,%.6f",
+            (point_num == INS_Point_Index) ? ">" : " ",
+            point_num,
+            INS_Point[point_num][0],
+            INS_Point[point_num][1]);
+        ips114_show_string(0, 16 + i*16, point_info);
+    }
+    // 底部提示信息
+    char buffer[32];
+    sprintf(buffer, "Idx:%02d KEY3:Save KEY4:Back", INS_Point_Index);
+    ips114_show_string(0, 112, buffer);
+}
+
 // 主菜单按键处理
 void Main_Menu_Key_Process(void)
 {
@@ -378,13 +401,14 @@ void Main_Menu_Key_Process(void)
         // 进入选中的子菜单
         switch(current_item) 
         {
-            case 0: menu_state = MENU_GPS_Point; break;
-            case 1: menu_state = MENU_GPS_PATH; break;
-            case 2: menu_state = MENU_GPS_INFO; break;
-            case 3: menu_state = MENU_SPEED_IMU; break;
-            case 4: menu_state = MENU_STEER; break;
-            case 5: menu_state = MENU_MOTOR; break;
-            case 6: menu_state = MENU_Calibrate_Gyro; break;
+            case 0: menu_state = MENU_Calibrate_Gyro; break;
+            case 1: menu_state = MENU_GPS_Point; break;
+            case 2: menu_state = MENU_INS_Point; break;
+            case 3: menu_state = MENU_GPS_PATH; break;
+            case 4: menu_state = MENU_MOTOR; break;
+            case 5: menu_state = MENU_GPS_INFO; break;
+            case 6: menu_state = MENU_SPEED_IMU; break;
+            case 7: menu_state = MENU_STEER; break;
         }
         key_clear_state(KEY_3);
     }
@@ -587,6 +611,54 @@ void Calibrate_Gyro_Menu_Key_Process(void)
     {
         menu_state = MENU_MAIN;
         Save_Basic_Data();
+        key_clear_state(KEY_4);
+    }
+}
+
+void INS_Point_Menu_Key_Process(void)
+{
+    if(key1_state == KEY_SHORT_PRESS) 
+    {
+        if(INS_Point_Index > 0) 
+        {
+            INS_Point_Index--;
+            // 滚动逻辑：当当前索引小于起始索引时调整显示范围
+            if(INS_Point_Index < start_index)
+                start_index = INS_Point_Index;
+        }
+        key_clear_state(KEY_1);
+    }
+    if(key2_state == KEY_SHORT_PRESS) 
+    {
+        if(INS_Point_Index < MAX_INS_POINTS - 1) 
+        {
+            INS_Point_Index++;
+            // 滚动逻辑：当当前索引超过显示范围时调整显示范围
+            if(INS_Point_Index >= start_index + visible_items)
+                start_index = INS_Point_Index - visible_items + 1;
+        }
+        key_clear_state(KEY_2);
+    }
+    if(key3_state == KEY_SHORT_PRESS) 
+    {
+        Save_INS_Point();
+        // 保存后自动跳转到下一个点位并调整显示
+        if(INS_Point_Index < MAX_INS_POINTS - 1) 
+        {
+            INS_Point_Index++;  // 自动跳到下一个点位
+            // 滚动显示逻辑
+            if(INS_Point_Index >= start_index + visible_items) 
+                start_index = INS_Point_Index - visible_items + 1;
+        }
+        // INS_Point_Index = (INS_Point_Index + 1) % MAX_INS_POINTS;
+        // // 滚动显示逻辑
+        // if(INS_Point_Index >= start_index + visible_items || INS_Point_Index < start_index) 
+        //     start_index = (INS_Point_Index / visible_items) * visible_items;
+        key_clear_state(KEY_3);
+    }
+    if(key4_state == KEY_SHORT_PRESS) 
+    {
+        menu_state = MENU_MAIN;
         key_clear_state(KEY_4);
     }
 }

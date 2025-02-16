@@ -71,7 +71,7 @@ int core0_main(void)
 
         // Print_Gps_Info();                                           // 打印 GPS 信息
         // printf("%f,%f\n",speed,target_speed);                       // 打印目标速度
-        printf("%f,%f,%f\n",pitch,roll,yaw);                        // 打印欧拉角
+        // printf("%f,%f,%f\n",pitch,roll,yaw);                        // 打印欧拉角
         // printf("%f,%f\n",yaw,yaw_mag);                              // 打印磁力计偏航角
 
         // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
@@ -108,6 +108,7 @@ IFX_INTERRUPT(cc60_pit_ch1_isr, 0, CCU6_0_CH1_ISR_PRIORITY)
     Imu_get_quaternion();                                           // 四元数解算
     // Imu_get_mag_yaw();                                              // 磁力计解算
     Steer_PID_Control(target_angle);                                // 舵机 PID 控制
+    Update_Position();                                              // 速度位置更新
     // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
     // time = end_time - start_time;
     // float time_us = (float)time / 100.0f;

@@ -12,6 +12,7 @@
 #include "pid.h"
 #include "uartReceiver.h"
 #include "gps.h"
+#include "ins.h"
 
 #include "control.h"
 
