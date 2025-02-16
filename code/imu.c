@@ -1,4 +1,5 @@
 #include "zf_common_headfile.h"
+#include "init.h"
 
 // 使用 Infineon 的 iLLD 库中的 STM 头文件
 #include "IfxStm.h"
@@ -16,7 +17,6 @@ float yaw_mag = 0.0f;                                        // 磁力计偏航�
 // uint32 mag_yaw_time = 0;         // 磁力计解算时间
 
 // 添加卡尔曼滤波和陀螺仪偏置相关变量
-float gyro_bias[3] = {0.0f, 0.0f, 0.0f};  // 陀螺仪偏置
 static float P[3] = {1.0f, 1.0f, 1.0f};          // 卡尔曼滤波误差协方差
 static float Q = 0.001f;                          // 过程噪声协方差
 static float R = 0.03f;                           // 测量噪声协方差

@@ -11,6 +11,7 @@
 
 extern uint8_t GPS_Point_Index;                                             // GPS 数据索引
 extern double GPS_Point[MAX_GPS_POINTS][2];                                 // GPS 数据
+extern float gyro_bias[3];
 
 void Flash_test(void);
 void Gps_data_to_flash(void);

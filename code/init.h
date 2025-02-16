@@ -2,6 +2,7 @@
 #define _init_h_
 
 #include "zf_common_headfile.h"
+#include "flash.h"
 #include "encoder.h"
 #include "imu.h"
 #include "menu.h"
@@ -11,7 +12,7 @@
 #include "pid.h"
 #include "uartReceiver.h"
 #include "gps.h"
-#include "flash.h"
+
 #include "control.h"
 
 void Init(void);

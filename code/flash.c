@@ -12,6 +12,8 @@
 uint8_t GPS_Point_Index = 0;                                         // GPS 数据索引
 double GPS_Point[MAX_GPS_POINTS][2];                                 // GPS 数据
 
+float gyro_bias[3] = {0.0f, 0.0f, 0.0f};  // 陀螺仪偏置
+
 // 修改存储结构
 typedef union {
     struct {

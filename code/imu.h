@@ -3,7 +3,6 @@
 
 extern float pitch, roll, yaw;
 extern float yaw_mag;
-extern float gyro_bias[3];
 
 void Imu_init(void);
 void Calibrate_Gyro(void);
