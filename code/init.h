@@ -13,8 +13,8 @@
 #include "uartReceiver.h"
 #include "gps.h"
 #include "ins.h"
-
 #include "control.h"
+#include "mode.h"
 
 void Init(void);
 

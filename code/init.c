@@ -11,6 +11,7 @@
 #include "gps.h"
 #include "control.h"
 #include "ins.h"
+#include "mode.h"
 
 void Init(void)
 {

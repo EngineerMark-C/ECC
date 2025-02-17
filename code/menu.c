@@ -10,12 +10,12 @@ typedef enum {
     MENU_Calibrate_Gyro, // 陀螺仪校准状态
     MENU_GPS_Point,      // GPS点位显示状态
     MENU_ENU_Point,      // ENU点位显示状态
-    MENU_INS_Point,       // INS点位显示状态
+    MENU_INS_Point,      // INS点位显示状态
     MENU_GPS_PATH,       // 路径设置状态
     MENU_MOTOR,          // 电机调节状态
     MENU_GPS_INFO,       // GPS信息显示状态
     MENU_SPEED_IMU,      // 速度和IMU信息显示状态
-    MENU_STEER          // 舵机调节状态
+    MENU_STEER           // 舵机调节状态
 } MenuState;
 
 // 主菜单项定义
@@ -380,7 +380,7 @@ void Display_Calibrate_Gyro(void)
 void Display_INS_Point(void)
 {
     ips114_show_string(0, 0, "INS Points");
-    ips114_show_float(120, 0, position[0], 6, 2);
+    ips114_show_float(90, 0, position[0], 6, 2);
     ips114_show_float(150, 0, position[1], 6, 2);
     // 显示当前可见范围的点位（Y轴间隔16像素）
     for(uint8_t i = 0; i < visible_items; i++) 

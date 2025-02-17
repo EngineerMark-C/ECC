@@ -12,16 +12,6 @@ uint8_t End_GPS_Point;                                               // 最后�
 uint8_t Start_INS_Point;                                             // 第一个 INS 数据索引
 uint8_t End_INS_Point;                                               // 最后一个 INS 数据索引
 
-// // 新增控制状态枚举
-// typedef enum {
-//     PHASE_GPS_NAV,    // GPS导航阶段
-//     PHASE_INS_NAV,    // INS导航阶段
-//     PHASE_TRANSITION  // 过渡阶段
-// } NavigationPhase;
-
-// NavigationPhase current_phase = PHASE_GPS_NAV;
-// uint8_t gps_trigger_point = 0;  // 触发INS阶段的GPS点索引
-
 typedef struct {
     double origin_lat;    // 原点纬度（弧度）
     double origin_lon;    // 原点经度（弧度）
@@ -103,7 +93,6 @@ void GPS_ENU_Point_to_Point(uint8_t i)
 
 void GPS_One_By_One(void)
 {
-//    if(current_phase != PHASE_GPS_NAV) return;
     
     if (Start_GPS_Point < End_GPS_Point)
     {
@@ -139,7 +128,6 @@ void INS_Point_to_Point(uint8_t i)
 
 void INS_One_By_One(void)
 {
-//    if(current_phase != PHASE_INS_NAV) return;
     
     if (Start_INS_Point < End_INS_Point)
     {
