@@ -29,6 +29,7 @@ void Encoder_get_speed(void)
     // WHEEL_PERIMETER：轮周长(cm)
     // SAMPLE_TIME：采样时间(s)
     // /100：将cm转换为m
+    
     // printf("encoder_data_dir: %d\n", encoder_data_dir);
     // static float filtered_speed = 0;
     speed = (float)encoder_data_dir / ENCODER_PULSE_NUM * GEAR_RATIO * WHEEL_PERIMETER / SAMPLE_TIME / 100.0f;

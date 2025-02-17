@@ -4,10 +4,65 @@
 float target_speed;
 float target_angle = 0.0f;
 
+float GPS_ENU[MAX_GPS_POINTS][2];                                    // GPS ENU 坐标
+
 uint8_t Start_GPS_Point;                                             // 第一个 GPS 数据索引
 uint8_t End_GPS_Point;                                               // 最后一个 GPS 数据索引
+uint8_t NOW_GPS_Point;                                               // 当前 GPS 数据索引
 
-void Point_to_Point(uint8_t i)
+uint8_t Start_INS_Point;                                             // 第一个 INS 数据索引
+uint8_t End_INS_Point;                                               // 最后一个 INS 数据索引
+uint8_t NOW_INS_Point;                                               // 当前 INS 数据索引
+
+uint8_t GPS_TO_INS_POINT = 0;                                        // GPS点位转换到INS点位
+
+typedef struct {
+    double origin_lat;    // 原点纬度（弧度）
+    double origin_lon;    // 原点经度（弧度）
+    float easting;        // 东向坐标（米）
+    float northing;       // 北向坐标（米）
+} CoordinateSystem;
+
+CoordinateSystem local_frame;  // 本地坐标系
+
+// 初始化零点坐标
+void Local_Frame_Init(double lat0, double lon0) 
+{
+    local_frame.origin_lat = ANGLE_TO_RAD(lat0);
+    local_frame.origin_lon = ANGLE_TO_RAD(lon0);
+}
+
+// WGS84坐标转ENU坐标
+void WGS84_to_ENU(double lat, double lon, float* east, float* north) 
+{
+    const double a = 6378137.0;       // WGS84长半轴
+    const double f = 1.0/298.257223563; // 扁率
+    
+    double sin_lat0 = sin(local_frame.origin_lat);
+    double cos_lat0 = cos(local_frame.origin_lat);
+    
+    double dLon = ANGLE_TO_RAD(lon) - local_frame.origin_lon;
+    double dLat = ANGLE_TO_RAD(lat) - local_frame.origin_lat;
+    
+    // 卯酉圈曲率半径
+    double N = a / sqrt(1 - (2*f - f*f)*sin_lat0*sin_lat0);
+    
+    // 泰勒展开近似（适用于10km范围内）
+    *east  = (float)(N * cos_lat0 * dLon);
+    *north = (float)(N * dLat - 0.5 * N * (dLat*dLat)*sin_lat0*cos_lat0);
+}
+
+// 将路径点预转换为ENU坐标（启动时初始化）
+void WGS84_to_ENU_Init(void)
+{
+    Local_Frame_Init(GPS_Point[0][0], GPS_Point[0][1]);
+    for(int i=0; i <= End_GPS_Point; i++){
+        WGS84_to_ENU(GPS_Point[i][0], GPS_Point[i][1], 
+                    &GPS_ENU[i][0], &GPS_ENU[i][1]);
+    }
+}
+
+void GPS_Point_to_Point(uint8_t i)
 {
     // char str[20];
     // sprintf(str, "go to %d", i);
@@ -25,14 +80,176 @@ void Point_to_Point(uint8_t i)
     }
 }
 
-void One_By_One(void)
+void GPS_ENU_Point_to_Point(uint8_t i) 
+{
+    // 使用平面坐标系计算
+    float dx = GPS_ENU[i][0]- position[0];
+    float dy = GPS_ENU[i][0] - position[1];
+    
+    // 后续计算与INS统一
+    float angle = RAD_TO_ANGLE(atan2f(dy, dx));
+    angle = angle < 0 ? angle + 360 : angle;
+    float distance = sqrtf(dx*dx + dy*dy);
+    
+    target_angle = angle;
+    if (distance < 1.0f) target_speed = 0.0f;
+}
+
+void GPS_Navigation(void)
 {
     if (Start_GPS_Point < End_GPS_Point)
     {
-        Point_to_Point(Start_GPS_Point);
+        GPS_Point_to_Point(NOW_GPS_Point);
         if (target_speed == 0.0f)
         {
-            Start_GPS_Point = (Start_GPS_Point + 1) % End_GPS_Point;
+            NOW_GPS_Point = NOW_GPS_Point + 1;
         }
+    }
+}
+
+void GPS_ENU_Navigation(void)
+{
+    if (Start_GPS_Point < End_GPS_Point)
+    {
+        GPS_ENU_Point_to_Point(NOW_GPS_Point);
+        if (target_speed == 0.0f)
+        {
+            NOW_GPS_Point = NOW_GPS_Point + 1;
+        }
+    }
+}
+
+void INS_Point_to_Point(uint8_t i)
+{
+    // 使用平面坐标系计算（单位：米）
+    float dx = INS_Point[i][0] - position[0];
+    float dy = INS_Point[i][1] - position[1];
+    
+    // 计算平面方位角（0-360度）
+    float angle = RAD_TO_ANGLE(atan2f(dy, dx));
+    angle = angle < 0 ? angle + 360 : angle;
+    
+    // 计算欧几里得距离
+    float distance = sqrtf(dx*dx + dy*dy);
+
+    target_angle = angle;
+
+    if (distance < 0.1f)
+    {
+        target_speed = 0.0f;
+    }
+}
+
+void INS_Navigation(void)
+{
+    if (Start_INS_Point < End_INS_Point)
+    {
+        INS_Point_to_Point(NOW_INS_Point);
+        if (target_speed == 0.0f)
+        {
+            NOW_INS_Point = NOW_INS_Point + 1;
+        }
+    }
+}
+
+void GPS_INS_Navigation(void)
+{
+    static uint8_t navigation_phase = 0;  // 0:GPS导航阶段  1:INS导航阶段  2:返回GPS导航阶段
+    
+    switch(navigation_phase)
+    {
+        case 0:  // GPS导航阶段
+            if (NOW_GPS_Point <= GPS_TO_INS_POINT)
+            {
+                // 继续使用GPS导航到切换点
+                GPS_Point_to_Point(NOW_GPS_Point);
+                if (target_speed == 0.0f)
+                {
+                    if (NOW_GPS_Point == GPS_TO_INS_POINT)
+                    {
+                        // 到达切换点，准备切换到INS导航
+                        navigation_phase = 1;
+                        NOW_INS_Point = Start_INS_Point;  // 初始化INS起始点
+                    }
+                    NOW_GPS_Point++;
+                }
+            }
+            break;
+            
+        case 1:  // INS导航阶段
+            INS_Point_to_Point(NOW_INS_Point);
+            if (target_speed == 0.0f)
+            {
+                NOW_INS_Point++;
+                if (NOW_INS_Point > End_INS_Point)
+                {
+                    // INS导航结束，切回GPS导航
+                    navigation_phase = 2;
+                    NOW_GPS_Point = GPS_TO_INS_POINT + 1;  // 从切换点后的GPS点继续导航
+                }
+            }
+            break;
+            
+        case 2:  // 返回GPS导航阶段
+            if (NOW_GPS_Point <= End_GPS_Point)
+            {
+                GPS_Point_to_Point(NOW_GPS_Point);
+                if (target_speed == 0.0f)
+                {
+                    NOW_GPS_Point = NOW_GPS_Point + 1;
+                }
+            }
+            break;
+    }
+}
+
+void GPS_ENU_INS_Navigation(void)
+{
+    static uint8_t navigation_phase = 0;  // 0:GPS导航阶段  1:INS导航阶段  2:返回GPS导航阶段
+    
+    switch(navigation_phase)
+    {
+        case 0:  // GPS导航阶段
+            if (NOW_GPS_Point <= GPS_TO_INS_POINT)
+            {
+                // 继续使用GPS导航到切换点
+                GPS_ENU_Point_to_Point(NOW_GPS_Point);
+                if (target_speed == 0.0f)
+                {
+                    if (NOW_GPS_Point == GPS_TO_INS_POINT)
+                    {
+                        // 到达切换点，准备切换到INS导航
+                        navigation_phase = 1;
+                        NOW_INS_Point = Start_INS_Point;  // 初始化INS起始点
+                    }
+                    NOW_GPS_Point++;
+                }
+            }
+            break;
+            
+        case 1:  // INS导航阶段
+            INS_Point_to_Point(NOW_INS_Point);
+            if (target_speed == 0.0f)
+            {
+                NOW_INS_Point++;
+                if (NOW_INS_Point > End_INS_Point)
+                {
+                    // INS导航结束，切回GPS导航
+                    navigation_phase = 2;
+                    NOW_GPS_Point = GPS_TO_INS_POINT + 1;  // 从切换点后的GPS点继续导航
+                }
+            }
+            break;
+            
+        case 2:  // 返回GPS导航阶段
+            if (NOW_GPS_Point <= End_GPS_Point)
+            {
+                GPS_ENU_Point_to_Point(NOW_GPS_Point);
+                if (target_speed == 0.0f)
+                {
+                    NOW_GPS_Point = NOW_GPS_Point + 1;
+                }
+            }
+            break;
     }
 }

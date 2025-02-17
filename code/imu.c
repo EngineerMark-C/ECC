@@ -1,4 +1,5 @@
 #include "zf_common_headfile.h"
+#include "init.h"
 
 // 使用 Infineon 的 iLLD 库中的 STM 头文件
 #include "IfxStm.h"
@@ -16,7 +17,6 @@ float yaw_mag = 0.0f;                                        // 磁力计偏航�
 // uint32 mag_yaw_time = 0;         // 磁力计解算时间
 
 // 添加卡尔曼滤波和陀螺仪偏置相关变量
-static float gyro_bias[3] = {0.0f, 0.0f, 0.0f};  // 陀螺仪偏置
 static float P[3] = {1.0f, 1.0f, 1.0f};          // 卡尔曼滤波误差协方差
 static float Q = 0.001f;                          // 过程噪声协方差
 static float R = 0.03f;                           // 测量噪声协方差
@@ -54,9 +54,8 @@ static float K[3];                                // 卡尔曼增益
 // }
 
 // 陀螺仪偏置校准函数
-void Calibrate_gyro(void)
+void Calibrate_Gyro(void)
 {
-    ips114_clear();    // 清屏
     ips114_show_string(60, 0, "Gyro Calibrating...");
     ips114_show_string(60, 16, "Keep IMU Still");
     
@@ -90,6 +89,7 @@ void Calibrate_gyro(void)
     ips114_show_float(60, 64, gyro_bias[0], 6, 2);  // X
     ips114_show_float(60, 80, gyro_bias[1], 6, 2);  // Y
     ips114_show_float(60, 96, gyro_bias[2], 6, 2);  // Z
+    ips114_show_string(60, 112, "Calibration Done!");
 }
 
 // 初始化 IMU963RA
@@ -111,26 +111,8 @@ void Calibrate_gyro(void)
 // 初始化 IMU963RA
 void Imu_init(void)
 {
-    uint8_t imu_init_state = imu963ra_init();
-    if(imu_init_state != 0)
-    {
-        ips114_clear();
-        ips114_show_string(60, 0, "IMU Init Failed!");
-        char error_str[30];
-        sprintf(error_str, "Error Code:%d", imu_init_state);
-        ips114_show_string(60, 16, error_str);
-        while(1);  // 如果初始化失败则停止运行
-    }
-    
-    ips114_show_string(60, 0, "IMU Init OK!");
-    system_delay_ms(500);  // 显示0.5秒
-    
-    pit_ms_init(PIT1, 5);           // 初始化PIT1为周期中断5ms周期
-    Calibrate_gyro();              // 校准陀螺仪偏置
-    
-    ips114_show_string(60, 112, "Calibration Done!");
-    system_delay_ms(1000);  // 显示1秒
-    ips114_clear();         // 清屏
+    imu963ra_init();
+    pit_ms_init(PIT1, 5);   // 初始化PIT1为周期中断5ms周期
 }
 
 // 获取 IMU963RA 数据
