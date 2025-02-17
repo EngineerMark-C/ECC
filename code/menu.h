@@ -14,6 +14,7 @@ void Display_GPS_INS_Path(void);
 void Display_Motor_Menu(void);
 void Display_Calibrate_Gyro(void);
 void Display_INS_Point(void);
+void Display_ENU_Point(void);
 
 void Main_Menu_Key_Process(void);
 void Steer_Menu_Key_Process(void);
@@ -22,5 +23,6 @@ void GPS_INS_Path_Menu_Key_Process(void);
 void Motor_Menu_Key_Process(void);
 void Calibrate_Gyro_Menu_Key_Process(void);
 void INS_Point_Menu_Key_Process(void);
+void ENU_Point_Menu_Key_Process(void);
 
 #endif

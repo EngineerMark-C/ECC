@@ -15,8 +15,8 @@ void INS_Init(void)
 // 速度位置更新
 void Update_Position(void)
 {
-    // 将角度转换为弧度
-    float yaw_radian = yaw * 0.0174533f;  
+    // 将角度转换为弧度_
+    float yaw_radian = ANGLE_TO_RAD(yaw);  
     
     // 使用偏航角进行航位推算
     float cos_yaw = cos(yaw_radian);

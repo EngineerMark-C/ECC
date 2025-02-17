@@ -15,6 +15,7 @@
 
 uint8_t GPS_Point_Index = 0;                                         // GPS 数据索引
 uint8_t INS_Point_Index = 0;                                         // INS 数据索引
+
 double GPS_Point[MAX_GPS_POINTS][2];                                 // GPS 数据
 float INS_Point[MAX_INS_POINTS][2];                                  // INS 点位
 
@@ -210,7 +211,7 @@ void Save_GPS_Point(void)
         }
         GPS_Point[GPS_Point_Index][0] = LATSUM / 10;
         GPS_Point[GPS_Point_Index][1] = LONSUM / 10;
-        
+        WGS84_to_ENU(GPS_Point[GPS_Point_Index][0], GPS_Point[GPS_Point_Index][1], &GPS_ENU[GPS_Point_Index][0], &GPS_ENU[GPS_Point_Index][1]);
         // 2. 同步到Flash
         flash_buffer_clear();
         

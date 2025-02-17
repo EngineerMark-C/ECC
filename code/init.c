@@ -21,6 +21,7 @@ void Init(void)
     Steer_init();                               // 初始化舵机
     Basic_Data_Init();                          // 初始化基础数据
     GPS_Points_Init();                          // 初始化 GPS 点位
+    WGS84_to_ENU_Init();                        // 初始化 WGS84 坐标转 ENU 坐标
     Imu_init();                                 // 初始化 IMU963RA
     Gps_init();                                 // 初始化 GPS
     PID_init(&pid_speed, 10.0, 0.0, 0.0);       // 初始化 PID 控制器
