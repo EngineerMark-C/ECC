@@ -3,7 +3,7 @@
 
 uint8_t Fire_Flag  = 0;                               //车辆启动标志位
 
-NavigationFlag Navigation_Flag = 0;                       //导航标志位初始化
+NavigationFlag Navigation_Flag;                       //导航标志位初始化
 
 void Navigation_Mode_Switch(void)
 {

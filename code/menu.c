@@ -244,6 +244,7 @@ void Display_Main_Menu(void)
     sprintf(buffer, "Page:%02d/%02d", start_index/visible_items + 1, 
             (MAIN_MENU_ITEMS_COUNT + visible_items - 1)/visible_items);
     ips114_show_string(0, 112, buffer);
+    ips114_show_int(90, 112, Fire_Flag, 2);
 }
 
 // 显示舵机调节界面
@@ -505,6 +506,11 @@ void Main_Menu_Key_Process(void)
             case 9: menu_state = MENU_NAV_MODE; ; break;
         }
         key_clear_state(KEY_3);
+    }
+    if (key4_state == KEY_SHORT_PRESS) 
+    {
+        Fire_Flag = Fire_Flag ? 0 : 1;
+        key_clear_state(KEY_4);
     }
 }
 
