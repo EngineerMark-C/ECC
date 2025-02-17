@@ -127,8 +127,7 @@ IFX_INTERRUPT(cc61_pit_ch0_isr, 0, CCU6_1_CH0_ISR_PRIORITY)
 
     // uint32 start_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
     Get_Now_Location();                                             // 获取当前位置
-    // GPS_One_By_One();                                               // 逐个点导航
-    INS_One_By_One();
+    Navigation_Mode_Switch();                                       // 导航模式切换
     // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
     // time = end_time - start_time;
     // float time_us = (float)time / 100.0f;

@@ -3,6 +3,7 @@
 #include "init.h"
 
 #define MAIN_MENU_ITEMS_COUNT (sizeof(main_menu_items)/sizeof(MainMenuItem))
+#define NAV_MODE_COUNT (sizeof(nav_mode_names)/sizeof(nav_mode_names[0]))
 
 // 定义菜单状态
 typedef enum {
@@ -15,7 +16,8 @@ typedef enum {
     MENU_MOTOR,          // 电机调节状态
     MENU_GPS_INFO,       // GPS信息显示状态
     MENU_SPEED_IMU,      // 速度和IMU信息显示状态
-    MENU_STEER           // 舵机调节状态
+    MENU_STEER,          // 舵机调节状态
+    MENU_NAV_MODE        // 导航模式选择状态
 } MenuState;
 
 // 主菜单项定义
@@ -56,7 +58,8 @@ MainMenuItem main_menu_items[] = {
     {"Motor Control"},
     {"GPS Info"},
     {"Speed & IMU"},
-    {"Steer Control"}
+    {"Steer Control"},
+    {"Navigation Mode"}
 };
 
 // 路径设置菜单项
@@ -64,7 +67,8 @@ GPSINSPathMenuItem gps_ins_path_menu[] = {
     {"Start GPS Point", &Start_GPS_Point},
     {"End GPS Point", &End_GPS_Point},
     {"Start INS Point", &Start_INS_Point},
-    {"End INS Point", &End_INS_Point}
+    {"End INS Point", &End_INS_Point},
+    {"GPS to INS Point", &GPS_TO_INS_POINT}
 };
 
 // 舵机菜单项
@@ -82,6 +86,15 @@ MotorMenuItem motor_menu = {
     0.0f,
     MAX_SPEED,
     0.1f
+};
+
+// 导航模式菜单显示文本数组
+static const char* nav_mode_names[] = {
+    "GPS Navigation",
+    "GPS-ENU Navigation",
+    "INS Navigation",
+    "GPS-INS Navigation",
+    "GPS-ENU-INS Navigation"
 };
 
 // 菜单全局变量
@@ -139,6 +152,9 @@ void Display_Menu(void)
         case MENU_ENU_Point:
             Display_ENU_Point();
             break;
+        case MENU_NAV_MODE:
+            Display_Nav_Mode_Menu();
+            break;
     }
 }
 
@@ -177,6 +193,9 @@ void Menu(void)
             break;
         case MENU_ENU_Point:
             ENU_Point_Menu_Key_Process();
+            break;
+        case MENU_NAV_MODE:
+            Nav_Mode_Key_Process();
             break;
         case MENU_SPEED_IMU:
         case MENU_GPS_INFO:
@@ -345,7 +364,7 @@ void Display_GPS_Point(void)
 void Display_GPS_INS_Path(void)
 {
     ips114_show_string(0, 0, "GPS Path Setting");
-    for (int i = 0; i < 4; i++) 
+    for (int i = 0; i < 5; i++) 
     {
         char buffer[32];
         sprintf(buffer, "%s%s: %d",
@@ -353,8 +372,8 @@ void Display_GPS_INS_Path(void)
             gps_ins_path_menu[i].name,
             *gps_ins_path_menu[i].num);
         ips114_show_string(0, 16 + i * 16, buffer);
-        ips114_show_string(0, 80, edit_mode ? "KEY1:+  KEY2:-" : "KEY3:Edit");
-        ips114_show_string(0, 96, "Press KEY4 to return");
+        ips114_show_string(0, 96, edit_mode ? "KEY1:+  KEY2:-" : "KEY3:Edit");
+        ips114_show_string(0, 112, "Press KEY4 to return");
     }
 }
 
@@ -425,6 +444,27 @@ void Display_ENU_Point(void)
     ips114_show_string(0, 112, buffer);
 }
 
+// 导航模式菜单显示函数
+void Display_Nav_Mode_Menu(void)
+{
+    ips114_show_string(0, 0, "Select Nav Mode");
+    // 添加调试输出确认Navigation_Flag的值
+    char debug_buf[32];
+    sprintf(debug_buf, "Flag:%d ", (uint8_t)Navigation_Flag);
+    ips114_show_string(80, 0, debug_buf);
+    
+    for(uint8_t i = 0; i < NAV_MODE_COUNT; i++) 
+    {
+        char buffer[32];
+        sprintf(buffer, "%s%s", 
+            (i == (uint8_t)Navigation_Flag) ? "> " : "  ",
+            nav_mode_names[i]);
+        ips114_show_string(0, 16 + i*16, buffer);
+    }
+    // 底部提示信息
+    ips114_show_string(0, 112, "KEY3:Select  KEY4:Back");
+}
+
 // 主菜单按键处理
 void Main_Menu_Key_Process(void)
 {
@@ -462,6 +502,7 @@ void Main_Menu_Key_Process(void)
             case 6: menu_state = MENU_GPS_INFO; break;
             case 7: menu_state = MENU_SPEED_IMU; break;
             case 8: menu_state = MENU_STEER; break;
+            case 9: menu_state = MENU_NAV_MODE; ; break;
         }
         key_clear_state(KEY_3);
     }
@@ -573,6 +614,7 @@ void GPS_INS_Path_Menu_Key_Process(void)
                 case 1: End_GPS_Point = (End_GPS_Point + 1) % MAX_GPS_POINTS; break;
                 case 2: Start_INS_Point = (Start_INS_Point + 1) % MAX_INS_POINTS; break;
                 case 3: End_INS_Point = (End_INS_Point + 1) % MAX_INS_POINTS; break;
+                case 4: GPS_TO_INS_POINT = (GPS_TO_INS_POINT + 1) % MAX_GPS_POINTS; break;
             }
             key_clear_state(KEY_1);
         }
@@ -584,6 +626,7 @@ void GPS_INS_Path_Menu_Key_Process(void)
                 case 1: End_GPS_Point = (End_GPS_Point + MAX_GPS_POINTS - 1) % MAX_GPS_POINTS; break;
                 case 2: Start_INS_Point = (Start_INS_Point + MAX_INS_POINTS - 1) % MAX_INS_POINTS; break;
                 case 3: End_INS_Point = (End_INS_Point + MAX_INS_POINTS - 1) % MAX_INS_POINTS; break;
+                case 4: GPS_TO_INS_POINT = (GPS_TO_INS_POINT + MAX_GPS_POINTS - 1) % MAX_GPS_POINTS; break;
             }
             key_clear_state(KEY_2);
         }
@@ -602,7 +645,7 @@ void GPS_INS_Path_Menu_Key_Process(void)
         }
         if(key2_state == KEY_SHORT_PRESS) 
         {
-            if(current_item < 3) current_item++;
+            if(current_item < 4) current_item++;
             key_clear_state(KEY_2);
         }
         if(key3_state == KEY_SHORT_PRESS) 
@@ -761,6 +804,39 @@ void ENU_Point_Menu_Key_Process(void)
         // // 滚动显示逻辑
         // if(GPS_Point_Index >= start_index + visible_items || GPS_Point_Index < start_index) 
         //     start_index = (GPS_Point_Index / visible_items) * visible_items;
+        key_clear_state(KEY_3);
+    }
+    if(key4_state == KEY_SHORT_PRESS) 
+    {
+        menu_state = MENU_MAIN;
+        key_clear_state(KEY_4);
+    }
+}
+
+// 新增导航模式菜单按键处理函数
+void Nav_Mode_Key_Process(void)
+{
+    if(key1_state == KEY_SHORT_PRESS) 
+    {
+        if((uint8_t)Navigation_Flag > 0) {
+            Navigation_Flag = (uint8_t)Navigation_Flag - 1;
+        }
+        key_clear_state(KEY_1);
+    }
+    if(key2_state == KEY_SHORT_PRESS) 
+    {
+        if((uint8_t)Navigation_Flag < NAV_MODE_COUNT - 1) {
+            Navigation_Flag = (uint8_t)Navigation_Flag + 1;
+        }
+        else {
+            Navigation_Flag = 0;
+        }
+        key_clear_state(KEY_2);
+    }
+    if(key3_state == KEY_SHORT_PRESS) 
+    {
+        menu_state = MENU_MAIN;
+        Save_Basic_Data();
         key_clear_state(KEY_3);
     }
     if(key4_state == KEY_SHORT_PRESS) 

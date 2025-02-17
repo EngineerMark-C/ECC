@@ -1,14 +1,31 @@
 #include "zf_common_headfile.h"
 #include "init.h"
 
-uint8_t Fire_Flag  = 0;                                                   //车辆启动标志位
+uint8_t Fire_Flag  = 0;                               //车辆启动标志位
 
-// // 新增控制状态枚举
-// typedef enum {
-//     PHASE_GPS_NAV,    // GPS导航阶段
-//     PHASE_INS_NAV,    // INS导航阶段
-//     PHASE_TRANSITION  // 过渡阶段
-// } NavigationPhase;
+NavigationFlag Navigation_Flag = 0;                       //导航标志位初始化
 
-// NavigationPhase current_phase = PHASE_GPS_NAV;
-// uint8_t gps_trigger_point = 0;  // 触发INS阶段的GPS点索引
+void Navigation_Mode_Switch(void)
+{
+    if (Fire_Flag == 1)
+    {
+        switch(Navigation_Flag)
+        {
+            case GPS_NAV_Flag:
+                GPS_Navigation();
+                break;
+            case GPS_ENU_NAV_Flag:
+                GPS_ENU_Navigation();
+                break;
+            case INS_NAV_Flag:
+                INS_Navigation();
+                break;
+            case GPS_INS_NAV_Flag:
+                GPS_INS_Navigation();
+                break;  
+            case GPS_ENU_INS_NAV_Flag:
+                GPS_ENU_INS_Navigation();
+                break;
+        }
+    }
+}

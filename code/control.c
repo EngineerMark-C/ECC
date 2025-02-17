@@ -8,9 +8,13 @@ float GPS_ENU[MAX_GPS_POINTS][2];                                    // GPS ENU 
 
 uint8_t Start_GPS_Point;                                             // 第一个 GPS 数据索引
 uint8_t End_GPS_Point;                                               // 最后一个 GPS 数据索引
+uint8_t NOW_GPS_Point;                                               // 当前 GPS 数据索引
 
 uint8_t Start_INS_Point;                                             // 第一个 INS 数据索引
 uint8_t End_INS_Point;                                               // 最后一个 INS 数据索引
+uint8_t NOW_INS_Point;                                               // 当前 INS 数据索引
+
+uint8_t GPS_TO_INS_POINT = 0;                                        // GPS点位转换到INS点位
 
 typedef struct {
     double origin_lat;    // 原点纬度（弧度）
@@ -91,16 +95,26 @@ void GPS_ENU_Point_to_Point(uint8_t i)
     if (distance < 1.0f) target_speed = 0.0f;
 }
 
-void GPS_One_By_One(void)
+void GPS_Navigation(void)
 {
-    
     if (Start_GPS_Point < End_GPS_Point)
     {
-    //     GPS_Point_to_Point(Start_GPS_Point);
-        GPS_ENU_Point_to_Point(Start_GPS_Point);
+        GPS_Point_to_Point(NOW_GPS_Point);
         if (target_speed == 0.0f)
         {
-            Start_GPS_Point = (Start_GPS_Point + 1) % End_GPS_Point;
+            NOW_GPS_Point = NOW_GPS_Point + 1;
+        }
+    }
+}
+
+void GPS_ENU_Navigation(void)
+{
+    if (Start_GPS_Point < End_GPS_Point)
+    {
+        GPS_ENU_Point_to_Point(NOW_GPS_Point);
+        if (target_speed == 0.0f)
+        {
+            NOW_GPS_Point = NOW_GPS_Point + 1;
         }
     }
 }
@@ -126,69 +140,116 @@ void INS_Point_to_Point(uint8_t i)
     }
 }
 
-void INS_One_By_One(void)
+void INS_Navigation(void)
 {
-    
     if (Start_INS_Point < End_INS_Point)
     {
-        INS_Point_to_Point(Start_INS_Point);
+        INS_Point_to_Point(NOW_INS_Point);
         if (target_speed == 0.0f)
         {
-            Start_INS_Point = (Start_INS_Point + 1) % End_INS_Point;
+            NOW_INS_Point = NOW_INS_Point + 1;
         }
     }
 }
 
-// void Navigation_Control(void) 
-// {
-//     static KalmanFilter gps_ins_filter;  // 应实现卡尔曼滤波
-//     static uint8_t ins_completed = 0;
-
-//     // 坐标融合（示例）
-//     float gps_east, gps_north;
-//     WGS84_to_ENU(NOW_location.latitude, NOW_location.longitude, &gps_east, &gps_north);
+void GPS_INS_Navigation(void)
+{
+    static uint8_t navigation_phase = 0;  // 0:GPS导航阶段  1:INS导航阶段  2:返回GPS导航阶段
     
-//     // 卡尔曼滤波更新
-//     kalman_update(&gps_ins_filter, 
-//                  position[0], position[1],
-//                  gps_east, gps_north);
+    switch(navigation_phase)
+    {
+        case 0:  // GPS导航阶段
+            if (NOW_GPS_Point <= GPS_TO_INS_POINT)
+            {
+                // 继续使用GPS导航到切换点
+                GPS_Point_to_Point(NOW_GPS_Point);
+                if (target_speed == 0.0f)
+                {
+                    if (NOW_GPS_Point == GPS_TO_INS_POINT)
+                    {
+                        // 到达切换点，准备切换到INS导航
+                        navigation_phase = 1;
+                        NOW_INS_Point = Start_INS_Point;  // 初始化INS起始点
+                    }
+                    NOW_GPS_Point++;
+                }
+            }
+            break;
+            
+        case 1:  // INS导航阶段
+            INS_Point_to_Point(NOW_INS_Point);
+            if (target_speed == 0.0f)
+            {
+                NOW_INS_Point++;
+                if (NOW_INS_Point > End_INS_Point)
+                {
+                    // INS导航结束，切回GPS导航
+                    navigation_phase = 2;
+                    NOW_GPS_Point = GPS_TO_INS_POINT + 1;  // 从切换点后的GPS点继续导航
+                }
+            }
+            break;
+            
+        case 2:  // 返回GPS导航阶段
+            if (NOW_GPS_Point <= End_GPS_Point)
+            {
+                GPS_Point_to_Point(NOW_GPS_Point);
+                if (target_speed == 0.0f)
+                {
+                    NOW_GPS_Point = NOW_GPS_Point + 1;
+                }
+            }
+            break;
+    }
+}
+
+void GPS_ENU_INS_Navigation(void)
+{
+    static uint8_t navigation_phase = 0;  // 0:GPS导航阶段  1:INS导航阶段  2:返回GPS导航阶段
     
-//     // 使用滤波后位置
-//     position[0] = gps_ins_filter.x;
-//     position[1] = gps_ins_filter.y;
-
-//     switch(current_phase) {
-//         case PHASE_GPS_NAV:
-//             GPS_One_By_One();
+    switch(navigation_phase)
+    {
+        case 0:  // GPS导航阶段
+            if (NOW_GPS_Point <= GPS_TO_INS_POINT)
+            {
+                // 继续使用GPS导航到切换点
+                GPS_ENU_Point_to_Point(NOW_GPS_Point);
+                if (target_speed == 0.0f)
+                {
+                    if (NOW_GPS_Point == GPS_TO_INS_POINT)
+                    {
+                        // 到达切换点，准备切换到INS导航
+                        navigation_phase = 1;
+                        NOW_INS_Point = Start_INS_Point;  // 初始化INS起始点
+                    }
+                    NOW_GPS_Point++;
+                }
+            }
+            break;
             
-//             // 当到达指定GPS点时触发INS阶段
-//             if(Start_GPS_Point == gps_trigger_point && target_speed == 0.0f) {
-//                 current_phase = PHASE_INS_NAV;
-//                 ins_completed = 0;
-//                 target_speed = 0.5f;  // 重置速度
-//             }
-//             break;
-
-//         case PHASE_INS_NAV:
-//             INS_One_By_One();
+        case 1:  // INS导航阶段
+            INS_Point_to_Point(NOW_INS_Point);
+            if (target_speed == 0.0f)
+            {
+                NOW_INS_Point++;
+                if (NOW_INS_Point > End_INS_Point)
+                {
+                    // INS导航结束，切回GPS导航
+                    navigation_phase = 2;
+                    NOW_GPS_Point = GPS_TO_INS_POINT + 1;  // 从切换点后的GPS点继续导航
+                }
+            }
+            break;
             
-//             // 检测INS是否完成
-//             if(Start_INS_Point >= End_INS_Point) {
-//                 ins_completed = 1;
-//                 current_phase = PHASE_TRANSITION;
-//             }
-//             break;
-
-//         case PHASE_TRANSITION:
-//             // 过渡处理（可选）
-//             target_speed = 0.0f;
-            
-//             // 返回GPS导航
-//             if(ins_completed) {
-//                 current_phase = PHASE_GPS_NAV;
-//                 Start_GPS_Point = gps_trigger_point + 1; // 继续后续GPS点
-//                 ins_completed = 0;
-//             }
-//             break;
-//     }
-// }
+        case 2:  // 返回GPS导航阶段
+            if (NOW_GPS_Point <= End_GPS_Point)
+            {
+                GPS_ENU_Point_to_Point(NOW_GPS_Point);
+                if (target_speed == 0.0f)
+                {
+                    NOW_GPS_Point = NOW_GPS_Point + 1;
+                }
+            }
+            break;
+    }
+}
