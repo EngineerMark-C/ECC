@@ -23,6 +23,6 @@ void Update_Position(void)
     float sin_yaw = sin(yaw_radian);
     
     // 速度积分得到位置
-    position[0] += speed * sin_yaw * SAMPLE_TIME;
-    position[1] += speed * cos_yaw * SAMPLE_TIME;
+    position[0] += speed * cos_yaw * SAMPLE_TIME;
+    position[1] += speed * sin_yaw * SAMPLE_TIME;
 }
