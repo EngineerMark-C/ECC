@@ -350,8 +350,10 @@ void INS_Points_Init(void)
 //                     | 5    | float      | gyro_bias[2]         |
 //                     | 6    | uint8      | Start_INS_Point      |
 //                     | 7    | uint8      | End_INS_Point        |
-//                     | 8    | uint8      | GPS_TO_INS_POINT      |
+//                     | 8    | uint8      | GPS_TO_INS_POINT     |
 //                     | 9    | uint8      | Navigation_Flag      |
+//                     | 10   | uint8      | Start_S_Point        |
+//                     | 11   | uint8      | End_S_Point          |
 
 // 保存基础数据
 void Save_Basic_Data(void)
@@ -368,6 +370,8 @@ void Save_Basic_Data(void)
     flash_union_buffer[7].uint8_type = End_INS_Point;
     flash_union_buffer[8].uint8_type = GPS_TO_INS_POINT;
     flash_union_buffer[9].uint8_type = (uint8_t)Navigation_Flag;
+    flash_union_buffer[10].uint8_type = Start_S_Point;
+    flash_union_buffer[11].uint8_type = End_S_Point;
 
     // 擦除并写入Flash
     flash_erase_page(FLASH_SECTION_INDEX, FLASH_BASIC_DATA_INDEX);
@@ -390,9 +394,12 @@ void Basic_Data_Init(void)
     End_INS_Point = flash_union_buffer[7].uint8_type;
     GPS_TO_INS_POINT = flash_union_buffer[8].uint8_type;
     Navigation_Flag = flash_union_buffer[9].uint8_type;
+    Start_S_Point = flash_union_buffer[10].uint8_type;
+    End_S_Point = flash_union_buffer[11].uint8_type;
 
     NOW_GPS_Point = Start_GPS_Point;
     NOW_INS_Point = Start_INS_Point;
+    NOW_S_Point = Start_S_Point;
 
     ips114_show_string(60, 32, "Basic Data Loaded.");
     system_delay_ms(500);
