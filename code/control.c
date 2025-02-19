@@ -2,9 +2,10 @@
 #include "init.h"
 
 float target_speed;
-float target_angle = 0.0f;
+float target_angle;
 
 float GPS_ENU[MAX_GPS_POINTS][2];                                    // GPS ENU 坐标
+float S_Point[MAX_INS_POINTS][2];                                    // S 型走位点
 
 uint8_t Start_GPS_Point;                                             // 第一个 GPS 数据索引
 uint8_t End_GPS_Point;                                               // 最后一个 GPS 数据索引
@@ -13,6 +14,10 @@ uint8_t NOW_GPS_Point;                                               // 当前 G
 uint8_t Start_INS_Point;                                             // 第一个 INS 数据索引
 uint8_t End_INS_Point;                                               // 最后一个 INS 数据索引
 uint8_t NOW_INS_Point;                                               // 当前 INS 数据索引
+
+uint8_t Start_S_Point;                                               // S 型走位开始索引
+uint8_t End_S_Point;                                                 // S 型走位结束索引
+uint8_t NOW_S_Point;                                                 // 当前 S 型走位索引
 
 uint8_t GPS_TO_INS_POINT = 0;                                        // GPS点位转换到INS点位
 
@@ -65,6 +70,27 @@ void WGS84_to_ENU_Init(void)
     }
 }
 
+// S 型走位点位生成
+void S_Point_Generate(uint8_t i)
+{
+    float dx = INS_Point[i][0] - INS_Point[i+1][0];
+    float dy = INS_Point[i][1] - INS_Point[i+1][1];
+
+    float distance = sqrtf(dx*dx + dy*dy);
+
+    S_Point[i][0] = INS_Point[i][0];
+    S_Point[i][1] = INS_Point[i][1] + ((i & 1) ? 1 : -1) *(distance / 2);
+}
+
+// S 型走位点位初始化
+void S_Point_Init(void)
+{
+    for(uint8_t i=0; i < End_S_Point; i++)
+    {
+        S_Point_Generate(i);
+    }
+}
+
 void GPS_Point_to_Point(uint8_t i)
 {
     // char str[20];
@@ -106,14 +132,12 @@ void GPS_Navigation(void)
         target_speed = 0.0f;
         return;
     }
-    if (NOW_GPS_Point <= End_GPS_Point && Start_GPS_Point < End_GPS_Point)
+    if (Start_GPS_Point < End_GPS_Point)
     {
         GPS_Point_to_Point(NOW_GPS_Point);
         if (reach_flag)  // 改为检查标志位
         {
-            if(NOW_GPS_Point < End_GPS_Point) {
-                NOW_GPS_Point++;
-            }
+            NOW_GPS_Point++;
             reach_flag = 0;  // 重置标志位
         }
     }
@@ -125,14 +149,52 @@ void GPS_ENU_Navigation(void)
         target_speed = 0.0f;
         return;
     }
-    if (NOW_GPS_Point <= End_GPS_Point && Start_GPS_Point < End_GPS_Point)
+    if (Start_GPS_Point < End_GPS_Point)
     {
         GPS_ENU_Point_to_Point(NOW_GPS_Point);
         if (reach_flag)  // 改为检查标志位
         {
-            if(NOW_GPS_Point < End_GPS_Point) {
-                NOW_GPS_Point++;
-            }
+            NOW_GPS_Point++;
+            reach_flag = 0;  // 重置标志位
+        }
+    }
+}
+
+// S 型走位导航
+void S_Point_to_Point(uint8_t i)
+{
+    // 使用平面坐标系计算（单位：米）
+    float dx = S_Point[NOW_S_Point][0] - position[0];
+    float dy = S_Point[NOW_S_Point][1] - position[1];
+    
+    // 计算平面方位角（0-360度）
+    float angle = RAD_TO_ANGLE(atan2f(dy, dx));
+    angle = angle < 0 ? angle + 360 : angle;
+    
+    // 计算欧几里得距离
+    float distance = sqrtf(dx*dx + dy*dy);
+
+    target_angle = angle;
+
+    if (distance < 0.1f)
+    {
+        reach_flag = 1;  // INS使用相同标志位
+    }
+}
+
+// S 型走位导航
+void S_Point_Navigation(void)
+{
+    if (NOW_S_Point > End_S_Point) {
+        target_speed = 0.0f;
+        return;
+    }
+    if (Start_S_Point < End_S_Point)
+    {
+        S_Point_to_Point(NOW_S_Point);
+        if (reach_flag)
+        {
+            NOW_S_Point++;
             reach_flag = 0;  // 重置标志位
         }
     }
@@ -167,11 +229,24 @@ void INS_Navigation(void)
     }
     if (Start_INS_Point < End_INS_Point)
     {
-        INS_Point_to_Point(NOW_INS_Point);
-        if (reach_flag)
+        if (NOW_S_Point == NOW_INS_Point && NOW_S_Point < End_S_Point) 
         {
-            NOW_INS_Point++;
-            reach_flag = 0;  // 重置标志位
+            S_Point_to_Point(NOW_S_Point);
+            if (reach_flag)
+            {
+                NOW_S_Point++;
+                NOW_INS_Point++;
+                reach_flag = 0;  // 重置标志位
+            }
+        } 
+        else 
+        {
+            INS_Point_to_Point(NOW_INS_Point);
+            if (reach_flag)
+            {
+                NOW_INS_Point++;
+                reach_flag = 0;  // 重置标志位
+            }
         }
     }
 }
