@@ -105,7 +105,7 @@ void GPS_Point_to_Point(uint8_t i)
     // ips114_show_float(90, 96, (float)distance, 5, 1);
     if (distance < 1.0f)
     {
-        reach_flag = 1;  // 使用标志位代替直接修改速度
+        reach_flag = 1;
     }
 }
 
@@ -122,7 +122,7 @@ void GPS_ENU_Point_to_Point(uint8_t i)
     target_angle = angle;
     if (distance < 1.0f) 
     {
-        reach_flag = 1;  // 统一使用标志位
+        reach_flag = 1;
     }
 }
 
@@ -178,7 +178,7 @@ void S_Point_to_Point(uint8_t i)
 
     if (distance < 0.1f)
     {
-        reach_flag = 1;  // INS使用相同标志位
+        reach_flag = 1;
     }
 }
 
@@ -217,7 +217,7 @@ void INS_Point_to_Point(uint8_t i)
 
     if (distance < 0.1f)
     {
-        reach_flag = 1;  // INS使用相同标志位
+        reach_flag = 1;
     }
 }
 

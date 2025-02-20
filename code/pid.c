@@ -25,8 +25,8 @@ void PID_Speed_Calc(struct PID *pid, float current)
     pid->current = current;
     pid->error = pid->target - pid->current;                    // 计算当前误差
     
-    pid->integral += pid->error;                               // 累积误差积分
-    pid->derivative = pid->error - pid->error_last;            // 计算误差微分
+    pid->integral += pid->error;                                // 累积误差积分
+    pid->derivative = pid->error - pid->error_last;             // 计算误差微分
     
     // 积分限幅，防止积分饱和
     if(pid->integral > 10000) pid->integral = 10000;
@@ -41,7 +41,7 @@ void PID_Speed_Calc(struct PID *pid, float current)
     if(pid->output > DUTY_MAX) pid->output = DUTY_MAX;
     if(pid->output < -DUTY_MAX) pid->output = -DUTY_MAX;
     
-    pid->error_last = pid->error;                              // 保存上次误差
+    pid->error_last = pid->error;                               // 保存上次误差
 }
 
 // 增量式 PID
@@ -65,9 +65,9 @@ void PID_Speed_Calc(struct PID *pid, float current)
 // 电机 PID 控制
 void Motor_PID_Control(float target)
 {
-    pid_speed.target = target;                    // 设置目标值
-    PID_Speed_Calc(&pid_speed, speed);                  // 使用当前速度作为反馈值
-    output_speed += (int16_t)pid_speed.output;               // 将PID输出转换为占空比
+    pid_speed.target = target;                                      // 设置目标值
+    PID_Speed_Calc(&pid_speed, speed);                              // 使用当前速度作为反馈值
+    output_speed += (int16_t)pid_speed.output;                      // 将PID输出转换为占空比
     
     // 输出限幅
     if(output_speed > DUTY_MAX) output_speed = DUTY_MAX;
@@ -124,7 +124,7 @@ void PID_Angle_Calc(struct PID *pid, float current)
 // 舵机 PID 控制
 void Steer_PID_Control(float target_angle)
 {
-    pid_steer.target = target_angle;  // 设置目标角度
-    PID_Angle_Calc(&pid_steer, yaw);  // 使用当前偏航角作为反馈
-    Steer_set_angle(pid_steer.output);// 设置舵机角度
+    pid_steer.target = target_angle;                                // 设置目标角度
+    PID_Angle_Calc(&pid_steer, yaw);                                // 使用当前偏航角作为反馈
+    Steer_set_angle(pid_steer.output);                              // 设置舵机角度
 }

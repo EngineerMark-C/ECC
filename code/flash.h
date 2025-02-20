@@ -13,10 +13,10 @@
 #define MAX_INS_POINTS            (16)                               // 最大 INS 点位数
 #define INS_DATA_SIZE             (3)                                // 5个存储单元（索引 + x轴坐标 + y轴坐标）
 
-extern uint8_t GPS_Point_Index;                                             // GPS 数据索引
-extern uint8_t INS_Point_Index;                                             // INS 数据索引
-extern double GPS_Point[MAX_GPS_POINTS][2];                                 // GPS 数据
-extern float INS_Point[MAX_INS_POINTS][2];                                  // INS 点位
+extern uint8_t GPS_Point_Index;                                      // GPS 数据索引
+extern uint8_t INS_Point_Index;                                      // INS 数据索引
+extern double GPS_Point[MAX_GPS_POINTS][2];                          // GPS 数据
+extern float INS_Point[MAX_INS_POINTS][2];                           // INS 点位
 
 extern float gyro_bias[3];
 

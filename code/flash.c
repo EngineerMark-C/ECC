@@ -1,23 +1,23 @@
 #include "zf_common_headfile.h"
 #include "init.h"
 
-#define FLASH_SECTION_INDEX       (0)                                // 存储数据用的扇区
-#define FLASH_PAGE_INDEX          (8)                                // 存储数据用的页码
-#define FLASH_BASIC_DATA_INDEX    (6)                                // 存储基础数据用的页码
-#define FLASH_GPS_DATA_INDEX      (5)                                // 存储 GPS 数据用的页码  第7页好像死了
-#define FLASH_INS_DATA_INDEX      (4)                                // 存储 INS 数据用的页码
+#define FLASH_SECTION_INDEX       (0)                                           // 存储数据用的扇区
+#define FLASH_PAGE_INDEX          (8)                                           // 存储数据用的页码
+#define FLASH_BASIC_DATA_INDEX    (6)                                           // 存储基础数据用的页码
+#define FLASH_GPS_DATA_INDEX      (5)                                           // 存储 GPS 数据用的页码  第7页好像死了
+#define FLASH_INS_DATA_INDEX      (4)                                           // 存储 INS 数据用的页码
 
-#define MAX_GPS_POINTS            (16)                               // 最大 GPS 点位数
-#define GPS_DATA_SIZE             (5)                                // 5个存储单元（索引 + 纬度高低位 + 经度高低位）
+#define MAX_GPS_POINTS            (16)                                          // 最大 GPS 点位数
+#define GPS_DATA_SIZE             (5)                                           // 5个存储单元（索引 + 纬度高低位 + 经度高低位）
 
-#define MAX_INS_POINTS            (16)                               // 最大 INS 点位数
-#define INS_DATA_SIZE             (3)                                // 5个存储单元（索引 + x轴坐标 + y轴坐标）
+#define MAX_INS_POINTS            (16)                                          // 最大 INS 点位数
+#define INS_DATA_SIZE             (3)                                           // 5个存储单元（索引 + x轴坐标 + y轴坐标）
 
-uint8_t GPS_Point_Index = 0;                                         // GPS 数据索引
-uint8_t INS_Point_Index = 0;                                         // INS 数据索引
+uint8_t GPS_Point_Index = 0;                                                    // GPS 数据索引
+uint8_t INS_Point_Index = 0;                                                    // INS 数据索引
 
-double GPS_Point[MAX_GPS_POINTS][2];                                 // GPS 数据
-float INS_Point[MAX_INS_POINTS][2];                                  // INS 点位
+double GPS_Point[MAX_GPS_POINTS][2];                                            // GPS 数据
+float INS_Point[MAX_INS_POINTS][2];                                             // INS 点位
 
 float gyro_bias[3] = {0.0f, 0.0f, 0.0f};  // 陀螺仪偏置
 
@@ -33,7 +33,7 @@ typedef union {
 // 例程测试
 void Flash_test(void)
 {
-if(flash_check(FLASH_SECTION_INDEX, FLASH_PAGE_INDEX))                      // 判断是否有数据
+if(flash_check(FLASH_SECTION_INDEX, FLASH_PAGE_INDEX))                          // 判断是否有数据
         flash_erase_page(FLASH_SECTION_INDEX, FLASH_PAGE_INDEX);                // 擦除这一页
 
     printf("\r\n");
