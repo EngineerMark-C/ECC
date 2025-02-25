@@ -15,6 +15,7 @@
 #include "ins.h"
 #include "control.h"
 #include "mode.h"
+#include "camera.h"
 
 void Init(void);
 
