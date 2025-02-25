@@ -112,6 +112,8 @@ static uint8_t start_index = 0;                                    // 新增：�
 static const uint8_t visible_items = 6;                            // 一屏显示6个条目（16px/item）
 uint8_t S_Point_Index = 0;                                         // S型走位点索引
 uint8_t Camera_Choose = 0;                                         // 摄像头选择
+static MenuState last_state = MENU_MAIN;                           // 记录上次菜单状态
+static uint8_t need_clear = 1;                                     // 清屏标志
 
 // 添加全局按键状态变量声明
 static key_state_enum key1_state;
@@ -126,8 +128,9 @@ void Button_init(void)
 
 void Display_Menu(void) 
 {
-    ips114_clear();    // 清屏
-    
+    if(need_clear) {
+        ips114_clear();  // 仅在需要时清屏
+    }
     switch(menu_state) 
     {
         case MENU_MAIN:
@@ -182,6 +185,17 @@ void Menu(void)
     key3_state = key_get_state(KEY_3);  // 确认/编辑
     key4_state = key_get_state(KEY_4);  // 返回
     
+    if(last_state != menu_state) 
+    {
+        ips114_clear(); // 状态变化时清屏
+        need_clear = 1;
+        last_state = menu_state;
+    } 
+    else 
+    {
+        need_clear = 0;
+    }
+
     switch(menu_state) 
     {
         case MENU_MAIN:
