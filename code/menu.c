@@ -19,7 +19,8 @@ typedef enum {
     MENU_SPEED_IMU,      // 速度和IMU信息显示状态
     MENU_STEER,          // 舵机调节状态
     MENU_NAV_MODE,       // 导航模式选择状态
-    MENU_S_Point         // S型走位显示状态
+    MENU_S_Point,         // S型走位显示状态
+    MENU_Camera          // 摄像头显示状态
 } MenuState;
 
 // 主菜单项定义
@@ -62,7 +63,8 @@ MainMenuItem main_menu_items[] = {
     {"Speed & IMU"},
     {"Steer Control"},
     {"Navigation Mode"},
-    {"S Point"}
+    {"S Point"},
+    {"Camera"}
 };
 
 // 路径设置菜单项
@@ -109,6 +111,9 @@ static bool edit_mode = false;                                     // 编辑模�
 static uint8_t start_index = 0;                                    // 新增：当前显示起始索引
 static const uint8_t visible_items = 6;                            // 一屏显示6个条目（16px/item）
 uint8_t S_Point_Index = 0;                                         // S型走位点索引
+uint8_t Camera_Choose = 0;                                         // 摄像头选择
+static MenuState last_state = MENU_MAIN;                           // 记录上次菜单状态
+static uint8_t need_clear = 1;                                     // 清屏标志
 
 // 添加全局按键状态变量声明
 static key_state_enum key1_state;
@@ -123,8 +128,9 @@ void Button_init(void)
 
 void Display_Menu(void) 
 {
-    ips114_clear();    // 清屏
-    
+    if(need_clear) {
+        ips114_clear();  // 仅在需要时清屏
+    }
     switch(menu_state) 
     {
         case MENU_MAIN:
@@ -163,6 +169,9 @@ void Display_Menu(void)
         case MENU_S_Point:
             Display_S_Point();
             break;
+        case MENU_Camera:
+            Display_Camera();
+            break;
     }
 }
 
@@ -175,7 +184,18 @@ void Menu(void)
     key2_state = key_get_state(KEY_2);  // 下
     key3_state = key_get_state(KEY_3);  // 确认/编辑
     key4_state = key_get_state(KEY_4);  // 返回
-    
+
+    if(last_state != menu_state || key1_state || key2_state || key3_state || key4_state) 
+    {
+        ips114_clear(); // 状态变化时清屏
+        need_clear = 1;
+        last_state = menu_state;
+    } 
+    else 
+    {
+        need_clear = 0;
+    }
+
     switch(menu_state) 
     {
         case MENU_MAIN:
@@ -207,6 +227,9 @@ void Menu(void)
             break;
         case MENU_S_Point:
             S_Point_Menu_Key_Process();
+            break;
+        case MENU_Camera:
+            Camera_Menu_Key_Process();
             break;
         case MENU_SPEED_IMU:
         case MENU_GPS_INFO:
@@ -506,27 +529,44 @@ void Display_Nav_Mode_Menu(void)
     ips114_show_string(0, 112, "KEY3:Select  KEY4:Back");
 }
 
+// 摄像头显示函数
+void Display_Camera(void)
+{
+    ips114_show_string(0, 0, "Camera");
+    if(mt9v03x_finish_flag)
+    {
+        if (Camera_Choose == 0)
+        {
+            ips114_displayimage03x((const uint8 *)mt9v03x_image, MT9V03X_W, MT9V03X_H);                             // 显示原始图像
+        }
+        else if (Camera_Choose == 1)
+        {
+            ips114_show_gray_image(0, 0, (const uint8 *)mt9v03x_image, MT9V03X_W, MT9V03X_H, 240, 135, 64);       // 显示灰度图像
+        }
+        mt9v03x_finish_flag = 0;
+    }
+    ips114_show_string(0, 112, "Press KEY4:Back");
+}
+
 // 主菜单按键处理
 void Main_Menu_Key_Process(void)
 {
     if(key1_state == KEY_SHORT_PRESS) 
     {
-        if(current_item > 0) {
-            current_item--;
-            // 滚动逻辑：当当前索引小于起始索引时调整显示范围
-            if(current_item < start_index)
-                start_index = current_item;
-        }
+        // 修改后的上键循环逻辑
+        current_item = (current_item == 0) ? (MAIN_MENU_ITEMS_COUNT - 1) : (current_item - 1);
+        // 更新显示起始索引
+        if(current_item < start_index)
+            start_index = (current_item / visible_items) * visible_items;
         key_clear_state(KEY_1);
     }
     if(key2_state == KEY_SHORT_PRESS) 
     {
-        if(current_item < MAIN_MENU_ITEMS_COUNT - 1) {
-            current_item++;
-            // 滚动逻辑：当当前索引超过显示范围时调整显示范围
-            if(current_item >= start_index + visible_items)
-                start_index = current_item - visible_items + 1;
-        }
+        // 修改后的下键循环逻辑
+        current_item = (current_item == MAIN_MENU_ITEMS_COUNT - 1) ? 0 : (current_item + 1);
+        // 更新显示起始索引
+        if(current_item >= start_index + visible_items || current_item < start_index)
+            start_index = (current_item / visible_items) * visible_items;
         key_clear_state(KEY_2);
     }
     if(key3_state == KEY_SHORT_PRESS) 
@@ -545,6 +585,7 @@ void Main_Menu_Key_Process(void)
             case 8: menu_state = MENU_STEER; break;
             case 9: menu_state = MENU_NAV_MODE; ; break;
             case 10: menu_state = MENU_S_Point; start_index = 0; break;
+            case 11: menu_state = MENU_Camera; break;
         }
         key_clear_state(KEY_3);
     }
@@ -933,6 +974,21 @@ void Nav_Mode_Key_Process(void)
         menu_state = MENU_MAIN;
         Save_Basic_Data();
         key_clear_state(KEY_3);
+    }
+    if(key4_state == KEY_SHORT_PRESS) 
+    {
+        menu_state = MENU_MAIN;
+        key_clear_state(KEY_4);
+    }
+}
+
+// Camera按键处理函数
+void Camera_Menu_Key_Process(void)
+{
+    if (key1_state == KEY_SHORT_PRESS)
+    {
+        Camera_Choose = Camera_Choose ? 0 : 1;
+        key_clear_state(KEY_1);
     }
     if(key4_state == KEY_SHORT_PRESS) 
     {

@@ -13,14 +13,14 @@ float pitch = 0.0f, roll = 0.0f, yaw = 0.0f;                 // 欧拉角
 float yaw_mag = 0.0f;                                        // 磁力计偏航角
 
 // 添加时间测量变量
-// uint32 quaternion_time = 0;      // 四元数解算时间
-// uint32 mag_yaw_time = 0;         // 磁力计解算时间
+// uint32 quaternion_time = 0;                               // 四元数解算时间
+// uint32 mag_yaw_time = 0;                                  // 磁力计解算时间
 
 // 添加卡尔曼滤波和陀螺仪偏置相关变量
-static float P[3] = {1.0f, 1.0f, 1.0f};          // 卡尔曼滤波误差协方差
-static float Q = 0.001f;                          // 过程噪声协方差
-static float R = 0.03f;                           // 测量噪声协方差
-static float K[3];                                // 卡尔曼增益
+static float P[3] = {1.0f, 1.0f, 1.0f};                      // 卡尔曼滤波误差协方差
+static float Q = 0.001f;                                     // 过程噪声协方差
+static float R = 0.03f;                                      // 测量噪声协方差
+static float K[3];                                           // 卡尔曼增益
 
 // 陀螺仪偏置校准函数
 // void Calibrate_gyro(void)

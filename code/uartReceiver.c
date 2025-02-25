@@ -37,9 +37,9 @@ void Angle_map(void)
 // 遥控逻辑
 void Remote_control(void)
 {
-    if(1 == uart_receiver.finsh_flag)                            // 帧完成标志判断
+    if(1 == uart_receiver.finsh_flag)                               // 帧完成标志判断
     {
-        if(1 == uart_receiver.state)                             // 遥控器失控状态判断
+        if(1 == uart_receiver.state)                                // 遥控器失控状态判断
         // {
         //     printf("CH1-CH6 data: ");
         //     for(int i = 0; i < 6; i++)
@@ -53,13 +53,13 @@ void Remote_control(void)
         //     printf("Remote control has been disconnected.\r\n"); // 串口输出失控提示
         // }
         {
-            Speed_map();                                          // 遥控数据与速度映射
-            Angle_map();                                          // 遥控数据与舵机角度映射
+            Speed_map();                                            // 遥控数据与速度映射
+            Angle_map();                                            // 遥控数据与舵机角度映射
         }
-        uart_receiver.finsh_flag = 0;                            // 帧完成标志复位
+        uart_receiver.finsh_flag = 0;                               // 帧完成标志复位
     }
     // else
     // {
-    //     printf("Waiting for remote control data...\n");  // 添加等待数据提示
+    //     printf("Waiting for remote control data...\n");          // 添加等待数据提示
     // }
 }

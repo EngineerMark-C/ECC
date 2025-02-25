@@ -17,7 +17,7 @@ float speed = 0.0f;
 void Encoder_init (void)
 {
     encoder_dir_init(ENCODER_DIR, ENCODER_DIR_PULSE, ENCODER_DIR_DIR);
-    pit_ms_init(PIT0, 10);                                                      // 初始化 PIT0 为周期中断 100ms 周
+    pit_ms_init(PIT0, 10);                                                      // 初始化 PIT0 为周期中断 10ms
 }
 
 void Encoder_get_speed(void)

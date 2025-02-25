@@ -12,6 +12,7 @@
 #include "control.h"
 #include "ins.h"
 #include "mode.h"
+#include "camera.h"
 
 void Init(void)
 {
@@ -31,4 +32,5 @@ void Init(void)
     PID_init(&pid_steer, 1.0f, 0.0f, 0.3f);     // 初始化 PID 控制器
     UartReceiver_init();                        // 初始化串口接收机
     INS_Init();                                 // 初始化惯导系统
+    Camera_Init();                              // 初始化摄像头
 }
