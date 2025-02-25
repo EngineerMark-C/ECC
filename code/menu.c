@@ -184,8 +184,8 @@ void Menu(void)
     key2_state = key_get_state(KEY_2);  // 下
     key3_state = key_get_state(KEY_3);  // 确认/编辑
     key4_state = key_get_state(KEY_4);  // 返回
-    
-    if(last_state != menu_state) 
+
+    if(last_state != menu_state || key1_state || key2_state || key3_state || key4_state) 
     {
         ips114_clear(); // 状态变化时清屏
         need_clear = 1;
