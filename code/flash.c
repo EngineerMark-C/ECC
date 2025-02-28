@@ -358,6 +358,10 @@ void INS_Points_Init(void)
 //                     | 13   | float      | SAFETY_X_MIN         |
 //                     | 14   | float      | SAFETY_Y_MAX         |
 //                     | 15   | float      | SAFETY_Y_MIN         |
+//                     | 16   | float      | MAX_SPEED            |
+//                     | 17   | float      | MIN_SPEED            |
+//                     | 18   | float      | APPROACH_SPEED       |
+//                     | 19   | float      | BRAKING_DISTANCE      |
 
 // 保存基础数据
 void Save_Basic_Data(void)
@@ -380,6 +384,10 @@ void Save_Basic_Data(void)
     flash_union_buffer[13].float_type = SAFETY_X_MIN;
     flash_union_buffer[14].float_type = SAFETY_Y_MAX;
     flash_union_buffer[15].float_type = SAFETY_Y_MIN;
+    flash_union_buffer[16].float_type = MAX_SPEED;
+    flash_union_buffer[17].float_type = MIN_SPEED;
+    flash_union_buffer[18].float_type = APPROACH_SPEED;
+    flash_union_buffer[19].float_type = BRAKING_DISTANCE;
 
     // 擦除并写入Flash
     flash_erase_page(FLASH_SECTION_INDEX, FLASH_BASIC_DATA_INDEX);
@@ -408,6 +416,10 @@ void Basic_Data_Init(void)
     SAFETY_X_MIN = flash_union_buffer[13].float_type;
     SAFETY_Y_MAX = flash_union_buffer[14].float_type;
     SAFETY_Y_MIN = flash_union_buffer[15].float_type;
+    MAX_SPEED = flash_union_buffer[16].float_type;
+    MIN_SPEED = flash_union_buffer[17].float_type;
+    APPROACH_SPEED = flash_union_buffer[18].float_type;
+    BRAKING_DISTANCE = flash_union_buffer[19].float_type;
 
     NOW_GPS_Point = Start_GPS_Point;
     NOW_INS_Point = Start_INS_Point;

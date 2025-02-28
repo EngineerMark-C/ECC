@@ -14,7 +14,7 @@ typedef enum {
     MENU_ENU_Point,      // ENU点位显示状态
     MENU_INS_Point,      // INS点位显示状态
     MENU_GPS_PATH,       // 路径设置状态
-    MENU_MOTOR,          // 电机调节状态
+    MENU_SPEED_MANAGE,   // 速度管理状态
     MENU_GPS_INFO,       // GPS信息显示状态
     MENU_SPEED_IMU,      // 速度和IMU信息显示状态
     MENU_STEER,          // 舵机调节状态
@@ -41,9 +41,8 @@ typedef struct {
 // 电机菜单项定义
 typedef struct {
     const char* name;
-    float min;
-    float max;
     float step;
+    float *num;
 } MotorMenuItem;
 
 // GPS路径设置菜单项定义
@@ -64,7 +63,7 @@ MainMenuItem main_menu_items[] = {
     {"ENU Point"},
     {"INS Point"},
     {"GPS Path Setup"},
-    {"Motor Control"},
+    {"Speed Manage"},
     {"GPS Info"},
     {"Speed & IMU"},
     {"Steer Control"},
@@ -103,11 +102,11 @@ SteerMenuItem steer_menu = {
 };
 
 // 电机菜单项
-MotorMenuItem motor_menu = {
-    "Motor Speed",
-    0.0f,
-    MAX_SPEED,
-    0.1f
+MotorMenuItem motor_menu[] = {
+    {"MAX_SPEED", 0.1f, &MAX_SPEED},
+    {"MIN_SPEED", 0.1f, &MIN_SPEED},
+    {"APPROACH_SPEED", 0.1f, &APPROACH_SPEED},
+    {"BRAKING_DISTANCE", 0.1f, &BRAKING_DISTANCE}
 };
 
 // 导航模式菜单显示文本数组
@@ -166,8 +165,8 @@ void Display_Menu(void)
         case MENU_GPS_PATH:
             Display_GPS_INS_Path();
             break;
-        case MENU_MOTOR:
-            Display_Motor_Menu();
+        case MENU_SPEED_MANAGE:
+            Display_Speed_Manage_Menu();
             break;
         case MENU_Calibrate_Gyro:
             Display_Calibrate_Gyro();
@@ -228,8 +227,8 @@ void Menu(void)
         case MENU_GPS_PATH:
             GPS_INS_Path_Menu_Key_Process();
             break;
-        case MENU_MOTOR:
-            Motor_Menu_Key_Process();
+        case MENU_SPEED_MANAGE:
+            Speed_Manage_Menu_Key_Process();
             break;
         case MENU_Calibrate_Gyro:
             Calibrate_Gyro_Menu_Key_Process();
@@ -437,15 +436,22 @@ void Display_GPS_INS_Path(void)
     ips114_show_string(0, 112, edit_mode ? "KEY1:+  KEY2:-" : "KEY3:Edit KEY4:Back");
 }
 
-// 显示电机调节界面
-void Display_Motor_Menu(void)
+// 显示速度管理界面
+void Display_Speed_Manage_Menu(void)
 {
-    ips114_show_string(0, 0, "Motor Control");
-    char buffer[32];
-    sprintf(buffer, "Speed: %.1f", target_speed);
-    ips114_show_string(0, 16, buffer);
-    ips114_show_string(0, 48, edit_mode ? "KEY1:+  KEY2:-" : "KEY3:Edit");
-    ips114_show_string(0, 64, "Press KEY4 to return");
+    ips114_show_string(0, 0, "Speed Management");
+
+    for(uint8_t i = 0; i < 4; i++) 
+    {
+        char buffer[32];
+        sprintf(buffer, "%s%s: %.1f",
+            (i == current_item) ? "> " : "  ",
+            motor_menu[i].name,
+            *motor_menu[i].num);
+        ips114_show_string(0, 16 + i*16, buffer);
+    }
+    ips114_show_string(0, 96, edit_mode ? "KEY1:+  KEY2:-" : "KEY3:Edit");
+    ips114_show_string(0, 112, "KEY4:Back");
 }
 
 // 显示陀螺仪校准界面
@@ -619,7 +625,7 @@ void Main_Menu_Key_Process(void)
             case 2: menu_state = MENU_ENU_Point; start_index = 0; break;
             case 3: menu_state = MENU_INS_Point; start_index = 0; break;
             case 4: menu_state = MENU_GPS_PATH; break;
-            case 5: menu_state = MENU_MOTOR; break;
+            case 5: menu_state = MENU_SPEED_MANAGE; current_item = 0; break;
             case 6: menu_state = MENU_GPS_INFO; break;
             case 7: menu_state = MENU_SPEED_IMU; break;
             case 8: menu_state = MENU_STEER; break;
@@ -804,23 +810,21 @@ void GPS_INS_Path_Menu_Key_Process(void)
 }
 
 // 电机调节按键处理
-void Motor_Menu_Key_Process(void)
+void Speed_Manage_Menu_Key_Process(void)
 {
-    if(edit_mode) 
+    if(edit_mode)
     {
         if(key1_state == KEY_SHORT_PRESS) 
         {
-            if(target_speed < motor_menu.max) 
-                target_speed += motor_menu.step;
+            *motor_menu[current_item].num += motor_menu[current_item].step;
             key_clear_state(KEY_1);
         }
         if(key2_state == KEY_SHORT_PRESS) 
         {
-            if(target_speed > motor_menu.min) 
-                target_speed -= motor_menu.step;
+            *motor_menu[current_item].num -= motor_menu[current_item].step;
             key_clear_state(KEY_2);
         }
-        if(key3_state == KEY_SHORT_PRESS || key4_state == KEY_SHORT_PRESS)
+        if(key3_state == KEY_SHORT_PRESS || key4_state == KEY_SHORT_PRESS) 
         {
             edit_mode = false;
             key_clear_state(KEY_3);
@@ -829,6 +833,22 @@ void Motor_Menu_Key_Process(void)
     } 
     else 
     {
+        if(key1_state == KEY_SHORT_PRESS) 
+        {
+            if(current_item > 0) 
+            {
+                current_item--;
+            }
+            key_clear_state(KEY_1);
+        }
+        if(key2_state == KEY_SHORT_PRESS) 
+        {
+            if(current_item < 3) 
+            {
+                current_item++;
+            }
+            key_clear_state(KEY_2);
+        }
         if(key3_state == KEY_SHORT_PRESS) 
         {
             edit_mode = true;
