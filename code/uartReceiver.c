@@ -32,7 +32,7 @@ void Angle_map(void)
     // 线性插值计算目标速度
     float target_angle;
 
-    target_angle = (120.0 / (1824 - 1024)) * (channel_value - 1024) + 1130;
+    target_angle = (120.0 / (1824 - 1024)) * (channel_value - 1024) + PWM_STEER_MIDDLE_L_SMALL;
 
     // 设置 PID 目标速度
     Sreer_set_duty(target_angle);
