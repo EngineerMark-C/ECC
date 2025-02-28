@@ -26,8 +26,8 @@ int pwm_limit(int duty, int max)
 // 设置PWM占空比
 void Motor_set_duty(int duty1, int duty2)
 {
-    duty1 = pwm_limit(duty1, 5000);
-    duty2 = pwm_limit(duty2, 5000);
+    duty1 = pwm_limit(duty1, 8000);
+    duty2 = pwm_limit(duty2, 8000);
     
     pwm_set_duty(PWM1, duty1);
     pwm_set_duty(PWM2, duty2);

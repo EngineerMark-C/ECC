@@ -37,7 +37,6 @@
 #pragma section all "cpu0_dsram"
 // 将本语句与#pragma section all restore语句之间的全局变量都放在CPU0的RAM中
 
-uint8 pit_state = 0;
 float sp =1.0f;
 // **************************** 代码区域 ****************************
 int core0_main(void)
@@ -50,21 +49,12 @@ int core0_main(void)
     Init();                         // 初始化函数
     while (TRUE)
     {
-        Imu_get_data();                                             // 获取 IMU963RA 数据
+        //Imu_get_data();                                             // 获取 IMU963RA 数据
 //        My_Key();                                                 // 按键处理函数
         Ips_show();                                                 // IPS 显示函数
         system_delay_ms(50);                                        // 适当的刷新间隔
 
-        if (pit_state == 1)
-        { 
-            Encoder_get_speed();                                                        // 计算速度
-
-            //PID_OK(sp);                                                               // 设置目标速度
-            Remote_control();                                                           // 遥控逻辑
-
-            pit_state = 0;
-        }
-        printf("%f,%f\n",speed,sp);
+        // printf("%f,%f\n",speed,sp);
     }
 
 }
@@ -76,8 +66,9 @@ IFX_INTERRUPT(cc60_pit_ch0_isr, 0, CCU6_0_CH0_ISR_PRIORITY)
 
     encoder_data_dir = encoder_get_count(ENCODER_DIR);               // 获取编码器计数
     encoder_clear_count(ENCODER_DIR);
+    Encoder_get_speed();                                                        // 计算速度
 
-    pit_state = 1;
+    Remote_control();                                                           // 遥控逻辑
 }
 
 
