@@ -18,6 +18,7 @@ void Display_ENU_Point(void);
 void Display_Nav_Mode_Menu(void);
 void Display_S_Point(void);
 void Display_Camera(void);
+void Display_Boundary(void);
 
 void Main_Menu_Key_Process(void);
 void Steer_Menu_Key_Process(void);
@@ -30,5 +31,6 @@ void ENU_Point_Menu_Key_Process(void);
 void Nav_Mode_Key_Process(void);
 void S_Point_Menu_Key_Process(void);
 void Camera_Menu_Key_Process(void);
+void Boundary_Menu_Key_Process(void);
 
 #endif

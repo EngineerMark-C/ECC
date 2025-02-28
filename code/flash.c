@@ -354,6 +354,10 @@ void INS_Points_Init(void)
 //                     | 9    | uint8      | Navigation_Flag      |
 //                     | 10   | uint8      | Start_S_Point        |
 //                     | 11   | uint8      | End_S_Point          |
+//                     | 12   | float      | SAFETY_X_MAX         |
+//                     | 13   | float      | SAFETY_X_MIN         |
+//                     | 14   | float      | SAFETY_Y_MAX         |
+//                     | 15   | float      | SAFETY_Y_MIN         |
 
 // 保存基础数据
 void Save_Basic_Data(void)
@@ -372,6 +376,10 @@ void Save_Basic_Data(void)
     flash_union_buffer[9].uint8_type = (uint8_t)Navigation_Flag;
     flash_union_buffer[10].uint8_type = Start_S_Point;
     flash_union_buffer[11].uint8_type = End_S_Point;
+    flash_union_buffer[12].float_type = SAFETY_X_MAX;
+    flash_union_buffer[13].float_type = SAFETY_X_MIN;
+    flash_union_buffer[14].float_type = SAFETY_Y_MAX;
+    flash_union_buffer[15].float_type = SAFETY_Y_MIN;
 
     // 擦除并写入Flash
     flash_erase_page(FLASH_SECTION_INDEX, FLASH_BASIC_DATA_INDEX);
@@ -396,6 +404,10 @@ void Basic_Data_Init(void)
     Navigation_Flag = flash_union_buffer[9].uint8_type;
     Start_S_Point = flash_union_buffer[10].uint8_type;
     End_S_Point = flash_union_buffer[11].uint8_type;
+    SAFETY_X_MAX = flash_union_buffer[12].float_type;
+    SAFETY_X_MIN = flash_union_buffer[13].float_type;
+    SAFETY_Y_MAX = flash_union_buffer[14].float_type;
+    SAFETY_Y_MIN = flash_union_buffer[15].float_type;
 
     NOW_GPS_Point = Start_GPS_Point;
     NOW_INS_Point = Start_INS_Point;

@@ -19,8 +19,9 @@ typedef enum {
     MENU_SPEED_IMU,      // 速度和IMU信息显示状态
     MENU_STEER,          // 舵机调节状态
     MENU_NAV_MODE,       // 导航模式选择状态
-    MENU_S_Point,         // S型走位显示状态
-    MENU_Camera          // 摄像头显示状态
+    MENU_S_Point,        // S型走位显示状态
+    MENU_Camera,         // 摄像头显示状态
+    MUNU_Boundary,       // 边界显示状态
 } MenuState;
 
 // 主菜单项定义
@@ -51,6 +52,11 @@ typedef struct {
     uint8_t* num;
 } GPSINSPathMenuItem;
 
+typedef struct {
+    const char* name;
+    float *num;
+} BoundaryMenuItem;
+
 // 主菜单项
 MainMenuItem main_menu_items[] = {
     {"Calibrate Gyro"},
@@ -64,7 +70,8 @@ MainMenuItem main_menu_items[] = {
     {"Steer Control"},
     {"Navigation Mode"},
     {"S Point"},
-    {"Camera"}
+    {"Camera"},
+    {"Boundary"}
 };
 
 // 路径设置菜单项
@@ -76,6 +83,14 @@ GPSINSPathMenuItem gps_ins_path_menu[] = {
     {"GPS to INS Point", &GPS_TO_INS_POINT},
     {"Start S Point", &Start_S_Point},
     {"End S Point", &End_S_Point}
+};
+
+// 边界编辑菜单项
+BoundaryMenuItem boundary_menu[] = {
+    {"SAFETY_X_MAX", &SAFETY_X_MAX},
+    {"SAFETY_X_MIN", &SAFETY_X_MIN},
+    {"SAFETY_Y_MAX", &SAFETY_Y_MAX},
+    {"SAFETY_Y_MIN", &SAFETY_Y_MIN}
 };
 
 // 舵机菜单项
@@ -172,6 +187,9 @@ void Display_Menu(void)
         case MENU_Camera:
             Display_Camera();
             break;
+        case MUNU_Boundary:
+            Display_Boundary();
+            break;
     }
 }
 
@@ -230,6 +248,9 @@ void Menu(void)
             break;
         case MENU_Camera:
             Camera_Menu_Key_Process();
+            break;
+        case MUNU_Boundary:
+            Boundary_Menu_Key_Process();
             break;
         case MENU_SPEED_IMU:
         case MENU_GPS_INFO:
@@ -548,6 +569,25 @@ void Display_Camera(void)
     ips114_show_string(0, 112, "Press KEY4:Back");
 }
 
+// 边界编辑界面
+void Display_Boundary(void)
+{
+    ips114_show_string(0, 0, "Boundary");
+
+    for (uint8_t i = 0; i < 4; i++)
+    {
+        char buffer[32];
+        sprintf(buffer, "%s%s: %.2f",
+            (i == current_item) ? "> " : "  ",
+            boundary_menu[i].name,
+            *boundary_menu[i].num);
+        ips114_show_string(0, 16 + i * 16, buffer);
+    }
+    // 底部提示信息
+    ips114_show_string(0, 96, edit_mode ? "KEY1:+  KEY2:-" : "KEY3:Edit");
+    ips114_show_string(0, 112, "KEY4:Back");
+}
+
 // 主菜单按键处理
 void Main_Menu_Key_Process(void)
 {
@@ -586,6 +626,7 @@ void Main_Menu_Key_Process(void)
             case 9: menu_state = MENU_NAV_MODE; ; break;
             case 10: menu_state = MENU_S_Point; start_index = 0; break;
             case 11: menu_state = MENU_Camera; break;
+            case 12: menu_state = MUNU_Boundary; current_item = 0; break;
         }
         key_clear_state(KEY_3);
     }
@@ -994,5 +1035,59 @@ void Camera_Menu_Key_Process(void)
     {
         menu_state = MENU_MAIN;
         key_clear_state(KEY_4);
+    }
+}
+
+// 编辑边界按键处理函数
+void Boundary_Menu_Key_Process(void)
+{
+    if(edit_mode) 
+    {
+        if(key1_state == KEY_SHORT_PRESS) 
+        {
+            *boundary_menu[current_item].num += 10;
+            key_clear_state(KEY_1);
+        }
+        if(key2_state == KEY_SHORT_PRESS) 
+        {
+            *boundary_menu[current_item].num -= 10;
+            key_clear_state(KEY_2);
+        }
+        if(key3_state == KEY_SHORT_PRESS || key4_state == KEY_SHORT_PRESS) 
+        {
+            edit_mode = false;
+            key_clear_state(KEY_3);
+            key_clear_state(KEY_4);
+        }
+    } 
+    else 
+    {
+        if (key1_state == KEY_SHORT_PRESS) 
+        {
+            if (current_item > 0) 
+            {
+                current_item--;
+            }
+            key_clear_state(KEY_1);
+        }
+        if (key2_state == KEY_SHORT_PRESS) 
+        {
+            if (current_item < 3) 
+            {
+                current_item++;
+            }
+            key_clear_state(KEY_2);
+        }
+        if(key3_state == KEY_SHORT_PRESS) 
+        {
+            edit_mode = true;
+            key_clear_state(KEY_3);
+        }
+        if(key4_state == KEY_SHORT_PRESS) 
+        {
+            menu_state = MENU_MAIN;
+            Save_Basic_Data();
+            key_clear_state(KEY_4);
+        }
     }
 }

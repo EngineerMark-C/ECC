@@ -4,6 +4,11 @@
 float target_speed;
 float target_angle;
 
+float SAFETY_X_MAX;                                                  // X轴最大安全范围
+float SAFETY_X_MIN;                                                  // X轴最小安全范围
+float SAFETY_Y_MAX;                                                  // Y轴最大安全范围
+float SAFETY_Y_MIN;                                                  // Y轴最小安全范围
+
 float GPS_ENU[MAX_GPS_POINTS][2];                                    // GPS ENU 坐标
 float S_Point[MAX_INS_POINTS][2];                                    // S 型走位点
 
@@ -32,6 +37,21 @@ CoordinateSystem local_frame;  // 本地坐标系
 
 // 到达标志位
 uint8_t reach_flag = 0;
+
+// 边界检查函数
+void Safety_Boundary_Check(void)
+{
+    // 检查东向坐标
+    if(position[0] < SAFETY_X_MIN || position[0] > SAFETY_X_MAX) 
+    {
+        target_speed = 0.0f;
+    }
+    // 检查北向坐标
+    if(position[1] < SAFETY_Y_MIN || position[1] > SAFETY_Y_MAX) 
+    {
+        target_speed = 0.0f;
+    }
+}
 
 // 初始化零点坐标
 void Local_Frame_Init(double lat0, double lon0) 
