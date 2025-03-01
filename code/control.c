@@ -74,7 +74,7 @@ void Speed_Management(float distance)
     {
         // 线性减速区间
         // 当前目标速度 = 靠近速度 + (最大速度 - 靠近速度) * (当前距离 / 减速距离)
-        current_target_speed = APPROACH_SPEED + (MAX_SPEED - APPROACH_SPEED) * (distance / BRAKING_DISTANCE);
+        current_target_speed = APPROACH_SPEED + (MAX_SPEED - APPROACH_SPEED) * (distance / BRAKING_DISTANCE) * 0.6f;
 
         // 确保不低于最小速度
         current_target_speed = fmaxf(current_target_speed, MIN_SPEED);
