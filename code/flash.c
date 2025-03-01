@@ -361,7 +361,8 @@ void INS_Points_Init(void)
 //                     | 16   | float      | MAX_SPEED            |
 //                     | 17   | float      | MIN_SPEED            |
 //                     | 18   | float      | APPROACH_SPEED       |
-//                     | 19   | float      | BRAKING_DISTANCE      |
+//                     | 19   | float      | BRAKING_DISTANCE     |
+//                     | 20   | float      | S_Distance           |
 
 // 保存基础数据
 void Save_Basic_Data(void)
@@ -388,6 +389,7 @@ void Save_Basic_Data(void)
     flash_union_buffer[17].float_type = MIN_SPEED;
     flash_union_buffer[18].float_type = APPROACH_SPEED;
     flash_union_buffer[19].float_type = BRAKING_DISTANCE;
+    flash_union_buffer[20].float_type = S_Distance;
 
     // 擦除并写入Flash
     flash_erase_page(FLASH_SECTION_INDEX, FLASH_BASIC_DATA_INDEX);
@@ -420,6 +422,7 @@ void Basic_Data_Init(void)
     MIN_SPEED = flash_union_buffer[17].float_type;
     APPROACH_SPEED = flash_union_buffer[18].float_type;
     BRAKING_DISTANCE = flash_union_buffer[19].float_type;
+    S_Distance = flash_union_buffer[20].float_type;
 
     NOW_GPS_Point = Start_GPS_Point;
     NOW_INS_Point = Start_INS_Point;

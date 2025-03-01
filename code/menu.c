@@ -106,7 +106,8 @@ MotorMenuItem motor_menu[] = {
     {"MAX_SPEED", 0.1f, &MAX_SPEED},
     {"MIN_SPEED", 0.1f, &MIN_SPEED},
     {"APPROACH_SPEED", 0.1f, &APPROACH_SPEED},
-    {"BRAKING_DISTANCE", 0.1f, &BRAKING_DISTANCE}
+    {"BRAKING_DISTANCE", 0.1f, &BRAKING_DISTANCE},
+    {"S_Distance", 0.1f, &S_Distance}
 };
 
 // 导航模式菜单显示文本数组
@@ -441,7 +442,7 @@ void Display_Speed_Manage_Menu(void)
 {
     ips114_show_string(0, 0, "Speed Management");
 
-    for(uint8_t i = 0; i < 4; i++) 
+    for(uint8_t i = 0; i < 5; i++) 
     {
         char buffer[32];
         sprintf(buffer, "%s%s: %.1f",
@@ -843,7 +844,7 @@ void Speed_Manage_Menu_Key_Process(void)
         }
         if(key2_state == KEY_SHORT_PRESS) 
         {
-            if(current_item < 3) 
+            if(current_item < 4) 
             {
                 current_item++;
             }

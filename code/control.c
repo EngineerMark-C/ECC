@@ -17,6 +17,8 @@ float BRAKING_DISTANCE;                                              // 开始�
 float GPS_ENU[MAX_GPS_POINTS][2];                                    // GPS ENU 坐标
 float S_Point[MAX_INS_POINTS][2];                                    // S 型走位点
 
+float S_Distance;                                                    // S 型走位偏移距离
+
 uint8_t Start_GPS_Point;                                             // 第一个 GPS 数据索引
 uint8_t End_GPS_Point;                                               // 最后一个 GPS 数据索引
 uint8_t NOW_GPS_Point;                                               // 当前 GPS 数据索引
@@ -122,13 +124,8 @@ void WGS84_to_ENU_Init(void)
 // S 型走位点位生成
 void S_Point_Generate(uint8_t i)
 {
-    float dx = INS_Point[i][0] - INS_Point[i+1][0];
-    float dy = INS_Point[i][1] - INS_Point[i+1][1];
-
-    float distance = sqrtf(dx*dx + dy*dy);
-
     S_Point[i][0] = INS_Point[i][0];
-    S_Point[i][1] = INS_Point[i][1] + ((i & 1) ? 1 : -1) *(distance / 2);
+    S_Point[i][1] = INS_Point[i][1] + ((i & 1) ? 1 : -1) * S_Distance;
 }
 
 // S 型走位点位初始化
