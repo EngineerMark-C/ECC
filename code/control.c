@@ -4,6 +4,16 @@
 float target_speed;
 float target_angle;
 
+float SAFETY_X_MAX;                                                  // X轴最大安全范围
+float SAFETY_X_MIN;                                                  // X轴最小安全范围
+float SAFETY_Y_MAX;                                                  // Y轴最大安全范围
+float SAFETY_Y_MIN;                                                  // Y轴最小安全范围
+
+float MAX_SPEED;                                                     // 最大速度
+float MIN_SPEED;                                                     // 最小速度
+float APPROACH_SPEED;                                                // 靠近速度    
+float BRAKING_DISTANCE;                                              // 开始减速距离
+
 float GPS_ENU[MAX_GPS_POINTS][2];                                    // GPS ENU 坐标
 float S_Point[MAX_INS_POINTS][2];                                    // S 型走位点
 
@@ -32,6 +42,45 @@ CoordinateSystem local_frame;  // 本地坐标系
 
 // 到达标志位
 uint8_t reach_flag = 0;
+
+// 边界检查函数
+void Safety_Boundary_Check(void)
+{
+    // 检查东向坐标
+    if(position[0] < SAFETY_X_MIN || position[0] > SAFETY_X_MAX) 
+    {
+        target_speed = 0.0f;
+        Fire_Flag = 0;
+    }
+    // 检查北向坐标
+    if(position[1] < SAFETY_Y_MIN || position[1] > SAFETY_Y_MAX) 
+    {
+        target_speed = 0.0f;
+        Fire_Flag = 0;
+    }
+}
+
+
+// 速度管理函数
+void Speed_Management(float distance)
+{
+    float current_target_speed;
+
+    // 动态速度曲线：距离越近速度越慢
+    if(distance > BRAKING_DISTANCE) {
+        current_target_speed = MAX_SPEED;
+    } 
+    else 
+    {
+        // 线性减速区间
+        // 当前目标速度 = 靠近速度 + (最大速度 - 靠近速度) * (当前距离 / 减速距离)
+        current_target_speed = APPROACH_SPEED + (MAX_SPEED - APPROACH_SPEED) * (distance / BRAKING_DISTANCE) * 0.6f;
+
+        // 确保不低于最小速度
+        current_target_speed = fmaxf(current_target_speed, MIN_SPEED);
+    }
+    target_speed = current_target_speed;
+}
 
 // 初始化零点坐标
 void Local_Frame_Init(double lat0, double lon0) 
@@ -101,6 +150,7 @@ void GPS_Point_to_Point(uint8_t i)
 
     // target_speed = 0.0f;
     target_angle = (float)angle;
+    Speed_Management((float)distance);
     // ips114_show_float(0, 96, target_angle, 5, 1);
     // ips114_show_float(90, 96, (float)distance, 5, 1);
     if (distance < 1.0f)
@@ -120,7 +170,10 @@ void GPS_ENU_Point_to_Point(uint8_t i)
     float distance = sqrtf(dx*dx + dy*dy);
     
     target_angle = angle;
-    if (distance < 1.0f) 
+    Speed_Management(distance);
+    
+    // 修改到达判断条件
+    if (distance < 1.0f)
     {
         reach_flag = 1;
     }
@@ -175,8 +228,9 @@ void S_Point_to_Point(uint8_t i)
     float distance = sqrtf(dx*dx + dy*dy);
 
     target_angle = angle;
-
-    if (distance < 0.1f)
+    Speed_Management(distance);
+    
+    if (distance < 0.2f)
     {
         reach_flag = 1;
     }
@@ -214,8 +268,9 @@ void INS_Point_to_Point(uint8_t i)
     float distance = sqrtf(dx*dx + dy*dy);
 
     target_angle = angle;
-
-    if (distance < 0.1f)
+    Speed_Management(distance);
+    
+    if (distance < 0.2f)
     {
         reach_flag = 1;
     }

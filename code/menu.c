@@ -14,13 +14,14 @@ typedef enum {
     MENU_ENU_Point,      // ENU点位显示状态
     MENU_INS_Point,      // INS点位显示状态
     MENU_GPS_PATH,       // 路径设置状态
-    MENU_MOTOR,          // 电机调节状态
+    MENU_SPEED_MANAGE,   // 速度管理状态
     MENU_GPS_INFO,       // GPS信息显示状态
     MENU_SPEED_IMU,      // 速度和IMU信息显示状态
     MENU_STEER,          // 舵机调节状态
     MENU_NAV_MODE,       // 导航模式选择状态
-    MENU_S_Point,         // S型走位显示状态
-    MENU_Camera          // 摄像头显示状态
+    MENU_S_Point,        // S型走位显示状态
+    MENU_Camera,         // 摄像头显示状态
+    MUNU_Boundary,       // 边界显示状态
 } MenuState;
 
 // 主菜单项定义
@@ -40,9 +41,8 @@ typedef struct {
 // 电机菜单项定义
 typedef struct {
     const char* name;
-    float min;
-    float max;
     float step;
+    float *num;
 } MotorMenuItem;
 
 // GPS路径设置菜单项定义
@@ -51,6 +51,11 @@ typedef struct {
     uint8_t* num;
 } GPSINSPathMenuItem;
 
+typedef struct {
+    const char* name;
+    float *num;
+} BoundaryMenuItem;
+
 // 主菜单项
 MainMenuItem main_menu_items[] = {
     {"Calibrate Gyro"},
@@ -58,13 +63,14 @@ MainMenuItem main_menu_items[] = {
     {"ENU Point"},
     {"INS Point"},
     {"GPS Path Setup"},
-    {"Motor Control"},
+    {"Speed Manage"},
     {"GPS Info"},
     {"Speed & IMU"},
     {"Steer Control"},
     {"Navigation Mode"},
     {"S Point"},
-    {"Camera"}
+    {"Camera"},
+    {"Boundary"}
 };
 
 // 路径设置菜单项
@@ -78,6 +84,14 @@ GPSINSPathMenuItem gps_ins_path_menu[] = {
     {"End S Point", &End_S_Point}
 };
 
+// 边界编辑菜单项
+BoundaryMenuItem boundary_menu[] = {
+    {"SAFETY_X_MAX", &SAFETY_X_MAX},
+    {"SAFETY_X_MIN", &SAFETY_X_MIN},
+    {"SAFETY_Y_MAX", &SAFETY_Y_MAX},
+    {"SAFETY_Y_MIN", &SAFETY_Y_MIN}
+};
+
 // 舵机菜单项
 SteerMenuItem steer_menu = {
     "Steer PWM",
@@ -88,11 +102,11 @@ SteerMenuItem steer_menu = {
 };
 
 // 电机菜单项
-MotorMenuItem motor_menu = {
-    "Motor Speed",
-    0.0f,
-    MAX_SPEED,
-    0.1f
+MotorMenuItem motor_menu[] = {
+    {"MAX_SPEED", 0.1f, &MAX_SPEED},
+    {"MIN_SPEED", 0.1f, &MIN_SPEED},
+    {"APPROACH_SPEED", 0.1f, &APPROACH_SPEED},
+    {"BRAKING_DISTANCE", 0.1f, &BRAKING_DISTANCE}
 };
 
 // 导航模式菜单显示文本数组
@@ -151,8 +165,8 @@ void Display_Menu(void)
         case MENU_GPS_PATH:
             Display_GPS_INS_Path();
             break;
-        case MENU_MOTOR:
-            Display_Motor_Menu();
+        case MENU_SPEED_MANAGE:
+            Display_Speed_Manage_Menu();
             break;
         case MENU_Calibrate_Gyro:
             Display_Calibrate_Gyro();
@@ -171,6 +185,9 @@ void Display_Menu(void)
             break;
         case MENU_Camera:
             Display_Camera();
+            break;
+        case MUNU_Boundary:
+            Display_Boundary();
             break;
     }
 }
@@ -210,8 +227,8 @@ void Menu(void)
         case MENU_GPS_PATH:
             GPS_INS_Path_Menu_Key_Process();
             break;
-        case MENU_MOTOR:
-            Motor_Menu_Key_Process();
+        case MENU_SPEED_MANAGE:
+            Speed_Manage_Menu_Key_Process();
             break;
         case MENU_Calibrate_Gyro:
             Calibrate_Gyro_Menu_Key_Process();
@@ -230,6 +247,9 @@ void Menu(void)
             break;
         case MENU_Camera:
             Camera_Menu_Key_Process();
+            break;
+        case MUNU_Boundary:
+            Boundary_Menu_Key_Process();
             break;
         case MENU_SPEED_IMU:
         case MENU_GPS_INFO:
@@ -416,15 +436,22 @@ void Display_GPS_INS_Path(void)
     ips114_show_string(0, 112, edit_mode ? "KEY1:+  KEY2:-" : "KEY3:Edit KEY4:Back");
 }
 
-// 显示电机调节界面
-void Display_Motor_Menu(void)
+// 显示速度管理界面
+void Display_Speed_Manage_Menu(void)
 {
-    ips114_show_string(0, 0, "Motor Control");
-    char buffer[32];
-    sprintf(buffer, "Speed: %.1f", target_speed);
-    ips114_show_string(0, 16, buffer);
-    ips114_show_string(0, 48, edit_mode ? "KEY1:+  KEY2:-" : "KEY3:Edit");
-    ips114_show_string(0, 64, "Press KEY4 to return");
+    ips114_show_string(0, 0, "Speed Management");
+
+    for(uint8_t i = 0; i < 4; i++) 
+    {
+        char buffer[32];
+        sprintf(buffer, "%s%s: %.1f",
+            (i == current_item) ? "> " : "  ",
+            motor_menu[i].name,
+            *motor_menu[i].num);
+        ips114_show_string(0, 16 + i*16, buffer);
+    }
+    ips114_show_string(0, 96, edit_mode ? "KEY1:+  KEY2:-" : "KEY3:Edit");
+    ips114_show_string(0, 112, "KEY4:Back");
 }
 
 // 显示陀螺仪校准界面
@@ -548,6 +575,25 @@ void Display_Camera(void)
     ips114_show_string(0, 112, "Press KEY4:Back");
 }
 
+// 边界编辑界面
+void Display_Boundary(void)
+{
+    ips114_show_string(0, 0, "Boundary");
+
+    for (uint8_t i = 0; i < 4; i++)
+    {
+        char buffer[32];
+        sprintf(buffer, "%s%s: %.2f",
+            (i == current_item) ? "> " : "  ",
+            boundary_menu[i].name,
+            *boundary_menu[i].num);
+        ips114_show_string(0, 16 + i * 16, buffer);
+    }
+    // 底部提示信息
+    ips114_show_string(0, 96, edit_mode ? "KEY1:+  KEY2:-" : "KEY3:Edit");
+    ips114_show_string(0, 112, "KEY4:Back");
+}
+
 // 主菜单按键处理
 void Main_Menu_Key_Process(void)
 {
@@ -579,13 +625,14 @@ void Main_Menu_Key_Process(void)
             case 2: menu_state = MENU_ENU_Point; start_index = 0; break;
             case 3: menu_state = MENU_INS_Point; start_index = 0; break;
             case 4: menu_state = MENU_GPS_PATH; break;
-            case 5: menu_state = MENU_MOTOR; break;
+            case 5: menu_state = MENU_SPEED_MANAGE; current_item = 0; break;
             case 6: menu_state = MENU_GPS_INFO; break;
             case 7: menu_state = MENU_SPEED_IMU; break;
             case 8: menu_state = MENU_STEER; break;
             case 9: menu_state = MENU_NAV_MODE; ; break;
             case 10: menu_state = MENU_S_Point; start_index = 0; break;
             case 11: menu_state = MENU_Camera; break;
+            case 12: menu_state = MUNU_Boundary; current_item = 0; break;
         }
         key_clear_state(KEY_3);
     }
@@ -763,23 +810,21 @@ void GPS_INS_Path_Menu_Key_Process(void)
 }
 
 // 电机调节按键处理
-void Motor_Menu_Key_Process(void)
+void Speed_Manage_Menu_Key_Process(void)
 {
-    if(edit_mode) 
+    if(edit_mode)
     {
         if(key1_state == KEY_SHORT_PRESS) 
         {
-            if(target_speed < motor_menu.max) 
-                target_speed += motor_menu.step;
+            *motor_menu[current_item].num += motor_menu[current_item].step;
             key_clear_state(KEY_1);
         }
         if(key2_state == KEY_SHORT_PRESS) 
         {
-            if(target_speed > motor_menu.min) 
-                target_speed -= motor_menu.step;
+            *motor_menu[current_item].num -= motor_menu[current_item].step;
             key_clear_state(KEY_2);
         }
-        if(key3_state == KEY_SHORT_PRESS || key4_state == KEY_SHORT_PRESS)
+        if(key3_state == KEY_SHORT_PRESS || key4_state == KEY_SHORT_PRESS) 
         {
             edit_mode = false;
             key_clear_state(KEY_3);
@@ -788,6 +833,22 @@ void Motor_Menu_Key_Process(void)
     } 
     else 
     {
+        if(key1_state == KEY_SHORT_PRESS) 
+        {
+            if(current_item > 0) 
+            {
+                current_item--;
+            }
+            key_clear_state(KEY_1);
+        }
+        if(key2_state == KEY_SHORT_PRESS) 
+        {
+            if(current_item < 3) 
+            {
+                current_item++;
+            }
+            key_clear_state(KEY_2);
+        }
         if(key3_state == KEY_SHORT_PRESS) 
         {
             edit_mode = true;
@@ -994,5 +1055,59 @@ void Camera_Menu_Key_Process(void)
     {
         menu_state = MENU_MAIN;
         key_clear_state(KEY_4);
+    }
+}
+
+// 编辑边界按键处理函数
+void Boundary_Menu_Key_Process(void)
+{
+    if(edit_mode) 
+    {
+        if(key1_state == KEY_SHORT_PRESS) 
+        {
+            *boundary_menu[current_item].num += 10;
+            key_clear_state(KEY_1);
+        }
+        if(key2_state == KEY_SHORT_PRESS) 
+        {
+            *boundary_menu[current_item].num -= 10;
+            key_clear_state(KEY_2);
+        }
+        if(key3_state == KEY_SHORT_PRESS || key4_state == KEY_SHORT_PRESS) 
+        {
+            edit_mode = false;
+            key_clear_state(KEY_3);
+            key_clear_state(KEY_4);
+        }
+    } 
+    else 
+    {
+        if (key1_state == KEY_SHORT_PRESS) 
+        {
+            if (current_item > 0) 
+            {
+                current_item--;
+            }
+            key_clear_state(KEY_1);
+        }
+        if (key2_state == KEY_SHORT_PRESS) 
+        {
+            if (current_item < 3) 
+            {
+                current_item++;
+            }
+            key_clear_state(KEY_2);
+        }
+        if(key3_state == KEY_SHORT_PRESS) 
+        {
+            edit_mode = true;
+            key_clear_state(KEY_3);
+        }
+        if(key4_state == KEY_SHORT_PRESS) 
+        {
+            menu_state = MENU_MAIN;
+            Save_Basic_Data();
+            key_clear_state(KEY_4);
+        }
     }
 }
