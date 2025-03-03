@@ -57,7 +57,8 @@ int core0_main(void)
         // uint32 start_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
 
         Menu();                                                     // 菜单逻辑
-        system_delay_ms(100);                                        // 将刷新间隔增加到100ms
+        system_delay_ms(100);                                       // 将刷新间隔增加到100ms
+
         Remote_control();                                           // 遥控逻辑
         // Imu_get_mag_yaw();                                          // 磁力计解算
         // Imu_get_quaternion();                                       // 四元数解算
