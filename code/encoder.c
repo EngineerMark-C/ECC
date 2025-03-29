@@ -9,15 +9,20 @@
 #define ENCODER_PULSE_NUM				1024									// 编码器一圈的脉冲数
 #define WHEEL_PERIMETER					22.61947f								// 轮子周长，单位cm
 #define GEAR_RATIO						0.245455f								// 齿轮传动比
-#define SAMPLE_TIME						0.01f									// 采样时间
+#define SAMPLE_TIME						0.1f									// 采样时间
 
 int16 encoder_data_dir = 0;
 float speed = 0.0f;
+uint16_t hall_count = 0; // 霍尔计数
+uint16_t countttt = 0; // 霍尔计数
+float rpm = 0.0f; // 转速
+float BLDC_speed = 0.0f; // BLDC 电机速度
+
 
 void Encoder_init (void)
 {
     encoder_dir_init(ENCODER_DIR, ENCODER_DIR_PULSE, ENCODER_DIR_DIR);
-    pit_ms_init(PIT0, 10);                                                      // 初始化 PIT0 为周期中断 10ms
+    pit_ms_init(PIT0, 100);                                                      // 初始化 PIT0 为周期中断 10ms
 }
 
 void Encoder_get_speed(void)
@@ -36,4 +41,14 @@ void Encoder_get_speed(void)
     //速度 = 脉冲数                  / 每圈脉冲数         * 传动比      * 轮周长          / 采样时间    / 100
     // filtered_speed = 0.8f * filtered_speed + 0.2f * speed;  // 一阶低通滤波
     // speed = filtered_speed;
+}
+
+void BLDC_get_speed(void)
+{
+    countttt = hall_count; // 霍尔计数
+    hall_count = 0; // 清零霍尔计数
+    // rpm = 计数 / 6
+    rpm = (float)countttt / 6 ;
+    // 转速 =    rpm *  传动比      * 轮周长         / 采样时间      / 100.0f
+    BLDC_speed = rpm *  GEAR_RATIO * WHEEL_PERIMETER / SAMPLE_TIME / 100.0f;
 }

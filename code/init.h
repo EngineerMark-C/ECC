@@ -16,6 +16,8 @@
 #include "control.h"
 #include "mode.h"
 #include "camera.h"
+#include "hall.h"
+#include "bldc.h"
 
 void Init(void);
 

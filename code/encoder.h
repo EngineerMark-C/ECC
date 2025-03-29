@@ -7,8 +7,13 @@
 
 extern int16 encoder_data_dir;
 extern float speed;
+extern uint16_t hall_count; // 霍尔计数
+extern uint16_t countttt; // 霍尔计数
+extern float rpm; // 转速
+extern float BLDC_speed; // BLDC 电机速度
 
 void Encoder_init(void);
 void Encoder_get_speed(void);
+void BLDC_get_speed(void);
 
 #endif

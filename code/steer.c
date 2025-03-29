@@ -1,7 +1,7 @@
 #include "zf_common_headfile.h"
 #include "init.h"
 
-#define STEER                   (ATOM1_CH1_P33_9)
+#define STEER                   (ATOM2_CH3_P00_12)
 
 #define PWM_STEER_MIN_L_SMALL					655                                            // L-Small车舵机PWM右极限   其实是 R 车
 #define PWM_STEER_MIDDLE_L_SMALL				765                                            // L-Small车舵机PWM中值

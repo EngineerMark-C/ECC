@@ -13,6 +13,8 @@
 #include "ins.h"
 #include "mode.h"
 #include "camera.h"
+#include "hall.h"
+#include "bldc.h"
 
 void Init(void)
 {
@@ -33,4 +35,5 @@ void Init(void)
     UartReceiver_init();                        // 初始化串口接收机
     INS_Init();                                 // 初始化惯导系统
     Camera_Init();                              // 初始化摄像头
+    //hall_init();                                // 初始化霍尔值
 }

@@ -72,15 +72,13 @@
 
 // }
 
-IFX_INTERRUPT(cc61_pit_ch1_isr, 0, CCU6_1_CH1_ISR_PRIORITY)
-{
-    interrupt_global_enable(0);                     // 开启中断嵌套
-    pit_clear_flag(CCU61_CH1);
-
-
-
-
-}
+// IFX_INTERRUPT(cc61_pit_ch1_isr, 0, CCU6_1_CH1_ISR_PRIORITY)
+// {
+//     interrupt_global_enable(0);                     // 开启中断嵌套
+//     pit_clear_flag(CCU61_CH1);
+    
+//     BLDC_Update();                                  // BLDC 电机更新
+// }
 // **************************** PIT中断函数 ****************************
 
 

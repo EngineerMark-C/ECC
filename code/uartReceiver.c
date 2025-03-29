@@ -19,8 +19,8 @@ void Speed_map(void)
 
     target_speed = (15.0 / (RECEIVER_CHANGE)) * (channel_value - RECEIVER_MIDDLE);
 
-    printf("channel_value: %d\r\n", channel_value);
-    printf("target_speed: %f\r\n", target_speed);
+    // printf("channel_value: %d\r\n", channel_value);
+    // printf("target_speed: %f\r\n", target_speed);
 }
 
 void Angle_map(void)
