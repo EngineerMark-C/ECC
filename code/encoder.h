@@ -11,6 +11,7 @@ extern uint16_t hall_count; // 霍尔计数
 extern uint16_t countttt; // 霍尔计数
 extern float rpm; // 转速
 extern float BLDC_speed; // BLDC 电机速度
+extern float BLDC_target_speed; // BLDC 电机目标速度
 
 void Encoder_init(void);
 void Encoder_get_speed(void);

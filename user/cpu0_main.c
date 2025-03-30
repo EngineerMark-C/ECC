@@ -91,8 +91,9 @@ IFX_INTERRUPT(cc60_pit_ch0_isr, 0, CCU6_0_CH0_ISR_PRIORITY)
     // encoder_data_dir = encoder_get_count(ENCODER_DIR);              // 获取编码器计数
     // encoder_clear_count(ENCODER_DIR);
     // Encoder_get_speed();                                            // 计算速度
+    BLDC_get_speed();                                               // 获取 BLDC 电机速度
     // Motor_PID_Control(target_speed);                                // 电机 PID 控制
-    BLDC_get_speed();                                              // 获取 BLDC 电机速度
+    BLDC_PID_Control(BLDC_target_speed);                            // BLDC 电机 PID 控制
     // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
     // time = end_time - start_time;
     // float time_us = (float)time / 100.0f;

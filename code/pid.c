@@ -84,6 +84,21 @@ void Motor_PID_Control(float target)
     }
 }
 
+//BLDC 电机 PID 控制
+void BLDC_PID_Control(float target)
+{
+    pid_speed.target = target;                                      // 设置目标值
+    PID_Speed_Calc(&pid_speed, BLDC_speed);                          // 使用当前速度作为反馈值
+    output_speed += (int16_t)pid_speed.output;                      // 将PID输出转换为占空比
+    
+    // 输出限幅
+    if(output_speed > BLDC_DUTY_MAX) output_speed = BLDC_DUTY_MAX;
+    if(output_speed < -BLDC_DUTY_MAX) output_speed = -BLDC_DUTY_MAX;
+
+    BLDC_Set_duty(output_speed);
+    
+}
+
 // 角度式 PID
 void PID_Angle_Calc(struct PID *pid, float current)
 {

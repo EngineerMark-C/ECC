@@ -43,26 +43,30 @@
 // 本例程是开源库空工程 可用作移植或者测试各类内外设
 // 本例程是开源库空工程 可用作移植或者测试各类内外设
 // 本例程是开源库空工程 可用作移植或者测试各类内外设
-// uint32 time = 0;                     // 用于计算时间的变量
-// float  time_us = 0;
+//uint32_t time = 0;                     // 用于计算时间的变量
+//float  time_us = 0;
 
 void core1_main(void)
 {
     disable_Watchdog();                     // 关闭看门狗
     interrupt_global_enable(0);             // 打开全局中断
     // 此处编写用户代码 例如外设初始化代码等
-
+    
     hall_init();                            // 初始化霍尔值
     BLDC_Init();                            // 初始化 BLDC
-    BLDC_Set_Speed(200);                                       // 设置 BLDC 电机速度
+    //BLDC_target_speed = -2;                // 设置 BLDC 电机目标速度
+    //BLDC_Set_duty(-200);       // 设置 BLDC 电机速度
+    
     // 此处编写用户代码 例如外设初始化代码等
     cpu_wait_event_ready();                 // 等待所有核心初始化完毕
     while (TRUE)
     {
         // 此处编写需要循环执行的代码
         //printf("%d\r\n", hall_value_now);          // 打印当前霍尔值
-        //printf("%d \r\n", countttt);             // 打印霍尔计数
+        //printf("%d \r\n", countttt);               // 打印霍尔计数
         printf("BLDC_speed: %.2f \r\n", BLDC_speed); // 打印 BLDC 电机速度
+        //printf("DIR: %d \r\n", BLDC_Dir); // 打印电机转向
+        // printf("speed: %.2f \r\n", speed); // 打印编码器速度
         // printf("所需时间: %.2f us\n", time_us);
 
         // 此处编写需要循环执行的代码
@@ -74,20 +78,21 @@ IFX_INTERRUPT(cc61_pit_ch1_isr, 0, CCU6_1_CH1_ISR_PRIORITY)
     interrupt_global_enable(0);                     // 开启中断嵌套
     pit_clear_flag(CCU61_CH1);
 
-    // uint32 start_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
+//    uint32 start_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
 
     read_hall_value();                              // 读取当前霍尔值
+
     if(hall_value_now != last_hall )
     {
-
+        BLDC_Dir_Judge();                            // 判断电机转向
         last_hall = hall_value_now;
         hall_count++;                               // 霍尔计数
-        BLDC_Update();                                  // BLDC 电机更新
+        BLDC_Update();                              // BLDC 电机更新
     }
-    // uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
-    // time = end_time - start_time;
-    // time_us = (float)time / 100.0f;
 
+//    uint32 end_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
+//    time = end_time - start_time;
+//    time_us = (float)time / 100.0f;
 }
 
 #pragma section all restore

@@ -20,6 +20,7 @@ extern struct PID pid_steer;
 
 void PID_init(struct PID *pid, float kp, float ki, float kd);
 void Motor_PID_Control(float target);
+void BLDC_PID_Control(float target);
 void Steer_PID_Control(float target);
 
 #endif

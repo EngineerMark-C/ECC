@@ -18,7 +18,7 @@ void Speed_map(void)
     int16 channel_value = uart_receiver.channel[1];
 
     target_speed = (15.0 / (RECEIVER_CHANGE)) * (channel_value - RECEIVER_MIDDLE);
-
+    BLDC_target_speed = target_speed; // 将目标速度赋值给 BLDC 电机目标速度
     // printf("channel_value: %d\r\n", channel_value);
     // printf("target_speed: %f\r\n", target_speed);
 }

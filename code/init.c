@@ -30,7 +30,8 @@ void Init(void)
     S_Point_Init();                             // 初始化 S 型走位点
     Imu_init();                                 // 初始化 IMU963RA
     Gps_init();                                 // 初始化 GPS
-    PID_init(&pid_speed, 10.0, 0.0, 0.0);       // 初始化 PID 控制器
+    //PID_init(&pid_speed, 50.0f, 5.0f, 0.0f);       // 初始化 PID 控制器
+    PID_init(&pid_speed, 10.0f, 0.0f, 0.0f);       // 初始化 PID 控制器
     PID_init(&pid_steer, 1.0f, 0.0f, 0.3f);     // 初始化 PID 控制器
     UartReceiver_init();                        // 初始化串口接收机
     INS_Init();                                 // 初始化惯导系统

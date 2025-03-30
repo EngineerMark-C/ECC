@@ -1,5 +1,6 @@
 #include "isr_config.h"
 #include "zf_common_headfile.h"
+#include "init.h"
 
 #define PIT0                            (CCU60_CH0 )                            // 使用的周期中断编号
 
@@ -17,6 +18,7 @@ uint16_t hall_count = 0; // 霍尔计数
 uint16_t countttt = 0; // 霍尔计数
 float rpm = 0.0f; // 转速
 float BLDC_speed = 0.0f; // BLDC 电机速度
+float BLDC_target_speed; // BLDC 电机目标速度
 
 
 void Encoder_init (void)
@@ -35,8 +37,7 @@ void Encoder_get_speed(void)
     // SAMPLE_TIME：采样时间(s)
     // /100：将cm转换为m
     
-    // printf("encoder_data_dir: %d\n", encoder_data_dir);
-    // static float filtered_speed = 0;
+    // printf("encoder_data_dir: %d\n", encoder_data_dir);s
     speed = (float)encoder_data_dir / ENCODER_PULSE_NUM * GEAR_RATIO * WHEEL_PERIMETER / SAMPLE_TIME / 100.0f;
     //速度 = 脉冲数                  / 每圈脉冲数         * 传动比      * 轮周长          / 采样时间    / 100
     // filtered_speed = 0.8f * filtered_speed + 0.2f * speed;  // 一阶低通滤波
@@ -45,10 +46,11 @@ void Encoder_get_speed(void)
 
 void BLDC_get_speed(void)
 {
+
     countttt = hall_count; // 霍尔计数
     hall_count = 0; // 清零霍尔计数
     // rpm = 计数 / 6
     rpm = (float)countttt / 6 ;
-    // 转速 =    rpm *  传动比      * 轮周长         / 采样时间      / 100.0f
-    BLDC_speed = rpm *  GEAR_RATIO * WHEEL_PERIMETER / SAMPLE_TIME / 100.0f;
+    // 转速 =    方向               * rpm *  传动比      * 轮周长          / 采样时间      / 100.0f
+    BLDC_speed = (1 - 2 * BLDC_Dir) * rpm *  GEAR_RATIO * WHEEL_PERIMETER / SAMPLE_TIME / 100.0f;
 }
