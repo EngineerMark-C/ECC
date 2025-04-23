@@ -28,4 +28,8 @@ void Navigation_Mode_Switch(void)
                 break;
         }
     }
+    if (Fire_Flag == 0)
+    {
+        Remote_control();                               // 遥控逻辑
+    }
 }

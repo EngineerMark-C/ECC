@@ -17,6 +17,8 @@ extern float BRAKING_DISTANCE;
 extern float GPS_ENU[MAX_GPS_POINTS][2];
 extern float S_Point[MAX_INS_POINTS][2];
 
+extern float S_Distance;
+
 extern uint8_t Start_GPS_Point;
 extern uint8_t End_GPS_Point;
 extern uint8_t NOW_GPS_Point;
