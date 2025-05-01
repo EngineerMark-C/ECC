@@ -13,6 +13,7 @@
 #include "ins.h"
 #include "mode.h"
 #include "camera.h"
+#include "bldc.h"
 
 void Init(void)
 {
@@ -20,6 +21,7 @@ void Init(void)
     Button_init();                              // 初始化按键
     Encoder_init();                             // 初始化编码器
     Motor_init();                               // 初始化电机
+    BLDC_Init();                                // 初始化无刷电机驱动
     Steer_init();                               // 初始化舵机
     Basic_Data_Init();                          // 初始化基础数据
     GPS_Points_Init();                          // 初始化 GPS 点位

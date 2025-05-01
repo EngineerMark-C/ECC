@@ -3,9 +3,14 @@
 
 #define PIT0                            (CCU60_CH0 )                            // 使用的周期中断编号
 
-#define ENCODER_DIR                     (TIM6_ENCODER)                          // 带方向编码器对应使用的编码器接口
-#define ENCODER_DIR_PULSE               (TIM6_ENCODER_CH1_P20_3)                // PULSE 对应的引脚
-#define ENCODER_DIR_DIR                 (TIM6_ENCODER_CH2_P20_0)                // DIR 对应的引脚
+// #define ENCODER_DIR                     (TIM6_ENCODER)                          // 带方向编码器对应使用的编码器接口
+// #define ENCODER_DIR_PULSE               (TIM6_ENCODER_CH1_P20_3)                // PULSE 对应的引脚
+// #define ENCODER_DIR_DIR                 (TIM6_ENCODER_CH2_P20_0)                // DIR 对应的引脚
+
+#define ENCODER_DIR                     (TIM5_ENCODER)                          // 带方向编码器对应使用的编码器接口
+#define ENCODER_DIR_PULSE               (TIM5_ENCODER_CH1_P10_3)                // PULSE 对应的引脚
+#define ENCODER_DIR_DIR                 (TIM5_ENCODER_CH2_P10_1)                // DIR 对应的引脚
+
 #define ENCODER_PULSE_NUM				1024									// 编码器一圈的脉冲数
 #define WHEEL_PERIMETER					22.61947f								// 轮子周长，单位cm
 #define GEAR_RATIO						0.245455f								// 齿轮传动比
@@ -30,7 +35,7 @@ void Encoder_get_speed(void)
     // SAMPLE_TIME：采样时间(s)
     // /100：将cm转换为m
     
-    // printf("encoder_data_dir: %d\n", encoder_data_dir);
+    printf("encoder_data_dir: %d\n", encoder_data_dir);
     // static float filtered_speed = 0;
     speed = (float)encoder_data_dir / ENCODER_PULSE_NUM * GEAR_RATIO * WHEEL_PERIMETER / SAMPLE_TIME / 100.0f;
     //速度 = 脉冲数                  / 每圈脉冲数         * 传动比      * 轮周长          / 采样时间    / 100
