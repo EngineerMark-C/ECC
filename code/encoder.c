@@ -34,11 +34,14 @@ void Encoder_get_speed(void)
     // WHEEL_PERIMETER：轮周长(cm)
     // SAMPLE_TIME：采样时间(s)
     // /100：将cm转换为m
-    
-    printf("encoder_data_dir: %d\n", encoder_data_dir);
-    // static float filtered_speed = 0;
-    speed = (float)encoder_data_dir / ENCODER_PULSE_NUM * GEAR_RATIO * WHEEL_PERIMETER / SAMPLE_TIME / 100.0f;
-    //速度 = 脉冲数                  / 每圈脉冲数         * 传动比      * 轮周长          / 采样时间    / 100
-    // filtered_speed = 0.8f * filtered_speed + 0.2f * speed;  // 一阶低通滤波
-    // speed = filtered_speed;
+
+    // 编码器速度计算
+    // speed = (float)encoder_data_dir / ENCODER_PULSE_NUM * GEAR_RATIO * WHEEL_PERIMETER / SAMPLE_TIME / 100.0f;
+    // 速度 = 脉冲数                   / 每圈脉冲数         * 传动比      * 轮周长          / 采样时间     / 100
+
+    // 霍尔编码器速度计算
+    // encoder_data_dir 是电机每分钟的转速 (RPM)，需要将其转换为速度 (m/s)
+    // 转换公式：速度 = (RPM / 60) * GEAR_RATIO * WHEEL_PERIMETER / 100
+    // printf("rpm= %d\n", encoder_data_dir);
+    speed = (float)encoder_data_dir /60 * GEAR_RATIO * WHEEL_PERIMETER;
 }

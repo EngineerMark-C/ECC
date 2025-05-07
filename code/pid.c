@@ -73,15 +73,18 @@ void Motor_PID_Control(float target)
     if(output_speed > DUTY_MAX) output_speed = DUTY_MAX;
     if(output_speed < -DUTY_MAX) output_speed = -DUTY_MAX;
 
-    // 电机控制
-    if(output_speed >= 0)
-    {
-        Motor_set_duty(0, output_speed);          // 正转
-    }
-    else
-    {
-        Motor_set_duty(-output_speed, 0);         // 反转
-    }
+    // 有刷电机控制
+    // if(output_speed >= 0)
+    // {
+    //     Motor_set_duty(0, output_speed);          // 正转
+    // }
+    // else
+    // {
+    //     Motor_set_duty(-output_speed, 0);         // 反转
+    // }
+
+    // 无刷电机控制
+    BLDC_Set_Duty(output_speed);
 }
 
 // 角度式 PID
