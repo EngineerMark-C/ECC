@@ -41,7 +41,7 @@ void Encoder_get_speed(void)
 
     // 霍尔编码器速度计算
     // encoder_data_dir 是电机每分钟的转速 (RPM)，需要将其转换为速度 (m/s)
-    // 转换公式：速度 = (RPM / 60) * GEAR_RATIO * WHEEL_PERIMETER / 100
+    // 转换公式：速度 = (RPM / 60) * GEAR_RATIO * WHEEL_PERIMETER
     // printf("rpm= %d\n", encoder_data_dir);
     speed = (float)encoder_data_dir /60 * GEAR_RATIO * WHEEL_PERIMETER;
 }

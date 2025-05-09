@@ -1091,7 +1091,7 @@ void Boundary_Menu_Key_Process(void)
             }
             key_clear_state(KEY_1);
         }
-        if (key2_state == KEY_SHORT_PRESS) 
+        if (key2_state == KEY_SHORT_PRESS)
         {
             if (current_item < 3) 
             {

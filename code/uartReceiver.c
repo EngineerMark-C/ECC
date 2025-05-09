@@ -17,7 +17,7 @@ void Speed_map(void)
     // 假设 uart_receiver.channel[1] 的值在 224 到 1824 之间
     int16 channel_value = uart_receiver.channel[1];
 
-    target_speed = (15.0 / (RECEIVER_CHANGE)) * (channel_value - RECEIVER_MIDDLE);
+    target_speed = (20.0 / (RECEIVER_CHANGE)) * (channel_value - RECEIVER_MIDDLE);
 
     // printf("channel_value: %d\r\n", channel_value);
     // printf("target_speed: %f\r\n", target_speed);
