@@ -2,7 +2,7 @@
 #define _menu_h_
 #include <string.h>
 
-#define LINE_CHAR_LIMIT 25                   // 每行字符限制
+#define LINE_CHAR_LIMIT 30                   // 每行字符限制
 
 void Button_init(void);
 void Menu(void);

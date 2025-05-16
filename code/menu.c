@@ -133,6 +133,7 @@ static MenuState last_state = MENU_MAIN;                           // 记录上�
 static uint8_t need_clear = 1;                                     // 清屏标志
 static bool recording_flag = false;                                // 录音状态标志
 static const char* sample_text = NULL;                             // 语音识别结果指针
+//static const char* sample_text = "Hello, World!";
 static uint8_t text_line_count = 0;                               // 总行数
 static uint8_t text_start_line = 0;                               // 显示起始行
 
@@ -605,48 +606,6 @@ void Display_Boundary(void)
     // 底部提示信息
     ips114_show_string(0, 96, edit_mode ? "KEY1:+  KEY2:-" : "KEY3:Edit");
     ips114_show_string(0, 112, "KEY4:Back");
-}
-
-//语音识别
-void Display_Voice_Led(void)
-{
-   if(need_clear) ips114_clear();
-    
-    if(recording_flag && sample_text) 
-    {
-        // 显示识别结果
-        ips114_show_string(0, 0, "Voice Recognition:");
-        
-        // 计算显示范围
-        uint8_t end_line = text_start_line + visible_items;
-        if(end_line > text_line_count) end_line = text_line_count;
-        
-        // 显示可见行（使用全局visible_items）
-        for(uint8_t i = text_start_line; i < end_line; i++) 
-        {
-            uint8_t display_line = i - text_start_line;
-            char line_buffer[LINE_CHAR_LIMIT + 1];
-            strncpy(line_buffer, &sample_text[i * LINE_CHAR_LIMIT], LINE_CHAR_LIMIT);
-            line_buffer[LINE_CHAR_LIMIT] = '\0';
-            ips114_show_string(0, 16 + display_line*16, line_buffer);
-        }
-        
-        // 显示滚动提示（当超过可见行数时）
-        if(text_line_count > visible_items) 
-        {
-            ips114_show_string(200, 112, "SCROLL");
-        }
-    } 
-    else 
-    {
-        // 默认界面布局
-        ips114_show_string(0, 0, "Voice Control");
-        ips114_show_string(0, 32, "KEY3: Start Recording");
-        ips114_show_string(0, 64, "KEY4: Return to Main");
-    }
-    
-    // 固定底部提示
-    ips114_show_string(0, 112, "Press KEY4 to return");
 }
 
 
@@ -1170,6 +1129,46 @@ void Boundary_Menu_Key_Process(void)
     }
 }
 
+//语音识别
+void Display_Voice_Led(void)
+{
+   if(need_clear) ips114_clear();
+
+    if(recording_flag && sample_text)
+    {
+        // 显示识别结果
+        ips114_show_string(0, 0, "Voice Recognition:");
+
+        // 计算显示范围
+        uint8_t end_line = text_start_line + visible_items;
+        if(end_line > text_line_count) end_line = text_line_count;
+
+        // 显示可见行（使用全局visible_items）
+        for(uint8_t i = text_start_line; i < end_line; i++)
+        {
+            uint8_t display_line = i - text_start_line;
+            char line_buffer[LINE_CHAR_LIMIT + 1];
+            strncpy(line_buffer, &sample_text[i * LINE_CHAR_LIMIT], LINE_CHAR_LIMIT);
+            line_buffer[LINE_CHAR_LIMIT] = '\0';
+            ips114_show_string(0, 16 + display_line*16, line_buffer);
+        }
+
+        // 显示滚动提示（当超过可见行数时）
+        if(text_line_count > visible_items)
+        {
+            ips114_show_string(200, 112, "SCROLL");
+        }
+    }
+    else
+    {
+        // 默认界面布局
+        ips114_show_string(0, 0, "Voice Control");
+        ips114_show_string(0, 32, "KEY3: Start Recording");
+        ips114_show_string(0, 64, "KEY4: BACK");
+    }
+}
+
+//
 void Voice_Led_Menu_Key_Process(void)
 {
     if(!recording_flag) 
@@ -1177,12 +1176,14 @@ void Voice_Led_Menu_Key_Process(void)
         if(key3_state == KEY_SHORT_PRESS) 
         {
             // 执行语音识别
-            sample_text = NULL;
+            sample_text = "Hello, World!One rainy afternoon, Lisa was looking for her house key. ";
             //sample_text = Voice_ctrl();
             recording_flag = true;
             
             // 计算总行数（兼容全局visible_items）
-            uint8_t text_len = strlen(sample_text);
+            //uint8_t text_len = strlen(sample_text);
+            size_t len = strlen(sample_text);
+            uint8_t text_len = (len > UINT8_MAX) ? UINT8_MAX : (uint8_t)len;
             text_line_count = text_len / LINE_CHAR_LIMIT;
             if(text_len % LINE_CHAR_LIMIT != 0) text_line_count++;
             
@@ -1191,7 +1192,7 @@ void Voice_Led_Menu_Key_Process(void)
         }
         if(key4_state == KEY_SHORT_PRESS) 
         {
-            menu_state = MENU_MAIN;
+            menu_state = MUNU_Voice_Led;
             key_clear_state(KEY_4);
         }
     } 
