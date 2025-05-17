@@ -86,7 +86,8 @@ IFX_INTERRUPT(cc60_pit_ch0_isr, 0, CCU6_0_CH0_ISR_PRIORITY)
 {
     interrupt_global_enable(0);                                     // 开启中断嵌套
     pit_clear_flag(CCU60_CH0);
-
+    audio_callback();
+    timer_10ms_flag = 1; // 设置定时器标志
     // uint32 start_time = IfxStm_getLower(IfxStm_getAddress(IfxStm_Index_0));
     encoder_data_dir = encoder_get_count(ENCODER_DIR);              // 获取编码器计数
     //printf("编码器计数: %d\n", encoder_data_dir);             // 打印编码器计数

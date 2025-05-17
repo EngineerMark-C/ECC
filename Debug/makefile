@@ -1,5 +1,5 @@
 ################################################################################
-# 鑷姩鐢熸垚鐨勬枃浠躲�備笉瑕佺紪杈戯紒
+# Automatically-generated file. Do not edit!
 ################################################################################
 
 -include ../makefile.init
@@ -44,16 +44,28 @@ RM := rm -rf
 -include libraries/infineon_libraries/Service/CpuGeneric/StdIf/subdir.mk
 -include libraries/infineon_libraries/Service/CpuGeneric/If/subdir.mk
 -include libraries/infineon_libraries/Infra/Platform/Tricore/Compilers/subdir.mk
+-include code/kemu4/xf_asr/subdir.mk
+-include code/kemu4/TLD7002_driver/subdir.mk
+-include code/kemu4/subdir.mk
 -include code/subdir.mk
 ifneq ($(MAKECMDGOALS),clean)
+ifneq ($(strip $(C++M_DEPS)),)
+-include $(C++M_DEPS)
+endif
 ifneq ($(strip $(C++_DEPS)),)
 -include $(C++_DEPS)
+endif
+ifneq ($(strip $(CCM_DEPS)),)
+-include $(CCM_DEPS)
 endif
 ifneq ($(strip $(CC_DEPS)),)
 -include $(CC_DEPS)
 endif
 ifneq ($(strip $(CPP_DEPS)),)
 -include $(CPP_DEPS)
+endif
+ifneq ($(strip $(CXXM_DEPS)),)
+-include $(CXXM_DEPS)
 endif
 ifneq ($(strip $(CXX_DEPS)),)
 -include $(CXX_DEPS)
@@ -84,27 +96,32 @@ SECONDARY_SIZE += \
 ECC.siz \
 
 
-# 鎵�鏈夌洰鏍�
+# All Target
 all: main-build
 
-# 涓绘瀯寤虹洰鏍�
+# Main-build Target
 main-build: ECC.elf secondary-outputs
 
-# 宸ュ叿璋冪敤
-ECC.elf: $(OBJS) makefile $(OPTIONAL_TOOL_DEPS)
-	@echo '姝ｅ湪鏋勫缓鐩爣锛� $@'
-	@echo '姝ｅ湪璋冪敤锛� TASKING Linker'
-	cctc --lsl-file="../Lcf_Tasking_Tricore_Tc.lsl" -Wl-Oc -Wl-OL -Wl-Ot -Wl-Ox -Wl-Oy "C:\Users\sconm\Desktop\ecc\ECC -wu\libraries\zf_device\zf_device_config.a" -Wl--map-file="ECC.map" -Wl-mc -Wl-mf -Wl-mi -Wl-mk -Wl-ml -Wl-mm -Wl-md -Wl-mr -Wl-mu --no-warnings= -Wl--error-limit=42 --fp-model=3 -lc_fpu -lcs_fpu -lfp_fpu -lrt --lsl-core=vtc --exceptions --strict --anachronisms --force-c++ -Ctc26xb -o"ECC.elf" -Wl-o"ECC.hex:IHEX" $(OBJS)
-	@echo '宸茬粨鏉熸瀯寤虹洰鏍囷細 $@'
+# Tool invocations
+ECC.elf: $(OBJS) makefile $(OPTIONAL_TOOL_DEPS) .ECC.elf.opt
+	@echo 'Building target: $@'
+	@echo 'Invoking: TASKING Linker'
+	cctc -f .ECC.elf.opt
+	@echo 'Finished building target: $@'
 	@echo ' '
+
+.ECC.elf.opt:
+	@argfile .ECC.elf.opt --lsl-file="../Lcf_Tasking_Tricore_Tc.lsl" -Wl-Oc -Wl-OL -Wl-Ot -Wl-Ox -Wl-Oy "C:\Users\Ye\Desktop\hangzhou20\ECC\libraries\zf_device\zf_device_config.a" -Wl--map-file="ECC.map" -Wl-mc -Wl-mf -Wl-mi -Wl-mk -Wl-ml -Wl-mm -Wl-md -Wl-mr -Wl-mu --no-warnings= -Wl--error-limit=42 --fp-model=3 -lc_fpu -lcs_fpu -lfp_fpu -lrt --lsl-core=vtc --exceptions --strict --anachronisms --force-c++ -Ctc26xb -o"ECC.elf" -Wl-o"ECC.hex:IHEX" $(OBJS)
+
+.PHONY: .ECC.elf.opt
 
 ECC.siz: ECC.elf makefile $(OPTIONAL_TOOL_DEPS)
-	@echo '姝ｅ湪璋冪敤锛� Print Size'
+	@echo 'Invoking: Print Size'
 	elfsize  "ECC.elf"
-	@echo '宸茬粨鏉熸瀯寤猴細 $@'
+	@echo 'Finished building: $@'
 	@echo ' '
 
-# 鍏朵粬鐩爣
+# Other Targets
 clean:
 	-$(RM) ECC.siz ECC.elf
 	-@echo ' '

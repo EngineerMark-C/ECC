@@ -1,0 +1,1777 @@
+	; Module start
+	.compiler_version	"TASKING VX-toolset for AURIX Development Studio (non-commercial): C compiler v1.1r8 Build 22011964"
+	.compiler_invocation	"ctc -f cc28728a --dep-file=code/kemu4/xf_asr/sha1.d -c99 --fp-model=2cFlnrSTz -D__CPU__=tc26xb -D__CPU_TC26XB__ --core=tc1.6.x -D__CPU__=tc26xb -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\code -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\code\\\\kemu4 -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\code\\\\kemu4\\\\TLD7002_driver -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\code\\\\kemu4\\\\xf_asr -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Configurations -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Infra -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Infra\\\\Platform -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Infra\\\\Platform\\\\Tricore -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Infra\\\\Platform\\\\Tricore\\\\Compilers -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Infra\\\\Sfr -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Infra\\\\Sfr\\\\TC26B -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Infra\\\\Sfr\\\\TC26B\\\\_Reg -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Service -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Service\\\\CpuGeneric -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Service\\\\CpuGeneric\\\\If -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Service\\\\CpuGeneric\\\\If\\\\Ccu6If -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Service\\\\CpuGeneric\\\\StdIf -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Service\\\\CpuGeneric\\\\SysSe -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Service\\\\CpuGeneric\\\\SysSe\\\\Bsp -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Service\\\\CpuGeneric\\\\SysSe\\\\Math -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Service\\\\CpuGeneric\\\\_Utilities -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Asclin -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Asclin\\\\Asc -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Asclin\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Ccu6 -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Ccu6\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Ccu6\\\\Timer -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Cpu -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Cpu\\\\CStart -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Cpu\\\\Irq -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Cpu\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Dma -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Dma\\\\Dma -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Dma\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Flash -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Flash\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Gpt12 -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Gpt12\\\\IncrEnc -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Gpt12\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Gtm -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Gtm\\\\Atom -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Gtm\\\\Atom\\\\Pwm -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Gtm\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Mtu -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Mtu\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Port -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Port\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Qspi -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Qspi\\\\SpiMaster -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Qspi\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Scu -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Scu\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Src -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Src\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Stm -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Stm\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Vadc -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Vadc\\\\Adc -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Vadc\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\_Impl -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\_Lib -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\_Lib\\\\DataHandling -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\_PinMap -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\zf_common -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\zf_components -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\zf_device -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\zf_driver -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\user -g2 -w544 -w557 -t4 --language=+volatile -N0 -O0 -Y0 -Z0 --compact-max-size=200 --misrac-version=2004 -o code/kemu4/xf_asr/sha1.src ../code/kemu4/xf_asr/sha1.c"
+	.compiler_name		"ctc"
+	;source	'../code/kemu4/xf_asr/sha1.c'
+
+	
+$TC16X
+	
+	.sdecl	'.text.sha1.sha1_process_block',code,cluster('sha1_process_block')
+	.sect	'.text.sha1.sha1_process_block'
+	.align	2
+	
+; Function sha1_process_block
+.L28:
+sha1_process_block:	.type	func
+	lea	a10,[a10]-320
+.L111:
+	mov	d1,#0
+.L112:
+	j	.L2
+.L3:
+	mul	d15,d1,#4
+	addsc.a	a2,a10,d15,#0
+.L249:
+	mul	d15,d1,#4
+.L250:
+	addsc.a	a15,a5,d15,#0
+	ld.bu	d15,[a15]
+.L251:
+	sha	d0,d15,#24
+.L252:
+	mul	d15,d1,#4
+.L253:
+	addsc.a	a15,a5,d15,#0
+	ld.bu	d15,[a15]1
+.L254:
+	sha	d15,d15,#16
+.L255:
+	or	d0,d15
+.L256:
+	mul	d15,d1,#4
+.L257:
+	addsc.a	a15,a5,d15,#0
+	ld.bu	d15,[a15]2
+.L258:
+	sha	d15,d15,#8
+.L259:
+	or	d0,d15
+.L260:
+	mul	d15,d1,#4
+.L261:
+	addsc.a	a15,a5,d15,#0
+	ld.bu	d15,[a15]3
+.L262:
+	or	d0,d15
+.L263:
+	st.w	[a2],d0
+.L264:
+	add	d1,#1
+.L2:
+	mov	d15,#16
+.L265:
+	jlt	d1,d15,.L3
+.L266:
+	mov	d2,#16
+.L113:
+	j	.L4
+.L5:
+	mul	d15,d2,#4
+	addsc.a	a15,a10,d15,#0
+.L267:
+	add	d15,d2,#-3
+	mul	d15,d15,#4
+	addsc.a	a2,a10,d15,#0
+	ld.w	d0,[a2]
+	add	d15,d2,#-8
+	mul	d15,d15,#4
+	addsc.a	a2,a10,d15,#0
+	ld.w	d1,[a2]
+	xor	d0,d1
+	add	d1,d2,#-14
+	mul	d15,d1,#4
+	addsc.a	a2,a10,d15,#0
+	ld.w	d1,[a2]
+	xor	d0,d1
+	add	d1,d2,#-16
+	mul	d15,d1,#4
+	addsc.a	a2,a10,d15,#0
+	ld.w	d1,[a2]
+	xor	d0,d1
+	sh	d0,#1
+	add	d15,d2,#-3
+	mul	d15,d15,#4
+	addsc.a	a2,a10,d15,#0
+	ld.w	d1,[a2]
+	add	d15,d2,#-8
+	mul	d15,d15,#4
+	addsc.a	a2,a10,d15,#0
+	ld.w	d15,[a2]
+	xor	d1,d15
+	add	d15,d2,#-14
+	mul	d15,d15,#4
+	addsc.a	a2,a10,d15,#0
+	ld.w	d15,[a2]
+	xor	d1,d15
+	add	d15,d2,#-16
+	mul	d15,d15,#4
+	addsc.a	a2,a10,d15,#0
+	ld.w	d15,[a2]
+	xor	d1,d15
+	sh	d15,d1,#-31
+	or	d0,d15
+.L268:
+	st.w	[a15],d0
+.L269:
+	add	d2,#1
+.L4:
+	mov	d15,#80
+.L270:
+	jlt	d2,d15,.L5
+.L271:
+	ld.w	d3,[a4]
+.L115:
+	ld.w	d4,[a4]4
+.L117:
+	ld.w	d5,[a4]8
+.L119:
+	ld.w	d6,[a4]12
+.L121:
+	ld.w	d8,[a4]16
+.L122:
+	mov	d7,#0
+.L114:
+	j	.L6
+.L7:
+	mov	d15,#20
+.L272:
+	jge	d7,d15,.L8
+.L273:
+	sh	d0,d3,#5
+	sh	d1,d3,#-27
+	or	d0,d1
+.L274:
+	and	d1,d4,d5
+	mov	d2,#-1
+	xor	d2,d4
+	and	d2,d6
+	or	d1,d2
+.L275:
+	add	d0,d1
+.L276:
+	add	d0,d8
+.L277:
+	mul	d15,d7,#4
+	addsc.a	a15,a10,d15,#0
+	ld.w	d15,[a15]
+.L278:
+	add	d0,d15
+.L279:
+	mov	d15,#31129
+	addih	d15,d15,#23170
+.L124:
+	add	d15,d0
+.L280:
+	j	.L9
+.L8:
+	mov	d15,#40
+.L281:
+	jge	d7,d15,.L10
+.L282:
+	sh	d15,d3,#5
+	sh	d0,d3,#-27
+	or	d15,d0
+.L283:
+	xor	d0,d4,d5
+	xor	d0,d6
+.L284:
+	add	d15,d0
+.L285:
+	add	d8,d15
+.L123:
+	mul	d15,d7,#4
+	addsc.a	a15,a10,d15,#0
+	ld.w	d15,[a15]
+.L286:
+	add	d8,d15
+.L287:
+	mov.u	d15,#60321
+	addih	d15,d15,#28377
+.L125:
+	add	d15,d8
+.L288:
+	j	.L11
+.L10:
+	mov	d15,#60
+.L289:
+	jge	d7,d15,.L12
+.L290:
+	sh	d15,d3,#5
+	sh	d0,d3,#-27
+	or	d15,d0
+.L291:
+	and	d0,d4,d5
+	and	d1,d4,d6
+	or	d0,d1
+	and	d1,d5,d6
+	or	d0,d1
+.L292:
+	add	d15,d0
+.L293:
+	add	d0,d15,d8
+.L294:
+	mul	d15,d7,#4
+	addsc.a	a15,a10,d15,#0
+	ld.w	d15,[a15]
+.L295:
+	add	d0,d15
+.L296:
+	mov.u	d15,#48348
+	addih	d15,d15,#36635
+.L126:
+	add	d15,d0
+.L297:
+	j	.L13
+.L12:
+	sh	d15,d3,#5
+	sh	d0,d3,#-27
+	or	d15,d0
+.L298:
+	xor	d0,d4,d5
+	xor	d0,d6
+.L299:
+	add	d15,d0
+.L300:
+	add	d0,d15,d8
+.L301:
+	mul	d15,d7,#4
+	addsc.a	a15,a10,d15,#0
+	ld.w	d15,[a15]
+.L302:
+	add	d0,d15
+.L303:
+	mov.u	d15,#49622
+	addih	d15,d15,#51810
+.L127:
+	add	d15,d0
+.L13:
+.L11:
+.L9:
+	mov	d8,d6
+.L128:
+	mov	d6,d5
+.L304:
+	sh	d5,d4,#30
+.L120:
+	sh	d4,#-2
+.L118:
+	or	d5,d4
+.L305:
+	mov	d4,d3
+.L129:
+	mov	d3,d15
+.L306:
+	add	d7,#1
+.L6:
+	mov	d15,#80
+.L307:
+	jlt	d7,d15,.L7
+.L308:
+	ld.w	d15,[a4]
+.L309:
+	add	d3,d15
+.L116:
+	st.w	[a4],d3
+.L310:
+	ld.w	d15,[a4]4
+.L311:
+	add	d15,d4
+	st.w	[a4]4,d15
+.L312:
+	ld.w	d15,[a4]8
+.L313:
+	add	d15,d5
+	st.w	[a4]8,d15
+.L314:
+	ld.w	d15,[a4]12
+.L315:
+	add	d15,d6
+	st.w	[a4]12,d15
+.L316:
+	ld.w	d15,[a4]16
+.L317:
+	add	d15,d8
+	st.w	[a4]16,d15
+.L318:
+	ret
+.L99:
+	
+__sha1_process_block_function_end:
+	.size	sha1_process_block,__sha1_process_block_function_end-sha1_process_block
+.L65:
+	; End of function
+	
+	.sdecl	'.text.sha1.sha1_init',code,cluster('sha1_init')
+	.sect	'.text.sha1.sha1_init'
+	.align	2
+	
+	.global	sha1_init
+; Function sha1_init
+.L30:
+sha1_init:	.type	func
+	mov	d15,#8961
+	addih	d15,d15,#26437
+.L172:
+	st.w	[a4],d15
+.L173:
+	mov.u	d15,#43913
+	addih	d15,d15,#61389
+.L174:
+	st.w	[a4]4,d15
+.L175:
+	mov.u	d15,#56574
+	addih	d15,d15,#39098
+.L176:
+	st.w	[a4]8,d15
+.L177:
+	mov	d15,#21622
+	addih	d15,d15,#4146
+.L178:
+	st.w	[a4]12,d15
+.L179:
+	mov.u	d15,#57840
+	addih	d15,d15,#50130
+.L180:
+	st.w	[a4]16,d15
+.L181:
+	mov	d15,#0
+.L182:
+	st.w	[a4]20,d15
+.L183:
+	mov	d15,#0
+.L184:
+	st.w	[a4]24,d15
+.L185:
+	ret
+.L66:
+	
+__sha1_init_function_end:
+	.size	sha1_init,__sha1_init_function_end-sha1_init
+.L45:
+	; End of function
+	
+	.sdecl	'.text.sha1.sha1_update',code,cluster('sha1_update')
+	.sect	'.text.sha1.sha1_update'
+	.align	2
+	
+	.global	sha1_update
+; Function sha1_update
+.L32:
+sha1_update:	.type	func
+	mov.aa	a15,a4
+.L133:
+	mov.aa	a12,a5
+.L135:
+	mov	d8,d4
+.L136:
+	ld.w	d15,[a15]20
+.L190:
+	extr.u	d0,d15,#3,#6
+.L137:
+	ld.w	d15,[a15]20
+.L191:
+	sh	d1,d8,#3
+.L192:
+	add	d1,d15
+	st.w	[a15]20,d1
+.L193:
+	ld.w	d15,[a15]20
+.L194:
+	sh	d1,d8,#3
+.L195:
+	jge.u	d15,d1,.L14
+.L196:
+	ld.w	d15,[a15]24
+.L197:
+	add	d15,#1
+	st.w	[a15]24,d15
+.L14:
+	ld.w	d15,[a15]24
+.L198:
+	sh	d1,d8,#-29
+.L199:
+	add	d15,d1
+	st.w	[a15]24,d15
+.L200:
+	rsub	d15,d0,#64
+.L138:
+	jlt.u	d8,d15,.L15
+.L201:
+	addsc.a	a2,a15,d0,#0
+	lea	a4,[a2]28
+.L130:
+	mov.aa	a5,a12
+	mov	d4,d15
+.L132:
+	call	memcpy
+.L131:
+	lea	a5,[a15]28
+	mov.aa	a4,a15
+.L139:
+	call	sha1_process_block
+.L140:
+	j	.L16
+.L17:
+	addsc.a	a5,a12,d15,#0
+	mov.aa	a4,a15
+.L141:
+	call	sha1_process_block
+.L142:
+	add	d15,d15,#64
+.L16:
+	add	d0,d15,#63
+.L202:
+	jlt.u	d0,d8,.L17
+.L203:
+	mov	d0,#0
+.L143:
+	j	.L18
+.L15:
+	mov	d15,#0
+.L18:
+	addsc.a	a15,a15,d0,#0
+.L134:
+	lea	a4,[a15]28
+.L204:
+	addsc.a	a5,a12,d15,#0
+.L205:
+	sub	d4,d8,d15
+	call	memcpy
+.L144:
+	ret
+.L69:
+	
+__sha1_update_function_end:
+	.size	sha1_update,__sha1_update_function_end-sha1_update
+.L50:
+	; End of function
+	
+	.sdecl	'.text.sha1.sha1_final',code,cluster('sha1_final')
+	.sect	'.text.sha1.sha1_final'
+	.align	2
+	
+	.global	sha1_final
+; Function sha1_final
+.L34:
+sha1_final:	.type	func
+	sub.a	a10,#16
+.L145:
+	mov.aa	a12,a4
+.L148:
+	mov.aa	a13,a5
+.L86:
+	mov	d0,#0
+.L149:
+	j	.L19
+.L20:
+	jlt	d0,#4,.L21
+.L210:
+	mov	d15,#0
+.L211:
+	j	.L22
+.L21:
+	mov	d15,#1
+.L22:
+	addsc.a	a2,a10,d0,#0
+.L212:
+	mul	d15,d15,#4
+	addsc.a	a15,a12,d15,#0
+	ld.w	d1,[a15]20
+.L213:
+	and	d15,d0,#3
+.L214:
+	rsub	d15,d15,#3
+.L215:
+	mul	d15,d15,#8
+.L216:
+	extr.u	d15,d1,d15,#8
+.L217:
+	st.b	[a2],d15
+.L218:
+	add	d0,#1
+.L19:
+	mov	d15,#8
+.L219:
+	jlt	d0,d15,.L20
+.L87:
+	mov	d15,#128
+.L220:
+	st.b	[a10]8,d15
+.L221:
+	lea	a5,[a10]8
+.L147:
+	mov	d4,#1
+	mov.aa	a4,a12
+	call	sha1_update
+.L146:
+	j	.L23
+.L24:
+	mov	d15,#0
+.L222:
+	st.b	[a10]8,d15
+.L223:
+	lea	a5,[a10]8
+.L224:
+	mov	d4,#1
+	mov.aa	a4,a12
+.L150:
+	call	sha1_update
+.L23:
+	ld.w	d15,[a12]20
+.L225:
+	and	d15,d15,#504
+.L226:
+	mov	d0,#448
+.L227:
+	jne	d15,d0,.L24
+.L228:
+	lea	a5,[a10]0
+.L229:
+	mov	d4,#8
+	mov.aa	a4,a12
+.L151:
+	call	sha1_update
+.L90:
+	mov	d0,#0
+.L152:
+	j	.L25
+.L26:
+	addsc.a	a15,a13,d0,#0
+.L230:
+	sha	d15,d0,#-2
+.L231:
+	mul	d15,d15,#4
+	addsc.a	a2,a12,d15,#0
+	ld.w	d1,[a2]
+.L232:
+	and	d15,d0,#3
+.L233:
+	rsub	d15,d15,#3
+.L234:
+	mul	d15,d15,#8
+.L235:
+	extr.u	d15,d1,d15,#8
+.L236:
+	st.b	[a15],d15
+.L237:
+	add	d0,#1
+.L25:
+	mov	d15,#20
+.L238:
+	jlt	d0,d15,.L26
+.L91:
+	ret
+.L78:
+	
+__sha1_final_function_end:
+	.size	sha1_final,__sha1_final_function_end-sha1_final
+.L55:
+	; End of function
+	
+	.sdecl	'.text.sha1.sha1_hash',code,cluster('sha1_hash')
+	.sect	'.text.sha1.sha1_hash'
+	.align	2
+	
+	.global	sha1_hash
+; Function sha1_hash
+.L36:
+sha1_hash:	.type	func
+	sub.a	a10,#96
+.L153:
+	mov.aa	a15,a4
+.L156:
+	mov	d15,d4
+.L157:
+	mov.aa	a12,a5
+.L158:
+	lea	a4,[a10]0
+.L154:
+	call	sha1_init
+.L155:
+	lea	a4,[a10]0
+.L243:
+	mov.aa	a5,a15
+.L159:
+	mov	d4,d15
+.L161:
+	call	sha1_update
+.L160:
+	lea	a4,[a10]0
+.L244:
+	mov.aa	a5,a12
+.L162:
+	call	sha1_final
+.L163:
+	ret
+.L93:
+	
+__sha1_hash_function_end:
+	.size	sha1_hash,__sha1_hash_function_end-sha1_hash
+.L60:
+	; End of function
+	
+	.calls	'sha1_update','memcpy'
+	.calls	'sha1_update','sha1_process_block'
+	.calls	'sha1_final','sha1_update'
+	.calls	'sha1_hash','sha1_init'
+	.calls	'sha1_hash','sha1_update'
+	.calls	'sha1_hash','sha1_final'
+	.calls	'sha1_process_block','',320
+	.calls	'sha1_init','',0
+	.calls	'sha1_update','',0
+	.calls	'sha1_final','',16
+	.extern	memcpy
+	.calls	'sha1_hash','',96
+	.sdecl	'.debug_info',debug
+	.sect	'.debug_info'
+.L38:
+	.word	640
+	.half	3
+	.word	.L39
+	.byte	4
+.L37:
+	.byte	1
+	.byte	'../code/kemu4/xf_asr/sha1.c',0
+	.byte	'TASKING VX-toolset for AURIX Development Studio (non-commercial): C compiler',0
+	.byte	'C:\\Users\\Ye\\Desktop\\hangzhou20\\ECC\\Debug\\',0,12,1
+	.word	.L40
+.L73:
+	.byte	2
+	.byte	'unsigned int',0,4,7,3,20
+	.word	165
+	.byte	4,4,0,3,8
+	.word	165
+	.byte	4,1,0
+.L84:
+	.byte	2
+	.byte	'unsigned char',0,1,8,3,64
+	.word	199
+	.byte	4,63,0
+.L97:
+	.byte	5,1,11,9,92,6
+	.byte	'state',0
+	.word	181
+	.byte	20,2,35,0,6
+	.byte	'count',0
+	.word	190
+	.byte	8,2,35,20,6
+	.byte	'buffer',0
+	.word	216
+	.byte	64,2,35,28,0
+.L67:
+	.byte	7
+	.word	225
+	.byte	8
+	.word	199
+.L71:
+	.byte	7
+	.word	282
+.L80:
+	.byte	7
+	.word	199
+.L82:
+	.byte	3,8
+	.word	199
+	.byte	4,7,0
+.L88:
+	.byte	2
+	.byte	'int',0,4,5,9
+	.byte	'void',0,7
+	.word	313
+	.byte	10
+	.word	319
+	.byte	8
+	.word	313
+	.byte	7
+	.word	329
+	.byte	10
+	.word	334
+	.byte	11
+	.byte	'memcpy',0,2,53,17
+	.word	319
+	.byte	1,1,1,1,12,2,53,33
+	.word	324
+	.byte	12,2,53,56
+	.word	339
+	.byte	12,2,53,68
+	.word	165
+	.byte	0
+.L102:
+	.byte	3,192,2
+	.word	165
+	.byte	4,79,0,2
+	.byte	'short int',0,2,5,13
+	.byte	'__wchar_t',0,3,1,1
+	.word	398
+	.byte	13
+	.byte	'__size_t',0,3,1,1
+	.word	165
+	.byte	13
+	.byte	'__ptrdiff_t',0,3,1,1
+	.word	306
+	.byte	14,1,7
+	.word	466
+	.byte	13
+	.byte	'__codeptr',0,3,1,1
+	.word	468
+	.byte	13
+	.byte	'__intptr_t',0,3,1,1
+	.word	306
+	.byte	13
+	.byte	'__uintptr_t',0,3,1,1
+	.word	165
+	.byte	13
+	.byte	'uint8_t',0,4,242,1,41
+	.word	199
+	.byte	13
+	.byte	'uint32_t',0,4,254,1,41
+	.word	165
+	.byte	13
+	.byte	'size_t',0,5,24,25
+	.word	165
+	.byte	13
+	.byte	'sha1_context',0,1,15,3
+	.word	225
+	.byte	2
+	.byte	'unsigned short int',0,2,7,13
+	.byte	'_iob_flag_t',0,6,82,25
+	.word	601
+	.byte	0
+	.sdecl	'.debug_abbrev',debug
+	.sect	'.debug_abbrev'
+.L39:
+	.byte	1,17,1,3,8,37,8,27,8,19,15,128,70,12,16,6,0,0,2,36,0,3,8,11,15,62,15,0,0,3,1,1,11,15,73,19,0,0,4,33,0
+	.byte	47,15,0,0,5,19,1,58,15,59,15,57,15,11,15,0,0,6,13,0,3,8,73,19,11,15,56,9,0,0,7,15,0,73,19,0,0,8,38,0,73
+	.byte	19,0,0,9,59,0,3,8,0,0,10,55,0,73,19,0,0,11,46,1,3,8,58,15,59,15,57,15,73,19,54,15,39,12,63,12,60,12,0
+	.byte	0,12,5,0,58,15,59,15,57,15,73,19,0,0,13,22,0,3,8,58,15,59,15,57,15,73,19,0,0,14,21,0,54,15,0,0,0
+	.sdecl	'.debug_line',debug
+	.sect	'.debug_line'
+.L40:
+	.word	.L165-.L164
+.L164:
+	.half	3
+	.word	.L167-.L166
+.L166:
+	.byte	2,1,-4,9,10,0,1,1,1,1,0,0,0,1
+	.byte	'C:\\Infineon\\AURIX-Studio-1.10.10\\tools\\Compilers\\Tasking_1.1r8\\ctc\\include\\',0,0
+	.byte	'..\\code\\kemu4\\xf_asr\\sha1.h',0,0,0,0
+	.byte	'string.h',0,1,0,0
+	.byte	'../code/kemu4/xf_asr/sha1.c',0,0,0,0
+	.byte	'stdint.h',0,1,0,0
+	.byte	'stddef.h',0,1,0,0
+	.byte	'stdio.h',0,1,0,0,0
+.L167:
+.L165:
+	.sdecl	'.debug_info',debug,cluster('sha1_init')
+	.sect	'.debug_info'
+.L41:
+	.word	226
+	.half	3
+	.word	.L42
+	.byte	4,1
+	.byte	'../code/kemu4/xf_asr/sha1.c',0
+	.byte	'TASKING VX-toolset for AURIX Development Studio (non-commercial): C compiler',0
+	.byte	'C:\\Users\\Ye\\Desktop\\hangzhou20\\ECC\\Debug\\',0,12,1
+	.word	.L44,.L43
+	.byte	2
+	.word	.L37
+	.byte	3
+	.byte	'sha1_init',0,1,82,6,1,1,1
+	.word	.L30,.L66,.L29
+	.byte	4
+	.byte	'ctx',0,1,82,30
+	.word	.L67,.L68
+	.byte	5
+	.word	.L30,.L66
+	.byte	0,0
+	.sdecl	'.debug_abbrev',debug,cluster('sha1_init')
+	.sect	'.debug_abbrev'
+.L42:
+	.byte	1,17,1,3,8,37,8,27,8,19,15,128,70,12,85,6,16,6,0,0,2,61,0,24,16,0,0,3,46,1,3,8,58,15,59,15,57,15,54,15
+	.byte	39,12,63,12,17,1,18,1,64,6,0,0,4,5,0,3,8,58,15,59,15,57,15,73,16,2,6,0,0,5,11,0,17,1,18,1,0,0,0
+	.sdecl	'.debug_line',debug,cluster('sha1_init')
+	.sect	'.debug_line'
+.L43:
+	.word	.L169-.L168
+.L168:
+	.half	3
+	.word	.L171-.L170
+.L170:
+	.byte	2,1,-4,9,10,0,1,1,1,1,0,0,0,1,0
+	.byte	'../code/kemu4/xf_asr/sha1.c',0,0,0,0,0
+.L171:
+	.byte	5,21,7,0,5,2
+	.word	.L30
+	.byte	3,211,0,1,5,19,9
+	.half	.L172-.L30
+	.byte	1,5,21,9
+	.half	.L173-.L172
+	.byte	3,1,1,5,19,9
+	.half	.L174-.L173
+	.byte	1,5,21,9
+	.half	.L175-.L174
+	.byte	3,1,1,5,19,9
+	.half	.L176-.L175
+	.byte	1,5,21,9
+	.half	.L177-.L176
+	.byte	3,1,1,5,19,9
+	.half	.L178-.L177
+	.byte	1,5,21,9
+	.half	.L179-.L178
+	.byte	3,1,1,5,19,9
+	.half	.L180-.L179
+	.byte	1,5,21,9
+	.half	.L181-.L180
+	.byte	3,1,1,5,19,9
+	.half	.L182-.L181
+	.byte	1,5,21,9
+	.half	.L183-.L182
+	.byte	3,1,1,5,19,9
+	.half	.L184-.L183
+	.byte	1,5,1,9
+	.half	.L185-.L184
+	.byte	3,1,1,7,9
+	.half	.L45-.L185
+	.byte	0,1,1
+.L169:
+	.sdecl	'.debug_ranges',debug,cluster('sha1_init')
+	.sect	'.debug_ranges'
+.L44:
+	.word	-1,.L30,0,.L45-.L30,0,0
+	.sdecl	'.debug_info',debug,cluster('sha1_update')
+	.sect	'.debug_info'
+.L46:
+	.word	314
+	.half	3
+	.word	.L47
+	.byte	4,1
+	.byte	'../code/kemu4/xf_asr/sha1.c',0
+	.byte	'TASKING VX-toolset for AURIX Development Studio (non-commercial): C compiler',0
+	.byte	'C:\\Users\\Ye\\Desktop\\hangzhou20\\ECC\\Debug\\',0,12,1
+	.word	.L49,.L48
+	.byte	2
+	.word	.L37
+	.byte	3
+	.byte	'sha1_update',0,1,94,6,1,1,1
+	.word	.L32,.L69,.L31
+	.byte	4
+	.byte	'ctx',0,1,94,32
+	.word	.L67,.L70
+	.byte	4
+	.byte	'data',0,1,94,52
+	.word	.L71,.L72
+	.byte	4
+	.byte	'len',0,1,94,65
+	.word	.L73,.L74
+	.byte	5
+	.word	.L32,.L69
+	.byte	6
+	.byte	'i',0,1,96,14
+	.word	.L73,.L75
+	.byte	6
+	.byte	'index',0,1,96,17
+	.word	.L73,.L76
+	.byte	6
+	.byte	'partLen',0,1,96,24
+	.word	.L73,.L77
+	.byte	0,0,0
+	.sdecl	'.debug_abbrev',debug,cluster('sha1_update')
+	.sect	'.debug_abbrev'
+.L47:
+	.byte	1,17,1,3,8,37,8,27,8,19,15,128,70,12,85,6,16,6,0,0,2,61,0,24,16,0,0,3,46,1,3,8,58,15,59,15,57,15,54,15
+	.byte	39,12,63,12,17,1,18,1,64,6,0,0,4,5,0,3,8,58,15,59,15,57,15,73,16,2,6,0,0,5,11,1,17,1,18,1,0,0,6,52,0,3
+	.byte	8,58,15,59,15,57,15,73,16,2,6,0,0,0
+	.sdecl	'.debug_line',debug,cluster('sha1_update')
+	.sect	'.debug_line'
+.L48:
+	.word	.L187-.L186
+.L186:
+	.half	3
+	.word	.L189-.L188
+.L188:
+	.byte	2,1,-4,9,10,0,1,1,1,1,0,0,0,1,0
+	.byte	'../code/kemu4/xf_asr/sha1.c',0,0,0,0,0
+.L189:
+	.byte	5,6,7,0,5,2
+	.word	.L32
+	.byte	3,221,0,1,5,24,9
+	.half	.L136-.L32
+	.byte	3,4,1,5,34,9
+	.half	.L190-.L136
+	.byte	1,5,15,9
+	.half	.L137-.L190
+	.byte	3,1,1,5,26,9
+	.half	.L191-.L137
+	.byte	1,5,19,9
+	.half	.L192-.L191
+	.byte	1,5,18,9
+	.half	.L193-.L192
+	.byte	3,1,1,5,29,9
+	.half	.L194-.L193
+	.byte	1,5,5,9
+	.half	.L195-.L194
+	.byte	1,5,19,7,9
+	.half	.L196-.L195
+	.byte	3,2,1,5,22,9
+	.half	.L197-.L196
+	.byte	1,5,15,9
+	.half	.L14-.L197
+	.byte	3,2,1,5,26,9
+	.half	.L198-.L14
+	.byte	1,5,19,9
+	.half	.L199-.L198
+	.byte	1,5,18,9
+	.half	.L200-.L199
+	.byte	3,2,1,5,5,9
+	.half	.L138-.L200
+	.byte	3,2,1,5,28,7,9
+	.half	.L201-.L138
+	.byte	3,2,1,5,43,9
+	.half	.L130-.L201
+	.byte	1,5,36,9
+	.half	.L131-.L130
+	.byte	3,1,1,5,38,9
+	.half	.L140-.L131
+	.byte	3,1,1,5,42,9
+	.half	.L17-.L140
+	.byte	3,2,1,9
+	.half	.L142-.L17
+	.byte	3,126,1,5,28,9
+	.half	.L16-.L142
+	.byte	1,5,38,9
+	.half	.L202-.L16
+	.byte	1,5,15,7,9
+	.half	.L203-.L202
+	.byte	3,4,1,5,18,9
+	.half	.L143-.L203
+	.byte	1,5,11,9
+	.half	.L15-.L143
+	.byte	3,4,1,5,24,9
+	.half	.L18-.L15
+	.byte	3,3,1,5,38,9
+	.half	.L204-.L18
+	.byte	1,5,47,9
+	.half	.L205-.L204
+	.byte	1,5,1,9
+	.half	.L144-.L205
+	.byte	3,1,1,7,9
+	.half	.L50-.L144
+	.byte	0,1,1
+.L187:
+	.sdecl	'.debug_ranges',debug,cluster('sha1_update')
+	.sect	'.debug_ranges'
+.L49:
+	.word	-1,.L32,0,.L50-.L32,0,0
+	.sdecl	'.debug_info',debug,cluster('sha1_final')
+	.sect	'.debug_info'
+.L51:
+	.word	336
+	.half	3
+	.word	.L52
+	.byte	4,1
+	.byte	'../code/kemu4/xf_asr/sha1.c',0
+	.byte	'TASKING VX-toolset for AURIX Development Studio (non-commercial): C compiler',0
+	.byte	'C:\\Users\\Ye\\Desktop\\hangzhou20\\ECC\\Debug\\',0,12,1
+	.word	.L54,.L53
+	.byte	2
+	.word	.L37
+	.byte	3
+	.byte	'sha1_final',0,1,127,6,1,1,1
+	.word	.L34,.L78,.L33
+	.byte	4
+	.byte	'ctx',0,1,127,31
+	.word	.L67,.L79
+	.byte	4
+	.byte	'digest',0,1,127,44
+	.word	.L80,.L81
+	.byte	5
+	.word	.L34,.L78
+	.byte	6
+	.byte	'finalcount',0,1,129,1,13
+	.word	.L82,.L83
+	.byte	6
+	.byte	'c',0,1,130,1,13
+	.word	.L84,.L85
+	.byte	5
+	.word	.L86,.L87
+	.byte	6
+	.byte	'i',0,1,132,1,13
+	.word	.L88,.L89
+	.byte	0,5
+	.word	.L90,.L91
+	.byte	6
+	.byte	'i',0,1,148,1,13
+	.word	.L88,.L92
+	.byte	0,0,0,0
+	.sdecl	'.debug_abbrev',debug,cluster('sha1_final')
+	.sect	'.debug_abbrev'
+.L52:
+	.byte	1,17,1,3,8,37,8,27,8,19,15,128,70,12,85,6,16,6,0,0,2,61,0,24,16,0,0,3,46,1,3,8,58,15,59,15,57,15,54,15
+	.byte	39,12,63,12,17,1,18,1,64,6,0,0,4,5,0,3,8,58,15,59,15,57,15,73,16,2,6,0,0,5,11,1,17,1,18,1,0,0,6,52,0,3
+	.byte	8,58,15,59,15,57,15,73,16,2,6,0,0,0
+	.sdecl	'.debug_line',debug,cluster('sha1_final')
+	.sect	'.debug_line'
+.L53:
+	.word	.L207-.L206
+.L206:
+	.half	3
+	.word	.L209-.L208
+.L208:
+	.byte	2,1,-4,9,10,0,1,1,1,1,0,0,0,1,0
+	.byte	'../code/kemu4/xf_asr/sha1.c',0,0,0,0,0
+.L209:
+	.byte	5,6,7,0,5,2
+	.word	.L34
+	.byte	3,254,0,1,5,15,9
+	.half	.L86-.L34
+	.byte	3,5,1,5,25,9
+	.half	.L149-.L86
+	.byte	1,5,48,9
+	.half	.L20-.L149
+	.byte	3,2,1,5,55,7,9
+	.half	.L210-.L20
+	.byte	1,5,59,9
+	.half	.L211-.L210
+	.byte	1,5,55,9
+	.half	.L21-.L211
+	.byte	1,5,19,9
+	.half	.L22-.L21
+	.byte	1,5,46,9
+	.half	.L212-.L22
+	.byte	1,5,77,9
+	.half	.L213-.L212
+	.byte	1,5,72,9
+	.half	.L214-.L213
+	.byte	1,5,83,9
+	.half	.L215-.L214
+	.byte	1,5,89,9
+	.half	.L216-.L215
+	.byte	1,5,23,9
+	.half	.L217-.L216
+	.byte	1,5,28,9
+	.half	.L218-.L217
+	.byte	3,126,1,5,24,9
+	.half	.L19-.L218
+	.byte	1,5,25,9
+	.half	.L219-.L19
+	.byte	1,5,9,7,9
+	.half	.L87-.L219
+	.byte	3,5,1,5,7,9
+	.half	.L220-.L87
+	.byte	1,5,23,9
+	.half	.L221-.L220
+	.byte	3,1,1,5,26,9
+	.half	.L147-.L221
+	.byte	1,5,43,9
+	.half	.L146-.L147
+	.byte	3,2,1,5,13,9
+	.half	.L24-.L146
+	.byte	3,2,1,5,11,9
+	.half	.L222-.L24
+	.byte	1,5,27,9
+	.half	.L223-.L222
+	.byte	3,1,1,5,30,9
+	.half	.L224-.L223
+	.byte	1,5,22,9
+	.half	.L23-.L224
+	.byte	3,125,1,5,26,9
+	.half	.L225-.L23
+	.byte	1,5,38,9
+	.half	.L226-.L225
+	.byte	1,5,43,9
+	.half	.L227-.L226
+	.byte	1,5,22,7,9
+	.half	.L228-.L227
+	.byte	3,6,1,5,34,9
+	.half	.L229-.L228
+	.byte	1,5,15,9
+	.half	.L90-.L229
+	.byte	3,2,1,5,38,9
+	.half	.L152-.L90
+	.byte	1,5,15,9
+	.half	.L26-.L152
+	.byte	3,2,1,5,45,9
+	.half	.L230-.L26
+	.byte	1,5,42,9
+	.half	.L231-.L230
+	.byte	1,5,63,9
+	.half	.L232-.L231
+	.byte	1,5,58,9
+	.half	.L233-.L232
+	.byte	1,5,69,9
+	.half	.L234-.L233
+	.byte	1,5,75,9
+	.half	.L235-.L234
+	.byte	1,5,19,9
+	.half	.L236-.L235
+	.byte	1,5,41,9
+	.half	.L237-.L236
+	.byte	3,126,1,5,24,9
+	.half	.L25-.L237
+	.byte	1,5,38,9
+	.half	.L238-.L25
+	.byte	1,5,1,7,9
+	.half	.L91-.L238
+	.byte	3,4,1,7,9
+	.half	.L55-.L91
+	.byte	0,1,1
+.L207:
+	.sdecl	'.debug_ranges',debug,cluster('sha1_final')
+	.sect	'.debug_ranges'
+.L54:
+	.word	-1,.L34,0,.L55-.L34,0,0
+	.sdecl	'.debug_info',debug,cluster('sha1_hash')
+	.sect	'.debug_info'
+.L56:
+	.word	284
+	.half	3
+	.word	.L57
+	.byte	4,1
+	.byte	'../code/kemu4/xf_asr/sha1.c',0
+	.byte	'TASKING VX-toolset for AURIX Development Studio (non-commercial): C compiler',0
+	.byte	'C:\\Users\\Ye\\Desktop\\hangzhou20\\ECC\\Debug\\',0,12,1
+	.word	.L59,.L58
+	.byte	2
+	.word	.L37
+	.byte	3
+	.byte	'sha1_hash',0,1,155,1,6,1,1,1
+	.word	.L36,.L93,.L35
+	.byte	4
+	.byte	'data',0,1,155,1,31
+	.word	.L71,.L94
+	.byte	4
+	.byte	'len',0,1,155,1,44
+	.word	.L73,.L95
+	.byte	4
+	.byte	'digest',0,1,155,1,57
+	.word	.L80,.L96
+	.byte	5
+	.word	.L36,.L93
+	.byte	6
+	.byte	'ctx',0,1,157,1,18
+	.word	.L97,.L98
+	.byte	0,0,0
+	.sdecl	'.debug_abbrev',debug,cluster('sha1_hash')
+	.sect	'.debug_abbrev'
+.L57:
+	.byte	1,17,1,3,8,37,8,27,8,19,15,128,70,12,85,6,16,6,0,0,2,61,0,24,16,0,0,3,46,1,3,8,58,15,59,15,57,15,54,15
+	.byte	39,12,63,12,17,1,18,1,64,6,0,0,4,5,0,3,8,58,15,59,15,57,15,73,16,2,6,0,0,5,11,1,17,1,18,1,0,0,6,52,0,3
+	.byte	8,58,15,59,15,57,15,73,16,2,6,0,0,0
+	.sdecl	'.debug_line',debug,cluster('sha1_hash')
+	.sect	'.debug_line'
+.L58:
+	.word	.L240-.L239
+.L239:
+	.half	3
+	.word	.L242-.L241
+.L241:
+	.byte	2,1,-4,9,10,0,1,1,1,1,0,0,0,1,0
+	.byte	'../code/kemu4/xf_asr/sha1.c',0,0,0,0,0
+.L242:
+	.byte	5,6,7,0,5,2
+	.word	.L36
+	.byte	3,154,1,1,5,16,9
+	.half	.L158-.L36
+	.byte	3,3,1,5,18,9
+	.half	.L155-.L158
+	.byte	3,1,1,5,29,9
+	.half	.L243-.L155
+	.byte	1,5,17,9
+	.half	.L160-.L243
+	.byte	3,1,1,5,22,9
+	.half	.L244-.L160
+	.byte	1,5,1,9
+	.half	.L163-.L244
+	.byte	3,1,1,7,9
+	.half	.L60-.L163
+	.byte	0,1,1
+.L240:
+	.sdecl	'.debug_ranges',debug,cluster('sha1_hash')
+	.sect	'.debug_ranges'
+.L59:
+	.word	-1,.L36,0,.L60-.L36,0,0
+	.sdecl	'.debug_info',debug,cluster('sha1_process_block')
+	.sect	'.debug_info'
+.L61:
+	.word	367
+	.half	3
+	.word	.L62
+	.byte	4,1
+	.byte	'../code/kemu4/xf_asr/sha1.c',0
+	.byte	'TASKING VX-toolset for AURIX Development Studio (non-commercial): C compiler',0
+	.byte	'C:\\Users\\Ye\\Desktop\\hangzhou20\\ECC\\Debug\\',0,12,1
+	.word	.L64,.L63
+	.byte	2
+	.word	.L37
+	.byte	3
+	.byte	'sha1_process_block',0,1,21,13,1,1
+	.word	.L28,.L99,.L27
+	.byte	4
+	.byte	'ctx',0,1,21,46
+	.word	.L67,.L100
+	.byte	4
+	.byte	'data',0,1,21,65
+	.word	.L71,.L101
+	.byte	5
+	.word	.L28,.L99
+	.byte	6
+	.byte	'W',0,1,23,14
+	.word	.L102,.L103
+	.byte	6
+	.byte	'A',0,1,24,14
+	.word	.L73,.L104
+	.byte	6
+	.byte	'B',0,1,24,17
+	.word	.L73,.L105
+	.byte	6
+	.byte	'C',0,1,24,20
+	.word	.L73,.L106
+	.byte	6
+	.byte	'D',0,1,24,23
+	.word	.L73,.L107
+	.byte	6
+	.byte	'E',0,1,24,26
+	.word	.L73,.L108
+	.byte	6
+	.byte	'temp',0,1,24,29
+	.word	.L73,.L109
+	.byte	6
+	.byte	't',0,1,25,9
+	.word	.L88,.L110
+	.byte	0,0,0
+	.sdecl	'.debug_abbrev',debug,cluster('sha1_process_block')
+	.sect	'.debug_abbrev'
+.L62:
+	.byte	1,17,1,3,8,37,8,27,8,19,15,128,70,12,85,6,16,6,0,0,2,61,0,24,16,0,0,3,46,1,3,8,58,15,59,15,57,15,54,15
+	.byte	39,12,17,1,18,1,64,6,0,0,4,5,0,3,8,58,15,59,15,57,15,73,16,2,6,0,0,5,11,1,17,1,18,1,0,0,6,52,0,3,8,58
+	.byte	15,59,15,57,15,73,16,2,6,0,0,0
+	.sdecl	'.debug_line',debug,cluster('sha1_process_block')
+	.sect	'.debug_line'
+.L63:
+	.word	.L246-.L245
+.L245:
+	.half	3
+	.word	.L248-.L247
+.L247:
+	.byte	2,1,-4,9,10,0,1,1,1,1,0,0,0,1,0
+	.byte	'../code/kemu4/xf_asr/sha1.c',0,0,0,0,0
+.L248:
+	.byte	5,13,7,0,5,2
+	.word	.L28
+	.byte	3,20,1,5,11,9
+	.half	.L111-.L28
+	.byte	3,7,1,5,22,9
+	.half	.L112-.L111
+	.byte	1,5,10,9
+	.half	.L3-.L112
+	.byte	3,2,1,5,24,9
+	.half	.L249-.L3
+	.byte	1,5,21,9
+	.half	.L250-.L249
+	.byte	1,5,29,9
+	.half	.L251-.L250
+	.byte	1,5,46,9
+	.half	.L252-.L251
+	.byte	1,5,43,9
+	.half	.L253-.L252
+	.byte	1,5,55,9
+	.half	.L254-.L253
+	.byte	1,5,36,9
+	.half	.L255-.L254
+	.byte	1,5,24,9
+	.half	.L256-.L255
+	.byte	3,1,1,5,21,9
+	.half	.L257-.L256
+	.byte	1,5,33,9
+	.half	.L258-.L257
+	.byte	1,5,62,9
+	.half	.L259-.L258
+	.byte	3,127,1,5,49,9
+	.half	.L260-.L259
+	.byte	3,1,1,5,46,9
+	.half	.L261-.L260
+	.byte	1,5,39,9
+	.half	.L262-.L261
+	.byte	1,5,14,9
+	.half	.L263-.L262
+	.byte	3,127,1,5,25,9
+	.half	.L264-.L263
+	.byte	3,126,1,5,20,9
+	.half	.L2-.L264
+	.byte	1,5,22,9
+	.half	.L265-.L2
+	.byte	1,5,11,7,9
+	.half	.L266-.L265
+	.byte	3,7,1,5,23,9
+	.half	.L113-.L266
+	.byte	1,5,10,9
+	.half	.L5-.L113
+	.byte	3,2,1,5,16,9
+	.half	.L267-.L5
+	.byte	1,5,14,9
+	.half	.L268-.L267
+	.byte	1,5,26,9
+	.half	.L269-.L268
+	.byte	3,126,1,5,21,9
+	.half	.L4-.L269
+	.byte	1,5,23,9
+	.half	.L270-.L4
+	.byte	1,5,19,7,9
+	.half	.L271-.L270
+	.byte	3,6,1,9
+	.half	.L115-.L271
+	.byte	3,1,1,9
+	.half	.L117-.L115
+	.byte	3,1,1,9
+	.half	.L119-.L117
+	.byte	3,1,1,9
+	.half	.L121-.L119
+	.byte	3,1,1,5,11,9
+	.half	.L122-.L121
+	.byte	3,3,1,5,22,9
+	.half	.L114-.L122
+	.byte	1,5,16,9
+	.half	.L7-.L114
+	.byte	3,2,1,5,9,9
+	.half	.L272-.L7
+	.byte	1,5,20,7,9
+	.half	.L273-.L272
+	.byte	3,2,1,5,41,9
+	.half	.L274-.L273
+	.byte	1,5,39,9
+	.half	.L275-.L274
+	.byte	1,5,58,9
+	.half	.L276-.L275
+	.byte	1,5,65,9
+	.half	.L277-.L276
+	.byte	1,5,62,9
+	.half	.L278-.L277
+	.byte	1,5,71,9
+	.half	.L279-.L278
+	.byte	1,5,69,9
+	.half	.L124-.L279
+	.byte	1,5,78,9
+	.half	.L280-.L124
+	.byte	1,5,21,9
+	.half	.L8-.L280
+	.byte	3,2,1,5,14,9
+	.half	.L281-.L8
+	.byte	1,5,20,7,9
+	.half	.L282-.L281
+	.byte	3,2,1,5,41,9
+	.half	.L283-.L282
+	.byte	1,5,39,9
+	.half	.L284-.L283
+	.byte	1,5,58,9
+	.half	.L285-.L284
+	.byte	1,5,65,9
+	.half	.L123-.L285
+	.byte	1,5,62,9
+	.half	.L286-.L123
+	.byte	1,5,71,9
+	.half	.L287-.L286
+	.byte	1,5,69,9
+	.half	.L125-.L287
+	.byte	1,5,78,9
+	.half	.L288-.L125
+	.byte	1,5,21,9
+	.half	.L10-.L288
+	.byte	3,2,1,5,14,9
+	.half	.L289-.L10
+	.byte	1,5,20,7,9
+	.half	.L290-.L289
+	.byte	3,2,1,5,41,9
+	.half	.L291-.L290
+	.byte	1,5,39,9
+	.half	.L292-.L291
+	.byte	1,5,58,9
+	.half	.L293-.L292
+	.byte	1,5,65,9
+	.half	.L294-.L293
+	.byte	1,5,62,9
+	.half	.L295-.L294
+	.byte	1,5,71,9
+	.half	.L296-.L295
+	.byte	1,5,69,9
+	.half	.L126-.L296
+	.byte	1,5,78,9
+	.half	.L297-.L126
+	.byte	1,5,20,9
+	.half	.L12-.L297
+	.byte	3,4,1,5,41,9
+	.half	.L298-.L12
+	.byte	1,5,39,9
+	.half	.L299-.L298
+	.byte	1,5,58,9
+	.half	.L300-.L299
+	.byte	1,5,65,9
+	.half	.L301-.L300
+	.byte	1,5,62,9
+	.half	.L302-.L301
+	.byte	1,5,71,9
+	.half	.L303-.L302
+	.byte	1,5,69,9
+	.half	.L127-.L303
+	.byte	1,5,11,9
+	.half	.L9-.L127
+	.byte	3,2,1,9
+	.half	.L128-.L9
+	.byte	3,1,1,5,13,9
+	.half	.L304-.L128
+	.byte	3,1,1,5,11,9
+	.half	.L305-.L304
+	.byte	3,1,1,9
+	.half	.L129-.L305
+	.byte	3,1,1,5,25,9
+	.half	.L306-.L129
+	.byte	3,106,1,5,20,9
+	.half	.L6-.L306
+	.byte	1,5,22,9
+	.half	.L307-.L6
+	.byte	1,5,15,7,9
+	.half	.L308-.L307
+	.byte	3,26,1,5,19,9
+	.half	.L309-.L308
+	.byte	1,5,15,9
+	.half	.L310-.L309
+	.byte	3,1,1,5,19,9
+	.half	.L311-.L310
+	.byte	1,5,15,9
+	.half	.L312-.L311
+	.byte	3,1,1,5,19,9
+	.half	.L313-.L312
+	.byte	1,5,15,9
+	.half	.L314-.L313
+	.byte	3,1,1,5,19,9
+	.half	.L315-.L314
+	.byte	1,5,15,9
+	.half	.L316-.L315
+	.byte	3,1,1,5,19,9
+	.half	.L317-.L316
+	.byte	1,5,1,9
+	.half	.L318-.L317
+	.byte	3,1,1,7,9
+	.half	.L65-.L318
+	.byte	0,1,1
+.L246:
+	.sdecl	'.debug_ranges',debug,cluster('sha1_process_block')
+	.sect	'.debug_ranges'
+.L64:
+	.word	-1,.L28,0,.L65-.L28,0,0
+	.sdecl	'.debug_loc',debug,cluster('sha1_final')
+	.sect	'.debug_loc'
+.L85:
+	.word	-1,.L34,0,.L78-.L34
+	.half	2
+	.byte	145,120
+	.word	0,0
+.L79:
+	.word	-1,.L34,0,.L146-.L34
+	.half	1
+	.byte	100
+	.word	.L148-.L34,.L78-.L34
+	.half	1
+	.byte	108
+	.word	.L150-.L34,.L23-.L34
+	.half	1
+	.byte	100
+	.word	.L151-.L34,.L90-.L34
+	.half	1
+	.byte	100
+	.word	0,0
+.L81:
+	.word	-1,.L34,0,.L147-.L34
+	.half	1
+	.byte	101
+	.word	.L86-.L34,.L78-.L34
+	.half	1
+	.byte	109
+	.word	0,0
+.L83:
+	.word	-1,.L34,0,.L78-.L34
+	.half	2
+	.byte	145,112
+	.word	0,0
+.L89:
+	.word	-1,.L34,.L149-.L34,.L146-.L34
+	.half	5
+	.byte	144,32,157,32,0
+	.word	0,0
+.L92:
+	.word	-1,.L34,.L152-.L34,.L78-.L34
+	.half	5
+	.byte	144,32,157,32,0
+	.word	0,0
+.L33:
+	.word	-1,.L34,0,.L145-.L34
+	.half	2
+	.byte	138,0
+	.word	.L145-.L34,.L78-.L34
+	.half	2
+	.byte	138,16
+	.word	.L78-.L34,.L78-.L34
+	.half	2
+	.byte	138,0
+	.word	0,0
+	.sdecl	'.debug_loc',debug,cluster('sha1_hash')
+	.sect	'.debug_loc'
+.L98:
+	.word	-1,.L36,0,.L93-.L36
+	.half	3
+	.byte	145,160,127
+	.word	0,0
+.L94:
+	.word	-1,.L36,0,.L154-.L36
+	.half	1
+	.byte	100
+	.word	.L156-.L36,.L93-.L36
+	.half	1
+	.byte	111
+	.word	.L159-.L36,.L160-.L36
+	.half	1
+	.byte	101
+	.word	0,0
+.L96:
+	.word	-1,.L36,0,.L155-.L36
+	.half	1
+	.byte	101
+	.word	.L158-.L36,.L93-.L36
+	.half	1
+	.byte	108
+	.word	.L162-.L36,.L163-.L36
+	.half	1
+	.byte	101
+	.word	0,0
+.L95:
+	.word	-1,.L36,0,.L155-.L36
+	.half	1
+	.byte	84
+	.word	.L157-.L36,.L93-.L36
+	.half	1
+	.byte	95
+	.word	.L161-.L36,.L160-.L36
+	.half	1
+	.byte	84
+	.word	0,0
+.L35:
+	.word	-1,.L36,0,.L153-.L36
+	.half	2
+	.byte	138,0
+	.word	.L153-.L36,.L93-.L36
+	.half	3
+	.byte	138,224,0
+	.word	.L93-.L36,.L93-.L36
+	.half	2
+	.byte	138,0
+	.word	0,0
+	.sdecl	'.debug_loc',debug,cluster('sha1_init')
+	.sect	'.debug_loc'
+.L68:
+	.word	-1,.L30,0,.L66-.L30
+	.half	1
+	.byte	100
+	.word	0,0
+.L29:
+	.word	-1,.L30,0,.L66-.L30
+	.half	2
+	.byte	138,0
+	.word	0,0
+	.sdecl	'.debug_loc',debug,cluster('sha1_process_block')
+	.sect	'.debug_loc'
+.L104:
+	.word	-1,.L28,.L115-.L28,.L116-.L28
+	.half	1
+	.byte	83
+	.word	0,0
+.L105:
+	.word	-1,.L28,.L117-.L28,.L118-.L28
+	.half	1
+	.byte	84
+	.word	.L129-.L28,.L99-.L28
+	.half	1
+	.byte	84
+	.word	0,0
+.L106:
+	.word	-1,.L28,.L119-.L28,.L120-.L28
+	.half	1
+	.byte	85
+	.word	.L118-.L28,.L99-.L28
+	.half	1
+	.byte	85
+	.word	0,0
+.L107:
+	.word	-1,.L28,.L121-.L28,.L99-.L28
+	.half	1
+	.byte	86
+	.word	0,0
+.L108:
+	.word	-1,.L28,.L122-.L28,.L123-.L28
+	.half	1
+	.byte	88
+	.word	.L10-.L28,.L9-.L28
+	.half	1
+	.byte	88
+	.word	.L128-.L28,.L99-.L28
+	.half	1
+	.byte	88
+	.word	0,0
+.L103:
+	.word	-1,.L28,0,.L99-.L28
+	.half	3
+	.byte	145,192,125
+	.word	0,0
+.L100:
+	.word	-1,.L28,0,.L99-.L28
+	.half	1
+	.byte	100
+	.word	0,0
+.L101:
+	.word	-1,.L28,0,.L99-.L28
+	.half	1
+	.byte	101
+	.word	0,0
+.L27:
+	.word	-1,.L28,0,.L111-.L28
+	.half	2
+	.byte	138,0
+	.word	.L111-.L28,.L99-.L28
+	.half	3
+	.byte	138,192,2
+	.word	.L99-.L28,.L99-.L28
+	.half	2
+	.byte	138,0
+	.word	0,0
+.L110:
+	.word	-1,.L28,.L112-.L28,.L113-.L28
+	.half	1
+	.byte	81
+	.word	.L113-.L28,.L114-.L28
+	.half	1
+	.byte	82
+	.word	.L114-.L28,.L99-.L28
+	.half	1
+	.byte	87
+	.word	0,0
+.L109:
+	.word	-1,.L28,.L124-.L28,.L8-.L28
+	.half	1
+	.byte	95
+	.word	.L125-.L28,.L10-.L28
+	.half	1
+	.byte	95
+	.word	.L126-.L28,.L12-.L28
+	.half	1
+	.byte	95
+	.word	.L127-.L28,.L6-.L28
+	.half	1
+	.byte	95
+	.word	0,0
+	.sdecl	'.debug_loc',debug,cluster('sha1_update')
+	.sect	'.debug_loc'
+.L70:
+	.word	-1,.L32,0,.L130-.L32
+	.half	1
+	.byte	100
+	.word	.L133-.L32,.L134-.L32
+	.half	1
+	.byte	111
+	.word	.L139-.L32,.L140-.L32
+	.half	1
+	.byte	100
+	.word	.L141-.L32,.L142-.L32
+	.half	1
+	.byte	100
+	.word	.L15-.L32,.L18-.L32
+	.half	1
+	.byte	100
+	.word	0,0
+.L72:
+	.word	-1,.L32,0,.L131-.L32
+	.half	1
+	.byte	101
+	.word	.L135-.L32,.L69-.L32
+	.half	1
+	.byte	108
+	.word	.L15-.L32,.L18-.L32
+	.half	1
+	.byte	101
+	.word	0,0
+.L75:
+	.word	0,0
+.L76:
+	.word	-1,.L32,.L137-.L32,.L131-.L32
+	.half	5
+	.byte	144,32,157,32,0
+	.word	.L143-.L32,.L144-.L32
+	.half	5
+	.byte	144,32,157,32,0
+	.word	0,0
+.L74:
+	.word	-1,.L32,0,.L132-.L32
+	.half	1
+	.byte	84
+	.word	.L136-.L32,.L69-.L32
+	.half	1
+	.byte	88
+	.word	.L15-.L32,.L18-.L32
+	.half	1
+	.byte	84
+	.word	0,0
+.L77:
+	.word	-1,.L32,.L138-.L32,.L69-.L32
+	.half	1
+	.byte	95
+	.word	.L132-.L32,.L131-.L32
+	.half	1
+	.byte	84
+	.word	0,0
+.L31:
+	.word	-1,.L32,0,.L69-.L32
+	.half	2
+	.byte	138,0
+	.word	0,0
+	.sdecl	'.debug_frame',debug
+	.sect	'.debug_frame'
+.L319:
+	.word	48
+	.word	-1
+	.byte	3,0,2,1,27,12,26,0,8,26,8,27,8,30,8,29,8,28,8,16,8,17,8,24,8,25,8,31,8,32,8,33,8,34,8,35,8,36,8,37,8,38
+	.byte	8,39
+	.sdecl	'.debug_frame',debug,cluster('sha1_process_block')
+	.sect	'.debug_frame'
+	.word	44
+	.word	.L319,.L28,.L99-.L28
+	.byte	8,19,8,22,8,23,4
+	.word	(.L111-.L28)/2
+	.byte	19,192,2,22,26,4,19,138,192,2,4
+	.word	(.L99-.L111)/2
+	.byte	19,0,8,26,0,0
+	.sdecl	'.debug_frame',debug,cluster('sha1_init')
+	.sect	'.debug_frame'
+	.word	24
+	.word	.L319,.L30,.L66-.L30
+	.byte	8,18,8,19,8,21,8,22,8,23,0,0
+	.sdecl	'.debug_frame',debug,cluster('sha1_update')
+	.sect	'.debug_frame'
+	.word	12
+	.word	.L319,.L32,.L69-.L32
+	.sdecl	'.debug_frame',debug,cluster('sha1_final')
+	.sect	'.debug_frame'
+	.word	36
+	.word	.L319,.L34,.L78-.L34
+	.byte	4
+	.word	(.L145-.L34)/2
+	.byte	19,16,22,26,3,19,138,16,4
+	.word	(.L78-.L145)/2
+	.byte	19,0,8,26,0,0
+	.sdecl	'.debug_frame',debug,cluster('sha1_hash')
+	.sect	'.debug_frame'
+	.word	36
+	.word	.L319,.L36,.L93-.L36
+	.byte	4
+	.word	(.L153-.L36)/2
+	.byte	19,224,0,22,26,4,19,138,224,0,4
+	.word	(.L93-.L153)/2
+	.byte	19,0,8,26
+	; Module end

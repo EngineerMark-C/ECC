@@ -1,0 +1,2692 @@
+	; Module start
+	.compiler_version	"TASKING VX-toolset for AURIX Development Studio (non-commercial): C compiler v1.1r8 Build 22011964"
+	.compiler_invocation	"ctc -f cc53780a --dep-file=code/kemu4/xf_asr/hmac_sha256.d -c99 --fp-model=2cFlnrSTz -D__CPU__=tc26xb -D__CPU_TC26XB__ --core=tc1.6.x -D__CPU__=tc26xb -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\code -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\code\\\\kemu4 -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\code\\\\kemu4\\\\TLD7002_driver -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\code\\\\kemu4\\\\xf_asr -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Configurations -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Infra -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Infra\\\\Platform -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Infra\\\\Platform\\\\Tricore -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Infra\\\\Platform\\\\Tricore\\\\Compilers -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Infra\\\\Sfr -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Infra\\\\Sfr\\\\TC26B -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Infra\\\\Sfr\\\\TC26B\\\\_Reg -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Service -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Service\\\\CpuGeneric -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Service\\\\CpuGeneric\\\\If -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Service\\\\CpuGeneric\\\\If\\\\Ccu6If -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Service\\\\CpuGeneric\\\\StdIf -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Service\\\\CpuGeneric\\\\SysSe -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Service\\\\CpuGeneric\\\\SysSe\\\\Bsp -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Service\\\\CpuGeneric\\\\SysSe\\\\Math -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\Service\\\\CpuGeneric\\\\_Utilities -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Asclin -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Asclin\\\\Asc -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Asclin\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Ccu6 -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Ccu6\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Ccu6\\\\Timer -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Cpu -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Cpu\\\\CStart -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Cpu\\\\Irq -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Cpu\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Dma -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Dma\\\\Dma -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Dma\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Flash -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Flash\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Gpt12 -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Gpt12\\\\IncrEnc -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Gpt12\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Gtm -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Gtm\\\\Atom -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Gtm\\\\Atom\\\\Pwm -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Gtm\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Mtu -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Mtu\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Port -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Port\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Qspi -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Qspi\\\\SpiMaster -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Qspi\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Scu -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Scu\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Src -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Src\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Stm -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Stm\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Vadc -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Vadc\\\\Adc -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\Vadc\\\\Std -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\_Impl -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\_Lib -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\_Lib\\\\DataHandling -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\infineon_libraries\\\\iLLD\\\\TC26B\\\\Tricore\\\\_PinMap -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\zf_common -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\zf_components -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\zf_device -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\libraries\\\\zf_driver -IC:\\\\Users\\\\Ye\\\\Desktop\\\\hangzhou20\\\\ECC\\\\user -g2 -w544 -w557 -t4 --language=+volatile -N0 -O0 -Y0 -Z0 --compact-max-size=200 --misrac-version=2004 -o code/kemu4/xf_asr/hmac_sha256.src ../code/kemu4/xf_asr/hmac_sha256.c"
+	.compiler_name		"ctc"
+	;source	'../code/kemu4/xf_asr/hmac_sha256.c'
+
+	
+$TC16X
+	
+	.sdecl	'.text.hmac_sha256.sha256_transform',code,cluster('sha256_transform')
+	.sect	'.text.hmac_sha256.sha256_transform'
+	.align	2
+	
+; Function sha256_transform
+.L23:
+sha256_transform:	.type	func
+	lea	a10,[a10]-256
+.L143:
+	mov.aa	a15,a4
+.L144:
+	mov	d3,#0
+.L145:
+	mov	d0,#0
+.L147:
+	j	.L2
+.L3:
+	mul	d15,d3,#4
+	addsc.a	a2,a10,d15,#0
+.L257:
+	addsc.a	a4,a5,d0,#0
+	ld.bu	d1,[a4]
+.L258:
+	sh	d1,d1,#24
+.L259:
+	addsc.a	a4,a5,d0,#0
+	ld.bu	d15,[a4]1
+.L260:
+	sh	d2,d15,#16
+.L261:
+	or	d1,d2
+.L262:
+	addsc.a	a4,a5,d0,#0
+	ld.bu	d15,[a4]2
+.L263:
+	sh	d2,d15,#8
+.L264:
+	or	d1,d2
+.L265:
+	addsc.a	a4,a5,d0,#0
+	ld.bu	d15,[a4]3
+.L266:
+	or	d1,d15
+.L267:
+	st.w	[a2],d1
+.L268:
+	add	d3,#1
+.L269:
+	add	d0,#4
+.L2:
+	mov	d15,#16
+.L270:
+	jlt.u	d3,d15,.L3
+.L271:
+	j	.L4
+.L5:
+	mul	d15,d3,#4
+	addsc.a	a4,a10,d15,#0
+.L272:
+	add	d15,d3,#-2
+	mul	d15,d15,#4
+	addsc.a	a2,a10,d15,#0
+	ld.w	d15,[a2]
+	sh	d0,d15,#-17
+	add	d15,d3,#-2
+	mul	d15,d15,#4
+	addsc.a	a2,a10,d15,#0
+	ld.w	d15,[a2]
+	sh	d15,d15,#15
+	or	d0,d15
+	add	d15,d3,#-2
+	mul	d15,d15,#4
+	addsc.a	a2,a10,d15,#0
+	ld.w	d15,[a2]
+	sh	d1,d15,#-19
+	add	d15,d3,#-2
+	mul	d15,d15,#4
+	addsc.a	a2,a10,d15,#0
+	ld.w	d15,[a2]
+	sh	d15,d15,#13
+	or	d1,d15
+	xor	d0,d1
+	add	d15,d3,#-2
+	mul	d15,d15,#4
+	addsc.a	a2,a10,d15,#0
+	ld.w	d15,[a2]
+	sh	d15,d15,#-10
+	xor	d0,d15
+.L273:
+	add	d15,d3,#-7
+.L274:
+	mul	d15,d15,#4
+	addsc.a	a2,a10,d15,#0
+	ld.w	d15,[a2]
+.L275:
+	add	d0,d15
+.L276:
+	add	d15,d3,#-15
+	mul	d15,d15,#4
+	addsc.a	a2,a10,d15,#0
+	ld.w	d1,[a2]
+	sh	d1,#-7
+	add	d15,d3,#-15
+	mul	d15,d15,#4
+	addsc.a	a2,a10,d15,#0
+	ld.w	d15,[a2]
+	sh	d15,d15,#25
+	or	d1,d15
+	add	d15,d3,#-15
+	mul	d15,d15,#4
+	addsc.a	a2,a10,d15,#0
+	ld.w	d15,[a2]
+	sh	d2,d15,#-18
+	add	d15,d3,#-15
+	mul	d15,d15,#4
+	addsc.a	a2,a10,d15,#0
+	ld.w	d15,[a2]
+	sh	d15,d15,#14
+	or	d2,d15
+	xor	d1,d2
+	add	d15,d3,#-15
+	mul	d15,d15,#4
+	addsc.a	a2,a10,d15,#0
+	ld.w	d15,[a2]
+	sh	d15,#-3
+	xor	d1,d15
+.L277:
+	add	d0,d1
+.L278:
+	add	d15,d3,#-16
+.L279:
+	mul	d15,d15,#4
+	addsc.a	a2,a10,d15,#0
+	ld.w	d15,[a2]
+.L280:
+	add	d0,d15
+.L281:
+	st.w	[a4],d0
+.L282:
+	add	d3,#1
+.L4:
+	mov	d15,#64
+.L283:
+	jlt.u	d3,d15,.L5
+.L284:
+	ld.w	d3,[a15]8
+.L146:
+	ld.w	d4,[a15]12
+.L148:
+	ld.w	d5,[a15]16
+.L149:
+	ld.w	d6,[a15]20
+.L150:
+	ld.w	d7,[a15]24
+.L151:
+	ld.w	d8,[a15]28
+.L152:
+	ld.w	d9,[a15]32
+.L153:
+	ld.w	d10,[a15]36
+.L154:
+	mov	d11,#0
+.L156:
+	j	.L6
+.L7:
+	sh	d0,d7,#-6
+	sh	d1,d7,#26
+	or	d0,d1
+	sh	d1,d7,#-11
+	sh	d2,d7,#21
+	or	d1,d2
+	xor	d0,d1
+	sh	d15,d7,#-25
+	sh	d1,d7,#7
+	or	d15,d1
+	xor	d0,d15
+.L285:
+	add	d10,d0
+.L155:
+	xor	d15,d8,d9
+	and	d15,d7
+	xor	d15,d9
+.L286:
+	add	d10,d15
+.L287:
+	mul	d15,d11,#4
+.L288:
+	movh.a	a2,#@his(K)
+	lea	a2,[a2]@los(K)
+.L289:
+	addsc.a	a2,a2,d15,#0
+	ld.w	d15,[a2]
+.L290:
+	add	d10,d15
+.L291:
+	mul	d15,d11,#4
+	addsc.a	a2,a10,d15,#0
+	ld.w	d15,[a2]
+.L157:
+	add	d15,d10
+.L292:
+	sh	d0,d3,#-2
+	sh	d1,d3,#30
+	or	d0,d1
+	sh	d1,d3,#-13
+	sh	d2,d3,#19
+	or	d1,d2
+	xor	d0,d1
+	sh	d1,d3,#-22
+	sh	d2,d3,#10
+	or	d1,d2
+	xor	d0,d1
+.L293:
+	and	d1,d3,d4
+	or	d2,d3,d4
+	and	d2,d5
+	or	d1,d2
+.L158:
+	add	d0,d1
+.L294:
+	mov	d10,d9
+.L159:
+	mov	d9,d8
+.L295:
+	mov	d8,d7
+.L296:
+	add	d7,d15,d6
+.L297:
+	mov	d6,d5
+.L298:
+	mov	d5,d4
+.L299:
+	mov	d4,d3
+.L300:
+	add	d3,d15,d0
+.L301:
+	add	d11,#1
+.L6:
+	mov	d15,#64
+.L302:
+	jlt.u	d11,d15,.L7
+.L303:
+	ld.w	d15,[a15]8
+.L304:
+	add	d15,d3
+	st.w	[a15]8,d15
+.L305:
+	ld.w	d15,[a15]12
+.L306:
+	add	d15,d4
+	st.w	[a15]12,d15
+.L307:
+	ld.w	d15,[a15]16
+.L308:
+	add	d15,d5
+	st.w	[a15]16,d15
+.L309:
+	ld.w	d15,[a15]20
+.L310:
+	add	d15,d6
+	st.w	[a15]20,d15
+.L311:
+	ld.w	d15,[a15]24
+.L312:
+	add	d15,d7
+	st.w	[a15]24,d15
+.L313:
+	ld.w	d15,[a15]28
+.L314:
+	add	d15,d8
+	st.w	[a15]28,d15
+.L315:
+	ld.w	d15,[a15]32
+.L316:
+	add	d15,d9
+	st.w	[a15]32,d15
+.L317:
+	ld.w	d15,[a15]36
+.L318:
+	add	d15,d10
+	st.w	[a15]36,d15
+.L319:
+	ret
+.L95:
+	
+__sha256_transform_function_end:
+	.size	sha256_transform,__sha256_transform_function_end-sha256_transform
+.L51:
+	; End of function
+	
+	.sdecl	'.text.hmac_sha256.sha256_init',code,cluster('sha256_init')
+	.sect	'.text.hmac_sha256.sha256_init'
+	.align	2
+	
+	.global	sha256_init
+; Function sha256_init
+.L25:
+sha256_init:	.type	func
+	mov	e0,#0
+.L324:
+	st.d	[a4]0,e0
+.L325:
+	mov.u	d15,#58983
+	addih	d15,d15,#27145
+.L326:
+	st.w	[a4]8,d15
+.L327:
+	mov.u	d15,#44677
+	addih	d15,d15,#47975
+.L328:
+	st.w	[a4]12,d15
+.L329:
+	mov.u	d15,#62322
+	addih	d15,d15,#15470
+.L330:
+	st.w	[a4]16,d15
+.L331:
+	mov.u	d15,#62778
+	addih	d15,d15,#42319
+.L332:
+	st.w	[a4]20,d15
+.L333:
+	mov	d15,#21119
+	addih	d15,d15,#20750
+.L334:
+	st.w	[a4]24,d15
+.L335:
+	mov	d15,#26764
+	addih	d15,d15,#39685
+.L336:
+	st.w	[a4]28,d15
+.L337:
+	mov.u	d15,#55723
+	addih	d15,d15,#8067
+.L338:
+	st.w	[a4]32,d15
+.L339:
+	mov.u	d15,#52505
+	addih	d15,d15,#23520
+.L340:
+	st.w	[a4]36,d15
+.L341:
+	ret
+.L113:
+	
+__sha256_init_function_end:
+	.size	sha256_init,__sha256_init_function_end-sha256_init
+.L56:
+	; End of function
+	
+	.sdecl	'.text.hmac_sha256.sha256_final',code,cluster('sha256_final')
+	.sect	'.text.hmac_sha256.sha256_final'
+	.align	2
+	
+	.global	sha256_final
+; Function sha256_final
+.L27:
+sha256_final:	.type	func
+	mov.aa	a12,a4
+.L161:
+	mov.aa	a13,a5
+.L162:
+	ld.d	e4,[a12]0
+.L346:
+	mov	e6,#64
+.L347:
+	call	__ll_urem64
+.L160:
+	addsc.a	a15,a12,d2,#0
+.L163:
+	mov	d15,#128
+.L348:
+	st.b	[a15]40,d15
+.L164:
+	add	d15,d2,#1
+.L165:
+	mov	d0,#56
+.L349:
+	jge.u	d0,d15,.L8
+.L350:
+	addsc.a	a15,a12,d15,#0
+	lea	a4,[a15]40
+.L351:
+	mov	d4,#0
+.L352:
+	rsub	d5,d15,#64
+	call	memset
+.L353:
+	mov	d15,#0
+.L354:
+	lea	a5,[a12]40
+	mov.aa	a4,a12
+.L167:
+	call	sha256_transform
+.L8:
+	addsc.a	a15,a12,d15,#0
+	lea	a4,[a15]40
+.L355:
+	mov	d4,#0
+.L356:
+	rsub	d5,d15,#56
+	call	memset
+.L357:
+	ld.d	e4,[a12]0
+.L358:
+	mov	e6,#8
+.L359:
+	call	__ll_mul64
+	st.d	[a12]0,e2
+.L360:
+	ld.d	e0,[a12]0
+.L361:
+	sh	d15,d1,#-24
+.L166:
+	extr.u	d15,d15,#0,#8
+.L362:
+	st.b	[a12]96,d15
+.L363:
+	ld.d	e0,[a12]0
+.L364:
+	sh	d15,d1,#-16
+.L365:
+	extr.u	d15,d15,#0,#8
+.L366:
+	st.b	[a12]97,d15
+.L367:
+	ld.d	e0,[a12]0
+.L368:
+	sh	d15,d1,#-8
+.L369:
+	extr.u	d15,d15,#0,#8
+.L370:
+	st.b	[a12]98,d15
+.L371:
+	ld.d	e0,[a12]0
+.L372:
+	extr.u	d15,d1,#0,#8
+.L373:
+	st.b	[a12]99,d15
+.L374:
+	ld.d	e0,[a12]0
+.L375:
+	dextr	d15,d1,d0,#8
+.L376:
+	extr.u	d15,d15,#0,#8
+.L377:
+	st.b	[a12]100,d15
+.L378:
+	ld.d	e0,[a12]0
+.L379:
+	dextr	d15,d1,d0,#16
+.L380:
+	extr.u	d15,d15,#0,#8
+.L381:
+	st.b	[a12]101,d15
+.L382:
+	ld.d	e0,[a12]0
+.L383:
+	dextr	d15,d1,d0,#24
+.L384:
+	extr.u	d15,d15,#0,#8
+.L385:
+	st.b	[a12]102,d15
+.L386:
+	ld.d	e0,[a12]0
+.L387:
+	extr.u	d15,d0,#0,#8
+.L388:
+	st.b	[a12]103,d15
+.L389:
+	lea	a5,[a12]40
+	mov.aa	a4,a12
+.L168:
+	call	sha256_transform
+.L169:
+	mov	d0,#0
+.L170:
+	j	.L9
+.L10:
+	mul	d15,d0,#4
+.L390:
+	addsc.a	a2,a13,d15,#0
+.L391:
+	mul	d15,d0,#4
+	addsc.a	a15,a12,d15,#0
+	ld.w	d15,[a15]8
+.L392:
+	sh	d15,d15,#-24
+.L393:
+	st.b	[a2],d15
+.L394:
+	mul	d15,d0,#4
+.L395:
+	addsc.a	a15,a13,d15,#0
+.L396:
+	mul	d15,d0,#4
+	addsc.a	a2,a12,d15,#0
+	ld.w	d15,[a2]8
+.L397:
+	sh	d15,d15,#-16
+.L398:
+	st.b	[a15]1,d15
+.L399:
+	mul	d15,d0,#4
+.L400:
+	addsc.a	a15,a13,d15,#0
+.L401:
+	mul	d15,d0,#4
+	addsc.a	a2,a12,d15,#0
+	ld.w	d15,[a2]8
+.L402:
+	sh	d15,#-8
+.L403:
+	st.b	[a15]2,d15
+.L404:
+	mul	d15,d0,#4
+.L405:
+	addsc.a	a15,a13,d15,#0
+.L406:
+	mul	d15,d0,#4
+	addsc.a	a2,a12,d15,#0
+	ld.w	d15,[a2]8
+.L407:
+	st.b	[a15]3,d15
+.L408:
+	add	d0,#1
+.L9:
+	jlt.u	d0,#8,.L10
+.L409:
+	mov.aa	a4,a12
+.L172:
+	call	sha256_init
+.L171:
+	ret
+.L115:
+	
+__sha256_final_function_end:
+	.size	sha256_final,__sha256_final_function_end-sha256_final
+.L61:
+	; End of function
+	
+	.sdecl	'.text.hmac_sha256.sha256_update',code,cluster('sha256_update')
+	.sect	'.text.hmac_sha256.sha256_update'
+	.align	2
+	
+	.global	sha256_update
+; Function sha256_update
+.L29:
+sha256_update:	.type	func
+	mov.aa	a15,a4
+.L175:
+	mov.aa	a12,a5
+.L177:
+	mov	d8,d4
+.L178:
+	ld.d	e4,[a15]0
+.L173:
+	mov	e6,#64
+.L414:
+	call	__ll_urem64
+.L174:
+	mov	d10,d2
+.L179:
+	ld.d	e0,[a15]0
+.L415:
+	mov	d3,#0
+	mov	d2,d8
+.L180:
+	addx	d0,d0,d2
+	addc	d1,d1,d3
+	st.d	[a15]0,e0
+.L416:
+	jeq	d10,#0,.L11
+.L417:
+	add	d0,d8,d10
+.L418:
+	mov	d15,#64
+.L419:
+	jge.u	d0,d15,.L12
+.L420:
+	addsc.a	a15,a15,d10,#0
+.L176:
+	lea	a4,[a15]40
+.L421:
+	mov.aa	a5,a12
+.L182:
+	mov	d4,d8
+.L181:
+	call	memcpy
+.L183:
+	j	.L13
+.L12:
+	addsc.a	a2,a15,d10,#0
+	lea	a4,[a2]40
+.L422:
+	rsub	d4,d10,#64
+	mov.aa	a5,a12
+.L185:
+	call	memcpy
+.L184:
+	rsub	d15,d10,#64
+.L423:
+	sub	d8,d15
+.L424:
+	rsub	d15,d10,#64
+.L425:
+	addsc.a	a12,a12,d15,#0
+.L426:
+	lea	a5,[a15]40
+	mov.aa	a4,a15
+.L186:
+	call	sha256_transform
+.L11:
+	j	.L14
+.L15:
+	mov.aa	a4,a15
+.L187:
+	mov.aa	a5,a12
+.L189:
+	call	sha256_transform
+.L188:
+	add	d8,d8,#-64
+.L427:
+	lea	a12,[a12]64
+.L14:
+	mov	d15,#64
+.L428:
+	jge.u	d8,d15,.L15
+.L429:
+	lea	a4,[a15]40
+.L430:
+	mov.aa	a5,a12
+.L190:
+	mov	d4,d8
+.L191:
+	call	memcpy
+.L13:
+	ret
+.L121:
+	
+__sha256_update_function_end:
+	.size	sha256_update,__sha256_update_function_end-sha256_update
+.L66:
+	; End of function
+	
+	.sdecl	'.text.hmac_sha256.hmac_sha256_init',code,cluster('hmac_sha256_init')
+	.sect	'.text.hmac_sha256.hmac_sha256_init'
+	.align	2
+	
+	.global	hmac_sha256_init
+; Function hmac_sha256_init
+.L31:
+hmac_sha256_init:	.type	func
+	mov.aa	a12,a4
+.L193:
+	mov.aa	a15,a5
+.L194:
+	mov	d8,d4
+.L195:
+	lea	a13,[a12]128
+.L196:
+	mov	d15,#64
+.L435:
+	jlt.u	d15,d8,.L16
+.L436:
+	mov.aa	a4,a12
+	mov.aa	a5,a15
+	mov	d4,d8
+	call	memcpy
+.L192:
+	addsc.a	a4,a12,d8,#0
+.L437:
+	mov	d4,#0
+.L438:
+	rsub	d5,d8,#64
+	call	memset
+.L439:
+	j	.L17
+.L16:
+	mov.aa	a4,a13
+.L197:
+	call	sha256_init
+.L198:
+	mov.aa	a4,a13
+.L199:
+	mov.aa	a5,a15
+.L201:
+	mov	d4,d8
+.L202:
+	call	sha256_update
+.L200:
+	mov.aa	a4,a13
+.L203:
+	mov.aa	a5,a12
+.L205:
+	call	sha256_final
+.L204:
+	lea	a4,[a12]32
+.L440:
+	mov	d4,#0
+.L441:
+	mov	d5,#32
+	call	memset
+.L17:
+	mov	d15,#0
+.L206:
+	j	.L18
+.L19:
+	addsc.a	a15,a12,d15,#0
+.L442:
+	addsc.a	a2,a12,d15,#0
+	ld.bu	d0,[a2]
+.L443:
+	xor	d0,d0,#92
+.L444:
+	st.b	[a15],d0
+.L445:
+	add	d15,#1
+.L18:
+	mov	d0,#64
+.L446:
+	jlt.u	d15,d0,.L19
+.L447:
+	mov.aa	a4,a13
+.L207:
+	call	sha256_init
+.L208:
+	mov	d4,#64
+	mov.aa	a4,a13
+.L209:
+	mov.aa	a5,a12
+.L211:
+	call	sha256_update
+.L210:
+	lea	a4,[a12]96
+.L448:
+	lea	a5,[a12]136
+.L449:
+	mov	d4,#32
+	call	memcpy
+.L450:
+	mov	d15,#0
+.L451:
+	j	.L20
+.L21:
+	addsc.a	a15,a12,d15,#0
+.L452:
+	addsc.a	a2,a12,d15,#0
+	ld.bu	d0,[a2]
+.L453:
+	xor	d0,d0,#92
+.L454:
+	xor	d0,d0,#54
+.L455:
+	st.b	[a15],d0
+.L456:
+	add	d15,#1
+.L20:
+	mov	d0,#64
+.L457:
+	jlt.u	d15,d0,.L21
+.L458:
+	mov.aa	a4,a13
+.L212:
+	call	sha256_init
+.L213:
+	mov	d4,#64
+	mov.aa	a4,a13
+.L214:
+	mov.aa	a5,a12
+.L216:
+	call	sha256_update
+.L215:
+	lea	a4,[a12]64
+.L459:
+	lea	a5,[a12]136
+.L460:
+	mov	d4,#32
+	call	memcpy
+.L461:
+	ret
+.L127:
+	
+__hmac_sha256_init_function_end:
+	.size	hmac_sha256_init,__hmac_sha256_init_function_end-hmac_sha256_init
+.L71:
+	; End of function
+	
+	.sdecl	'.text.hmac_sha256.hmac_sha256_update',code,cluster('hmac_sha256_update')
+	.sect	'.text.hmac_sha256.hmac_sha256_update'
+	.align	2
+	
+	.global	hmac_sha256_update
+; Function hmac_sha256_update
+.L33:
+hmac_sha256_update:	.type	func
+	lea	a4,[a4]128
+.L217:
+	call	sha256_update
+.L218:
+	ret
+.L134:
+	
+__hmac_sha256_update_function_end:
+	.size	hmac_sha256_update,__hmac_sha256_update_function_end-hmac_sha256_update
+.L76:
+	; End of function
+	
+	.sdecl	'.text.hmac_sha256.hmac_sha256_final',code,cluster('hmac_sha256_final')
+	.sect	'.text.hmac_sha256.hmac_sha256_final'
+	.align	2
+	
+	.global	hmac_sha256_final
+; Function hmac_sha256_final
+.L35:
+hmac_sha256_final:	.type	func
+	mov.aa	a15,a4
+.L221:
+	mov.aa	a12,a5
+.L222:
+	lea	a13,[a15]128
+.L223:
+	mov.aa	a4,a13
+.L219:
+	mov.aa	a5,a12
+	call	sha256_final
+.L220:
+	lea	a4,[a15]136
+.L470:
+	lea	a5,[a15]96
+.L471:
+	mov	d4,#32
+	call	memcpy
+.L472:
+	mov	e0,#64
+.L473:
+	st.d	[a15]128,e0
+.L474:
+	mov	d4,#32
+	mov.aa	a4,a13
+.L224:
+	mov.aa	a5,a12
+.L226:
+	call	sha256_update
+.L225:
+	mov.aa	a4,a13
+.L227:
+	mov.aa	a5,a12
+.L229:
+	call	sha256_final
+.L228:
+	lea	a4,[a15]136
+.L475:
+	lea	a5,[a15]64
+.L476:
+	mov	d4,#32
+	call	memcpy
+.L477:
+	mov	e0,#64
+.L478:
+	st.d	[a15]128,e0
+.L479:
+	ret
+.L138:
+	
+__hmac_sha256_final_function_end:
+	.size	hmac_sha256_final,__hmac_sha256_final_function_end-hmac_sha256_final
+.L81:
+	; End of function
+	
+	.sdecl	'.text.hmac_sha256.hmac_sha256',code,cluster('hmac_sha256')
+	.sect	'.text.hmac_sha256.hmac_sha256'
+	.align	2
+	
+	.global	hmac_sha256
+; Function hmac_sha256
+.L37:
+hmac_sha256:	.type	func
+	sub.a	a10,#232
+.L230:
+	mov.aa	a15,a4
+.L234:
+	mov.aa	a12,a5
+.L235:
+	mov	d15,d5
+.L236:
+	mov.aa	a13,a6
+.L237:
+	lea	a4,[a10]0
+.L233:
+	mov.aa	a5,a15
+.L231:
+	call	hmac_sha256_init
+.L232:
+	lea	a4,[a10]0
+.L251:
+	mov.aa	a5,a12
+.L238:
+	mov	d4,d15
+.L240:
+	call	hmac_sha256_update
+.L239:
+	lea	a4,[a10]0
+.L252:
+	mov.aa	a5,a13
+.L241:
+	call	hmac_sha256_final
+.L242:
+	ret
+.L84:
+	
+__hmac_sha256_function_end:
+	.size	hmac_sha256,__hmac_sha256_function_end-hmac_sha256
+.L46:
+	; End of function
+	
+	.sdecl	'.rodata.hmac_sha256.K',data,rom,cluster('K')
+	.sect	'.rodata.hmac_sha256.K'
+	.align	2
+K:	.type	object
+	.size	K,256
+	.word	1116352408,1899447441,-1245643825,-373957723,961987163,1508970993,-1841331548,-1424204075
+	.word	-670586216,310598401,607225278,1426881987,1925078388,-2132889090,-1680079193,-1046744716
+	.word	-459576895,-272742522,264347078,604807628,770255983,1249150122,1555081692,1996064986
+	.word	-1740746414,-1473132947,-1341970488,-1084653625,-958395405,-710438585,113926993,338241895
+	.word	666307205,773529912,1294757372,1396182291,1695183700,1986661051,-2117940946,-1838011259
+	.word	-1564481375,-1474664885,-1035236496,-949202525,-778901479,-694614492,-200395387,275423344
+	.word	430227734,506948616,659060556,883997877,958139571,1322822218,1537002063,1747873779
+	.word	1955562222,2024104815,-2067236844,-1933114872,-1866530822,-1538233109,-1090935817,-965641998
+	.calls	'sha256_final','__ll_urem64'
+	.calls	'sha256_final','__ll_mul64'
+	.calls	'sha256_update','__ll_urem64'
+	.calls	'sha256_final','memset'
+	.calls	'sha256_final','sha256_transform'
+	.calls	'sha256_final','sha256_init'
+	.calls	'sha256_update','memcpy'
+	.calls	'sha256_update','sha256_transform'
+	.calls	'hmac_sha256_init','memcpy'
+	.calls	'hmac_sha256_init','memset'
+	.calls	'hmac_sha256_init','sha256_init'
+	.calls	'hmac_sha256_init','sha256_update'
+	.calls	'hmac_sha256_init','sha256_final'
+	.calls	'hmac_sha256_update','sha256_update'
+	.calls	'hmac_sha256_final','sha256_final'
+	.calls	'hmac_sha256_final','memcpy'
+	.calls	'hmac_sha256_final','sha256_update'
+	.calls	'hmac_sha256','hmac_sha256_init'
+	.calls	'hmac_sha256','hmac_sha256_update'
+	.calls	'hmac_sha256','hmac_sha256_final'
+	.calls	'sha256_transform','',256
+	.calls	'sha256_init','',0
+	.calls	'sha256_final','',0
+	.calls	'sha256_update','',0
+	.calls	'hmac_sha256_init','',0
+	.calls	'hmac_sha256_update','',0
+	.calls	'hmac_sha256_final','',0
+	.extern	memcpy
+	.extern	memset
+	.extern	__ll_urem64
+	.extern	__ll_mul64
+	.calls	'hmac_sha256','',232
+	.sdecl	'.debug_info',debug
+	.sect	'.debug_info'
+.L39:
+	.word	746
+	.half	3
+	.word	.L40
+	.byte	4
+.L38:
+	.byte	1
+	.byte	'../code/kemu4/xf_asr/hmac_sha256.c',0
+	.byte	'TASKING VX-toolset for AURIX Development Studio (non-commercial): C compiler',0
+	.byte	'C:\\Users\\Ye\\Desktop\\hangzhou20\\ECC\\Debug\\',0,12,1
+	.word	.L41
+	.byte	2
+	.byte	'unsigned char',0,1,8,3
+	.word	172
+.L85:
+	.byte	4
+	.word	189
+.L87:
+	.byte	2
+	.byte	'unsigned int',0,4,7
+.L91:
+	.byte	4
+	.word	172
+	.byte	5,64
+	.word	172
+	.byte	6,63,0,5,32
+	.word	199
+	.byte	6,7,0,2
+	.byte	'unsigned long long int',0,8,7,7
+	.byte	'sha256_ctx_t',0,1,10,16,104,8
+	.byte	'len',0
+	.word	238
+	.byte	8,2,35,0,8
+	.byte	'h',0
+	.word	229
+	.byte	32,2,35,8,8
+	.byte	'buf',0
+	.word	220
+	.byte	64,2,35,40,0
+.L93:
+	.byte	7
+	.byte	'hmac_sha256_ctx_t',0,1,16,16,232,1,8
+	.byte	'buf',0
+	.word	220
+	.byte	64,2,35,0,8
+	.byte	'h_inner',0
+	.word	229
+	.byte	32,2,35,64,8
+	.byte	'h_outer',0
+	.word	229
+	.byte	32,2,35,96,8
+	.byte	'sha',0
+	.word	264
+	.byte	104,3,35,128,1,0,9
+	.byte	'void',0,4
+	.word	406
+	.byte	10
+	.word	412
+	.byte	3
+	.word	406
+	.byte	4
+	.word	422
+	.byte	10
+	.word	427
+	.byte	11
+	.byte	'memcpy',0,2,53,17
+	.word	412
+	.byte	1,1,1,1,12,2,53,33
+	.word	417
+	.byte	12,2,53,56
+	.word	432
+	.byte	12,2,53,68
+	.word	199
+	.byte	0
+.L119:
+	.byte	2
+	.byte	'int',0,4,5,11
+	.byte	'memset',0,2,56,17
+	.word	412
+	.byte	1,1,1,1,12,2,56,33
+	.word	412
+	.byte	12,2,56,36
+	.word	481
+	.byte	12,2,56,41
+	.word	199
+	.byte	0
+.L96:
+	.byte	4
+	.word	264
+.L109:
+	.byte	5,128,2
+	.word	199
+	.byte	6,63,0
+.L128:
+	.byte	4
+	.word	320
+	.byte	13
+	.byte	'__size_t',0,3,1,1
+	.word	199
+	.byte	14,1,4
+	.word	569
+	.byte	13
+	.byte	'__codeptr',0,3,1,1
+	.word	571
+	.byte	13
+	.byte	'__intptr_t',0,3,1,1
+	.word	481
+	.byte	13
+	.byte	'__uintptr_t',0,3,1,1
+	.word	199
+	.byte	13
+	.byte	'uint8_t',0,4,242,1,41
+	.word	172
+	.byte	13
+	.byte	'uint32_t',0,4,254,1,41
+	.word	199
+	.byte	13
+	.byte	'uint64_t',0,4,134,2,41
+	.word	238
+	.byte	13
+	.byte	'SHA256_CTX',0,1,14,3
+	.word	264
+	.byte	13
+	.byte	'HMAC_SHA256_CTX',0,1,21,3
+	.word	320
+	.byte	13
+	.byte	'size_t',0,2,29,25
+	.word	199
+.L142:
+	.byte	3
+	.word	537
+	.byte	0
+	.sdecl	'.debug_abbrev',debug
+	.sect	'.debug_abbrev'
+.L40:
+	.byte	1,17,1,3,8,37,8,27,8,19,15,128,70,12,16,6,0,0,2,36,0,3,8,11,15,62,15,0,0,3,38,0,73,19,0,0,4,15,0,73,19
+	.byte	0,0,5,1,1,11,15,73,19,0,0,6,33,0,47,15,0,0,7,19,1,3,8,58,15,59,15,57,15,11,15,0,0,8,13,0,3,8,73,19,11
+	.byte	15,56,9,0,0,9,59,0,3,8,0,0,10,55,0,73,19,0,0,11,46,1,3,8,58,15,59,15,57,15,73,19,54,15,39,12,63,12,60
+	.byte	12,0,0,12,5,0,58,15,59,15,57,15,73,19,0,0,13,22,0,3,8,58,15,59,15,57,15,73,19,0,0,14,21,0,54,15,0,0,0
+	.sdecl	'.debug_line',debug
+	.sect	'.debug_line'
+.L41:
+	.word	.L244-.L243
+.L243:
+	.half	3
+	.word	.L246-.L245
+.L245:
+	.byte	2,1,-4,9,10,0,1,1,1,1,0,0,0,1
+	.byte	'C:\\Infineon\\AURIX-Studio-1.10.10\\tools\\Compilers\\Tasking_1.1r8\\ctc\\include\\',0,0
+	.byte	'..\\code\\kemu4\\xf_asr\\hmac_sha256.h',0,0,0,0
+	.byte	'string.h',0,1,0,0
+	.byte	'../code/kemu4/xf_asr/hmac_sha256.c',0,0,0,0
+	.byte	'stdint.h',0,1,0,0,0
+.L246:
+.L244:
+	.sdecl	'.debug_info',debug,cluster('hmac_sha256')
+	.sect	'.debug_info'
+.L42:
+	.word	335
+	.half	3
+	.word	.L43
+	.byte	4,1
+	.byte	'../code/kemu4/xf_asr/hmac_sha256.c',0
+	.byte	'TASKING VX-toolset for AURIX Development Studio (non-commercial): C compiler',0
+	.byte	'C:\\Users\\Ye\\Desktop\\hangzhou20\\ECC\\Debug\\',0,12,1
+	.word	.L45,.L44
+	.byte	2
+	.word	.L38
+	.byte	3
+	.byte	'hmac_sha256',0,1,204,1,6,1,1,1
+	.word	.L37,.L84,.L36
+	.byte	4
+	.byte	'key',0,1,204,1,33
+	.word	.L85,.L86
+	.byte	4
+	.byte	'keylen',0,1,204,1,47
+	.word	.L87,.L88
+	.byte	4
+	.byte	'data',0,1,205,1,33
+	.word	.L85,.L89
+	.byte	4
+	.byte	'datalen',0,1,205,1,48
+	.word	.L87,.L90
+	.byte	4
+	.byte	'digest',0,1,206,1,27
+	.word	.L91,.L92
+	.byte	5
+	.word	.L37,.L84
+	.byte	6
+	.byte	'hmac',0,1,208,1,21
+	.word	.L93,.L94
+	.byte	0,0,0
+	.sdecl	'.debug_abbrev',debug,cluster('hmac_sha256')
+	.sect	'.debug_abbrev'
+.L43:
+	.byte	1,17,1,3,8,37,8,27,8,19,15,128,70,12,85,6,16,6,0,0,2,61,0,24,16,0,0,3,46,1,3,8,58,15,59,15,57,15,54,15
+	.byte	39,12,63,12,17,1,18,1,64,6,0,0,4,5,0,3,8,58,15,59,15,57,15,73,16,2,6,0,0,5,11,1,17,1,18,1,0,0,6,52,0,3
+	.byte	8,58,15,59,15,57,15,73,16,2,6,0,0,0
+	.sdecl	'.debug_line',debug,cluster('hmac_sha256')
+	.sect	'.debug_line'
+.L44:
+	.word	.L248-.L247
+.L247:
+	.half	3
+	.word	.L250-.L249
+.L249:
+	.byte	2,1,-4,9,10,0,1,1,1,1,0,0,0,1,0
+	.byte	'../code/kemu4/xf_asr/hmac_sha256.c',0,0,0,0,0
+.L250:
+	.byte	5,6,7,0,5,2
+	.word	.L37
+	.byte	3,203,1,1,5,23,9
+	.half	.L237-.L37
+	.byte	3,5,1,5,34,9
+	.half	.L233-.L237
+	.byte	1,5,25,9
+	.half	.L232-.L233
+	.byte	3,1,1,5,37,9
+	.half	.L251-.L232
+	.byte	1,5,24,9
+	.half	.L239-.L251
+	.byte	3,1,1,5,30,9
+	.half	.L252-.L239
+	.byte	1,5,1,9
+	.half	.L242-.L252
+	.byte	3,1,1,7,9
+	.half	.L46-.L242
+	.byte	0,1,1
+.L248:
+	.sdecl	'.debug_ranges',debug,cluster('hmac_sha256')
+	.sect	'.debug_ranges'
+.L45:
+	.word	-1,.L37,0,.L46-.L37,0,0
+	.sdecl	'.debug_info',debug,cluster('sha256_transform')
+	.sect	'.debug_info'
+.L47:
+	.word	438
+	.half	3
+	.word	.L48
+	.byte	4,1
+	.byte	'../code/kemu4/xf_asr/hmac_sha256.c',0
+	.byte	'TASKING VX-toolset for AURIX Development Studio (non-commercial): C compiler',0
+	.byte	'C:\\Users\\Ye\\Desktop\\hangzhou20\\ECC\\Debug\\',0,12,1
+	.word	.L50,.L49
+	.byte	2
+	.word	.L38
+	.byte	3
+	.byte	'sha256_transform',0,1,26,13,1,1
+	.word	.L23,.L95,.L22
+	.byte	4
+	.byte	's',0,1,26,42
+	.word	.L96,.L97
+	.byte	4
+	.byte	'buf',0,1,26,60
+	.word	.L85,.L98
+	.byte	5
+	.word	.L23,.L95
+	.byte	6
+	.byte	't1',0,1,28,14
+	.word	.L87,.L99
+	.byte	6
+	.byte	't2',0,1,28,18
+	.word	.L87,.L100
+	.byte	6
+	.byte	'a',0,1,28,22
+	.word	.L87,.L101
+	.byte	6
+	.byte	'b',0,1,28,25
+	.word	.L87,.L102
+	.byte	6
+	.byte	'c',0,1,28,28
+	.word	.L87,.L103
+	.byte	6
+	.byte	'd',0,1,28,31
+	.word	.L87,.L104
+	.byte	6
+	.byte	'e',0,1,28,34
+	.word	.L87,.L105
+	.byte	6
+	.byte	'f',0,1,28,37
+	.word	.L87,.L106
+	.byte	6
+	.byte	'g',0,1,28,40
+	.word	.L87,.L107
+	.byte	6
+	.byte	'h',0,1,28,43
+	.word	.L87,.L108
+	.byte	6
+	.byte	'm',0,1,28,46
+	.word	.L109,.L110
+	.byte	6
+	.byte	'i',0,1,29,14
+	.word	.L87,.L111
+	.byte	6
+	.byte	'j',0,1,29,17
+	.word	.L87,.L112
+	.byte	0,0,0
+	.sdecl	'.debug_abbrev',debug,cluster('sha256_transform')
+	.sect	'.debug_abbrev'
+.L48:
+	.byte	1,17,1,3,8,37,8,27,8,19,15,128,70,12,85,6,16,6,0,0,2,61,0,24,16,0,0,3,46,1,3,8,58,15,59,15,57,15,54,15
+	.byte	39,12,17,1,18,1,64,6,0,0,4,5,0,3,8,58,15,59,15,57,15,73,16,2,6,0,0,5,11,1,17,1,18,1,0,0,6,52,0,3,8,58
+	.byte	15,59,15,57,15,73,16,2,6,0,0,0
+	.sdecl	'.debug_line',debug,cluster('sha256_transform')
+	.sect	'.debug_line'
+.L49:
+	.word	.L254-.L253
+.L253:
+	.half	3
+	.word	.L256-.L255
+.L255:
+	.byte	2,1,-4,9,10,0,1,1,1,1,0,0,0,1,0
+	.byte	'../code/kemu4/xf_asr/hmac_sha256.c',0,0,0,0,0
+.L256:
+	.byte	5,13,7,0,5,2
+	.word	.L23
+	.byte	3,25,1,5,11,9
+	.half	.L144-.L23
+	.byte	3,5,1,5,18,9
+	.half	.L145-.L144
+	.byte	1,5,29,9
+	.half	.L147-.L145
+	.byte	1,5,10,9
+	.half	.L3-.L147
+	.byte	3,2,1,5,30,9
+	.half	.L257-.L3
+	.byte	1,5,34,9
+	.half	.L258-.L257
+	.byte	1,5,56,9
+	.half	.L259-.L258
+	.byte	1,5,64,9
+	.half	.L260-.L259
+	.byte	1,5,40,9
+	.half	.L261-.L260
+	.byte	1,5,30,9
+	.half	.L262-.L261
+	.byte	3,1,1,5,38,9
+	.half	.L263-.L262
+	.byte	1,5,70,9
+	.half	.L264-.L263
+	.byte	3,127,1,5,59,9
+	.half	.L265-.L264
+	.byte	3,1,1,5,43,9
+	.half	.L266-.L265
+	.byte	1,5,14,9
+	.half	.L267-.L266
+	.byte	3,127,1,5,32,9
+	.half	.L268-.L267
+	.byte	3,126,1,5,38,9
+	.half	.L269-.L268
+	.byte	1,5,27,9
+	.half	.L2-.L269
+	.byte	1,5,29,9
+	.half	.L270-.L2
+	.byte	1,5,17,7,9
+	.half	.L271-.L270
+	.byte	3,5,1,5,10,9
+	.half	.L5-.L271
+	.byte	3,2,1,5,16,9
+	.half	.L272-.L5
+	.byte	1,5,35,9
+	.half	.L273-.L272
+	.byte	1,5,32,9
+	.half	.L274-.L273
+	.byte	1,5,29,9
+	.half	.L275-.L274
+	.byte	1,5,42,9
+	.half	.L276-.L275
+	.byte	1,5,40,9
+	.half	.L277-.L276
+	.byte	1,5,62,9
+	.half	.L278-.L277
+	.byte	1,5,59,9
+	.half	.L279-.L278
+	.byte	1,5,56,9
+	.half	.L280-.L279
+	.byte	1,5,14,9
+	.half	.L281-.L280
+	.byte	1,5,20,9
+	.half	.L282-.L281
+	.byte	3,126,1,5,15,9
+	.half	.L4-.L282
+	.byte	1,5,17,9
+	.half	.L283-.L4
+	.byte	1,5,13,7,9
+	.half	.L284-.L283
+	.byte	3,4,1,9
+	.half	.L146-.L284
+	.byte	3,1,1,9
+	.half	.L148-.L146
+	.byte	3,1,1,9
+	.half	.L149-.L148
+	.byte	3,1,1,9
+	.half	.L150-.L149
+	.byte	3,1,1,9
+	.half	.L151-.L150
+	.byte	3,1,1,9
+	.half	.L152-.L151
+	.byte	3,1,1,9
+	.half	.L153-.L152
+	.byte	3,1,1,5,11,9
+	.half	.L154-.L153
+	.byte	3,1,1,5,22,9
+	.half	.L156-.L154
+	.byte	1,5,18,9
+	.half	.L7-.L156
+	.byte	3,2,1,5,16,9
+	.half	.L285-.L7
+	.byte	1,5,26,9
+	.half	.L155-.L285
+	.byte	1,5,24,9
+	.half	.L286-.L155
+	.byte	1,5,41,9
+	.half	.L287-.L286
+	.byte	1,5,40,9
+	.half	.L288-.L287
+	.byte	1,5,41,9
+	.half	.L289-.L288
+	.byte	1,5,38,9
+	.half	.L290-.L289
+	.byte	1,5,48,9
+	.half	.L291-.L290
+	.byte	1,5,45,9
+	.half	.L157-.L291
+	.byte	1,5,14,9
+	.half	.L292-.L157
+	.byte	3,1,1,5,22,9
+	.half	.L293-.L292
+	.byte	1,5,20,9
+	.half	.L158-.L293
+	.byte	1,5,11,9
+	.half	.L294-.L158
+	.byte	3,1,1,9
+	.half	.L159-.L294
+	.byte	3,1,1,9
+	.half	.L295-.L159
+	.byte	3,1,1,5,15,9
+	.half	.L296-.L295
+	.byte	3,1,1,5,11,9
+	.half	.L297-.L296
+	.byte	3,1,1,9
+	.half	.L298-.L297
+	.byte	3,1,1,9
+	.half	.L299-.L298
+	.byte	3,1,1,5,16,9
+	.half	.L300-.L299
+	.byte	3,1,1,5,25,9
+	.half	.L301-.L300
+	.byte	3,117,1,5,20,9
+	.half	.L6-.L301
+	.byte	1,5,22,9
+	.half	.L302-.L6
+	.byte	1,5,9,7,9
+	.half	.L303-.L302
+	.byte	3,13,1,5,13,9
+	.half	.L304-.L303
+	.byte	1,5,9,9
+	.half	.L305-.L304
+	.byte	3,1,1,5,13,9
+	.half	.L306-.L305
+	.byte	1,5,9,9
+	.half	.L307-.L306
+	.byte	3,1,1,5,13,9
+	.half	.L308-.L307
+	.byte	1,5,9,9
+	.half	.L309-.L308
+	.byte	3,1,1,5,13,9
+	.half	.L310-.L309
+	.byte	1,5,9,9
+	.half	.L311-.L310
+	.byte	3,1,1,5,13,9
+	.half	.L312-.L311
+	.byte	1,5,9,9
+	.half	.L313-.L312
+	.byte	3,1,1,5,13,9
+	.half	.L314-.L313
+	.byte	1,5,9,9
+	.half	.L315-.L314
+	.byte	3,1,1,5,13,9
+	.half	.L316-.L315
+	.byte	1,5,9,9
+	.half	.L317-.L316
+	.byte	3,1,1,5,13,9
+	.half	.L318-.L317
+	.byte	1,5,1,9
+	.half	.L319-.L318
+	.byte	3,1,1,7,9
+	.half	.L51-.L319
+	.byte	0,1,1
+.L254:
+	.sdecl	'.debug_ranges',debug,cluster('sha256_transform')
+	.sect	'.debug_ranges'
+.L50:
+	.word	-1,.L23,0,.L51-.L23,0,0
+	.sdecl	'.debug_info',debug,cluster('sha256_init')
+	.sect	'.debug_info'
+.L52:
+	.word	233
+	.half	3
+	.word	.L53
+	.byte	4,1
+	.byte	'../code/kemu4/xf_asr/hmac_sha256.c',0
+	.byte	'TASKING VX-toolset for AURIX Development Studio (non-commercial): C compiler',0
+	.byte	'C:\\Users\\Ye\\Desktop\\hangzhou20\\ECC\\Debug\\',0,12,1
+	.word	.L55,.L54
+	.byte	2
+	.word	.L38
+	.byte	3
+	.byte	'sha256_init',0,1,71,6,1,1,1
+	.word	.L25,.L113,.L24
+	.byte	4
+	.byte	's',0,1,71,30
+	.word	.L96,.L114
+	.byte	5
+	.word	.L25,.L113
+	.byte	0,0
+	.sdecl	'.debug_abbrev',debug,cluster('sha256_init')
+	.sect	'.debug_abbrev'
+.L53:
+	.byte	1,17,1,3,8,37,8,27,8,19,15,128,70,12,85,6,16,6,0,0,2,61,0,24,16,0,0,3,46,1,3,8,58,15,59,15,57,15,54,15
+	.byte	39,12,63,12,17,1,18,1,64,6,0,0,4,5,0,3,8,58,15,59,15,57,15,73,16,2,6,0,0,5,11,0,17,1,18,1,0,0,0
+	.sdecl	'.debug_line',debug,cluster('sha256_init')
+	.sect	'.debug_line'
+.L54:
+	.word	.L321-.L320
+.L320:
+	.half	3
+	.word	.L323-.L322
+.L322:
+	.byte	2,1,-4,9,10,0,1,1,1,1,0,0,0,1,0
+	.byte	'../code/kemu4/xf_asr/hmac_sha256.c',0,0,0,0,0
+.L323:
+	.byte	5,14,7,0,5,2
+	.word	.L25
+	.byte	3,200,0,1,5,12,9
+	.half	.L324-.L25
+	.byte	1,5,15,9
+	.half	.L325-.L324
+	.byte	3,2,1,5,13,9
+	.half	.L326-.L325
+	.byte	1,5,15,9
+	.half	.L327-.L326
+	.byte	3,1,1,5,13,9
+	.half	.L328-.L327
+	.byte	1,5,15,9
+	.half	.L329-.L328
+	.byte	3,1,1,5,13,9
+	.half	.L330-.L329
+	.byte	1,5,15,9
+	.half	.L331-.L330
+	.byte	3,1,1,5,13,9
+	.half	.L332-.L331
+	.byte	1,5,15,9
+	.half	.L333-.L332
+	.byte	3,1,1,5,13,9
+	.half	.L334-.L333
+	.byte	1,5,15,9
+	.half	.L335-.L334
+	.byte	3,1,1,5,13,9
+	.half	.L336-.L335
+	.byte	1,5,15,9
+	.half	.L337-.L336
+	.byte	3,1,1,5,13,9
+	.half	.L338-.L337
+	.byte	1,5,15,9
+	.half	.L339-.L338
+	.byte	3,1,1,5,13,9
+	.half	.L340-.L339
+	.byte	1,5,1,9
+	.half	.L341-.L340
+	.byte	3,1,1,7,9
+	.half	.L56-.L341
+	.byte	0,1,1
+.L321:
+	.sdecl	'.debug_ranges',debug,cluster('sha256_init')
+	.sect	'.debug_ranges'
+.L55:
+	.word	-1,.L25,0,.L56-.L25,0,0
+	.sdecl	'.debug_info',debug,cluster('sha256_final')
+	.sect	'.debug_info'
+.L57:
+	.word	278
+	.half	3
+	.word	.L58
+	.byte	4,1
+	.byte	'../code/kemu4/xf_asr/hmac_sha256.c',0
+	.byte	'TASKING VX-toolset for AURIX Development Studio (non-commercial): C compiler',0
+	.byte	'C:\\Users\\Ye\\Desktop\\hangzhou20\\ECC\\Debug\\',0,12,1
+	.word	.L60,.L59
+	.byte	2
+	.word	.L38
+	.byte	3
+	.byte	'sha256_final',0,1,85,6,1,1,1
+	.word	.L27,.L115,.L26
+	.byte	4
+	.byte	's',0,1,85,31
+	.word	.L96,.L116
+	.byte	4
+	.byte	'md',0,1,85,43
+	.word	.L91,.L117
+	.byte	5
+	.word	.L27,.L115
+	.byte	6
+	.byte	'r',0,1,87,14
+	.word	.L87,.L118
+	.byte	6
+	.byte	'i',0,1,88,9
+	.word	.L119,.L120
+	.byte	0,0,0
+	.sdecl	'.debug_abbrev',debug,cluster('sha256_final')
+	.sect	'.debug_abbrev'
+.L58:
+	.byte	1,17,1,3,8,37,8,27,8,19,15,128,70,12,85,6,16,6,0,0,2,61,0,24,16,0,0,3,46,1,3,8,58,15,59,15,57,15,54,15
+	.byte	39,12,63,12,17,1,18,1,64,6,0,0,4,5,0,3,8,58,15,59,15,57,15,73,16,2,6,0,0,5,11,1,17,1,18,1,0,0,6,52,0,3
+	.byte	8,58,15,59,15,57,15,73,16,2,6,0,0,0
+	.sdecl	'.debug_line',debug,cluster('sha256_final')
+	.sect	'.debug_line'
+.L59:
+	.word	.L343-.L342
+.L342:
+	.half	3
+	.word	.L345-.L344
+.L344:
+	.byte	2,1,-4,9,10,0,1,1,1,1,0,0,0,1,0
+	.byte	'../code/kemu4/xf_asr/hmac_sha256.c',0,0,0,0,0
+.L345:
+	.byte	5,6,7,0,5,2
+	.word	.L27
+	.byte	3,212,0,1,5,19,9
+	.half	.L162-.L27
+	.byte	3,2,1,5,27,9
+	.half	.L346-.L162
+	.byte	1,5,25,9
+	.half	.L347-.L346
+	.byte	1,5,11,9
+	.half	.L160-.L347
+	.byte	3,3,1,5,19,9
+	.half	.L163-.L160
+	.byte	1,5,17,9
+	.half	.L348-.L163
+	.byte	1,5,13,9
+	.half	.L164-.L348
+	.byte	1,5,12,9
+	.half	.L165-.L164
+	.byte	3,1,1,5,5,9
+	.half	.L349-.L165
+	.byte	1,5,23,7,9
+	.half	.L350-.L349
+	.byte	3,2,1,5,28,9
+	.half	.L351-.L350
+	.byte	1,5,47,9
+	.half	.L352-.L351
+	.byte	1,5,11,9
+	.half	.L353-.L352
+	.byte	3,1,1,5,30,9
+	.half	.L354-.L353
+	.byte	3,1,1,5,19,9
+	.half	.L8-.L354
+	.byte	3,2,1,5,24,9
+	.half	.L355-.L8
+	.byte	1,5,30,9
+	.half	.L356-.L355
+	.byte	1,5,6,9
+	.half	.L357-.L356
+	.byte	3,1,1,5,15,9
+	.half	.L358-.L357
+	.byte	1,5,12,9
+	.half	.L359-.L358
+	.byte	1,5,29,9
+	.half	.L360-.L359
+	.byte	3,1,1,5,35,9
+	.half	.L361-.L360
+	.byte	1,5,18,9
+	.half	.L166-.L361
+	.byte	1,5,16,9
+	.half	.L362-.L166
+	.byte	1,5,29,9
+	.half	.L363-.L362
+	.byte	3,1,1,5,35,9
+	.half	.L364-.L363
+	.byte	1,5,18,9
+	.half	.L365-.L364
+	.byte	1,5,16,9
+	.half	.L366-.L365
+	.byte	1,5,29,9
+	.half	.L367-.L366
+	.byte	3,1,1,5,35,9
+	.half	.L368-.L367
+	.byte	1,5,18,9
+	.half	.L369-.L368
+	.byte	1,5,16,9
+	.half	.L370-.L369
+	.byte	1,5,29,9
+	.half	.L371-.L370
+	.byte	3,1,1,5,18,9
+	.half	.L372-.L371
+	.byte	1,5,16,9
+	.half	.L373-.L372
+	.byte	1,5,29,9
+	.half	.L374-.L373
+	.byte	3,1,1,5,35,9
+	.half	.L375-.L374
+	.byte	1,5,18,9
+	.half	.L376-.L375
+	.byte	1,5,16,9
+	.half	.L377-.L376
+	.byte	1,5,29,9
+	.half	.L378-.L377
+	.byte	3,1,1,5,35,9
+	.half	.L379-.L378
+	.byte	1,5,18,9
+	.half	.L380-.L379
+	.byte	1,5,16,9
+	.half	.L381-.L380
+	.byte	1,5,29,9
+	.half	.L382-.L381
+	.byte	3,1,1,5,35,9
+	.half	.L383-.L382
+	.byte	1,5,18,9
+	.half	.L384-.L383
+	.byte	1,5,16,9
+	.half	.L385-.L384
+	.byte	1,5,29,9
+	.half	.L386-.L385
+	.byte	3,1,1,5,18,9
+	.half	.L387-.L386
+	.byte	1,5,16,9
+	.half	.L388-.L387
+	.byte	1,5,26,9
+	.half	.L389-.L388
+	.byte	3,1,1,5,11,9
+	.half	.L169-.L389
+	.byte	3,2,1,5,36,9
+	.half	.L170-.L169
+	.byte	1,5,14,9
+	.half	.L10-.L170
+	.byte	3,2,1,5,11,9
+	.half	.L390-.L10
+	.byte	1,5,39,9
+	.half	.L391-.L390
+	.byte	1,5,43,9
+	.half	.L392-.L391
+	.byte	1,5,23,9
+	.half	.L393-.L392
+	.byte	1,5,14,9
+	.half	.L394-.L393
+	.byte	3,1,1,5,11,9
+	.half	.L395-.L394
+	.byte	1,5,39,9
+	.half	.L396-.L395
+	.byte	1,5,43,9
+	.half	.L397-.L396
+	.byte	1,5,23,9
+	.half	.L398-.L397
+	.byte	1,5,14,9
+	.half	.L399-.L398
+	.byte	3,1,1,5,11,9
+	.half	.L400-.L399
+	.byte	1,5,39,9
+	.half	.L401-.L400
+	.byte	1,5,43,9
+	.half	.L402-.L401
+	.byte	1,5,23,9
+	.half	.L403-.L402
+	.byte	1,5,14,9
+	.half	.L404-.L403
+	.byte	3,1,1,5,11,9
+	.half	.L405-.L404
+	.byte	1,5,39,9
+	.half	.L406-.L405
+	.byte	1,5,23,9
+	.half	.L407-.L406
+	.byte	1,5,39,9
+	.half	.L408-.L407
+	.byte	3,123,1,5,36,9
+	.half	.L9-.L408
+	.byte	1,5,17,7,9
+	.half	.L409-.L9
+	.byte	3,7,1,5,1,9
+	.half	.L171-.L409
+	.byte	3,1,1,7,9
+	.half	.L61-.L171
+	.byte	0,1,1
+.L343:
+	.sdecl	'.debug_ranges',debug,cluster('sha256_final')
+	.sect	'.debug_ranges'
+.L60:
+	.word	-1,.L27,0,.L61-.L27,0,0
+	.sdecl	'.debug_info',debug,cluster('sha256_update')
+	.sect	'.debug_info'
+.L62:
+	.word	294
+	.half	3
+	.word	.L63
+	.byte	4,1
+	.byte	'../code/kemu4/xf_asr/hmac_sha256.c',0
+	.byte	'TASKING VX-toolset for AURIX Development Studio (non-commercial): C compiler',0
+	.byte	'C:\\Users\\Ye\\Desktop\\hangzhou20\\ECC\\Debug\\',0,12,1
+	.word	.L65,.L64
+	.byte	2
+	.word	.L38
+	.byte	3
+	.byte	'sha256_update',0,1,119,6,1,1,1
+	.word	.L29,.L121,.L28
+	.byte	4
+	.byte	's',0,1,119,32
+	.word	.L96,.L122
+	.byte	4
+	.byte	'm',0,1,119,50
+	.word	.L85,.L123
+	.byte	4
+	.byte	'len',0,1,119,62
+	.word	.L87,.L124
+	.byte	5
+	.word	.L29,.L121
+	.byte	6
+	.byte	'p',0,1,121,20
+	.word	.L85,.L125
+	.byte	6
+	.byte	'r',0,1,122,14
+	.word	.L87,.L126
+	.byte	0,0,0
+	.sdecl	'.debug_abbrev',debug,cluster('sha256_update')
+	.sect	'.debug_abbrev'
+.L63:
+	.byte	1,17,1,3,8,37,8,27,8,19,15,128,70,12,85,6,16,6,0,0,2,61,0,24,16,0,0,3,46,1,3,8,58,15,59,15,57,15,54,15
+	.byte	39,12,63,12,17,1,18,1,64,6,0,0,4,5,0,3,8,58,15,59,15,57,15,73,16,2,6,0,0,5,11,1,17,1,18,1,0,0,6,52,0,3
+	.byte	8,58,15,59,15,57,15,73,16,2,6,0,0,0
+	.sdecl	'.debug_line',debug,cluster('sha256_update')
+	.sect	'.debug_line'
+.L64:
+	.word	.L411-.L410
+.L410:
+	.half	3
+	.word	.L413-.L412
+.L412:
+	.byte	2,1,-4,9,10,0,1,1,1,1,0,0,0,1,0
+	.byte	'../code/kemu4/xf_asr/hmac_sha256.c',0,0,0,0,0
+.L413:
+	.byte	5,6,7,0,5,2
+	.word	.L29
+	.byte	3,246,0,1,5,19,9
+	.half	.L178-.L29
+	.byte	3,3,1,5,27,9
+	.half	.L173-.L178
+	.byte	1,5,25,9
+	.half	.L414-.L173
+	.byte	1,5,6,9
+	.half	.L179-.L414
+	.byte	3,2,1,5,15,9
+	.half	.L415-.L179
+	.byte	1,5,12,9
+	.half	.L180-.L415
+	.byte	1,5,5,9
+	.half	.L416-.L180
+	.byte	3,1,1,5,16,7,9
+	.half	.L417-.L416
+	.byte	3,2,1,5,22,9
+	.half	.L418-.L417
+	.byte	1,5,9,9
+	.half	.L419-.L418
+	.byte	1,5,27,7,9
+	.half	.L420-.L419
+	.byte	3,2,1,5,35,9
+	.half	.L421-.L420
+	.byte	1,5,13,9
+	.half	.L183-.L421
+	.byte	3,1,1,5,23,9
+	.half	.L12-.L183
+	.byte	3,2,1,5,47,9
+	.half	.L422-.L12
+	.byte	1,5,32,9
+	.half	.L184-.L422
+	.byte	3,1,1,5,13,9
+	.half	.L423-.L184
+	.byte	1,5,30,9
+	.half	.L424-.L423
+	.byte	3,1,1,5,11,9
+	.half	.L425-.L424
+	.byte	1,5,30,9
+	.half	.L426-.L425
+	.byte	3,1,1,5,33,9
+	.half	.L11-.L426
+	.byte	3,2,1,5,29,9
+	.half	.L15-.L11
+	.byte	3,2,1,5,39,9
+	.half	.L188-.L15
+	.byte	3,126,1,5,61,9
+	.half	.L427-.L188
+	.byte	1,5,18,9
+	.half	.L14-.L427
+	.byte	1,5,33,9
+	.half	.L428-.L14
+	.byte	1,5,13,7,9
+	.half	.L429-.L428
+	.byte	3,4,1,5,23,9
+	.half	.L430-.L429
+	.byte	1,5,1,9
+	.half	.L13-.L430
+	.byte	3,1,1,7,9
+	.half	.L66-.L13
+	.byte	0,1,1
+.L411:
+	.sdecl	'.debug_ranges',debug,cluster('sha256_update')
+	.sect	'.debug_ranges'
+.L65:
+	.word	-1,.L29,0,.L66-.L29,0,0
+	.sdecl	'.debug_info',debug,cluster('hmac_sha256_init')
+	.sect	'.debug_info'
+.L67:
+	.word	313
+	.half	3
+	.word	.L68
+	.byte	4,1
+	.byte	'../code/kemu4/xf_asr/hmac_sha256.c',0
+	.byte	'TASKING VX-toolset for AURIX Development Studio (non-commercial): C compiler',0
+	.byte	'C:\\Users\\Ye\\Desktop\\hangzhou20\\ECC\\Debug\\',0,12,1
+	.word	.L70,.L69
+	.byte	2
+	.word	.L38
+	.byte	3
+	.byte	'hmac_sha256_init',0,1,145,1,6,1,1,1
+	.word	.L31,.L127,.L30
+	.byte	4
+	.byte	'hmac',0,1,145,1,40
+	.word	.L128,.L129
+	.byte	4
+	.byte	'key',0,1,145,1,61
+	.word	.L85,.L130
+	.byte	4
+	.byte	'keylen',0,1,145,1,75
+	.word	.L87,.L131
+	.byte	5
+	.word	.L31,.L127
+	.byte	6
+	.byte	'sha',0,1,147,1,17
+	.word	.L96,.L132
+	.byte	6
+	.byte	'i',0,1,148,1,14
+	.word	.L87,.L133
+	.byte	0,0,0
+	.sdecl	'.debug_abbrev',debug,cluster('hmac_sha256_init')
+	.sect	'.debug_abbrev'
+.L68:
+	.byte	1,17,1,3,8,37,8,27,8,19,15,128,70,12,85,6,16,6,0,0,2,61,0,24,16,0,0,3,46,1,3,8,58,15,59,15,57,15,54,15
+	.byte	39,12,63,12,17,1,18,1,64,6,0,0,4,5,0,3,8,58,15,59,15,57,15,73,16,2,6,0,0,5,11,1,17,1,18,1,0,0,6,52,0,3
+	.byte	8,58,15,59,15,57,15,73,16,2,6,0,0,0
+	.sdecl	'.debug_line',debug,cluster('hmac_sha256_init')
+	.sect	'.debug_line'
+.L69:
+	.word	.L432-.L431
+.L431:
+	.half	3
+	.word	.L434-.L433
+.L433:
+	.byte	2,1,-4,9,10,0,1,1,1,1,0,0,0,1,0
+	.byte	'../code/kemu4/xf_asr/hmac_sha256.c',0,0,0,0,0
+.L434:
+	.byte	5,6,7,0,5,2
+	.word	.L31
+	.byte	3,144,1,1,5,28,9
+	.half	.L195-.L31
+	.byte	3,2,1,5,18,9
+	.half	.L196-.L195
+	.byte	3,3,1,5,5,9
+	.half	.L435-.L196
+	.byte	1,5,32,7,9
+	.half	.L436-.L435
+	.byte	3,2,1,5,26,9
+	.half	.L192-.L436
+	.byte	3,1,1,5,36,9
+	.half	.L437-.L192
+	.byte	1,5,58,9
+	.half	.L438-.L437
+	.byte	1,5,39,9
+	.half	.L439-.L438
+	.byte	3,127,1,5,21,9
+	.half	.L16-.L439
+	.byte	3,5,1,5,33,9
+	.half	.L198-.L16
+	.byte	3,1,1,5,31,9
+	.half	.L200-.L198
+	.byte	3,1,1,5,26,9
+	.half	.L204-.L200
+	.byte	3,1,1,5,46,9
+	.half	.L440-.L204
+	.byte	1,5,68,9
+	.half	.L441-.L440
+	.byte	1,5,11,9
+	.half	.L17-.L441
+	.byte	3,3,1,5,35,9
+	.half	.L206-.L17
+	.byte	1,5,18,9
+	.half	.L19-.L206
+	.byte	3,2,1,5,35,9
+	.half	.L442-.L19
+	.byte	1,5,41,9
+	.half	.L443-.L442
+	.byte	1,5,24,9
+	.half	.L444-.L443
+	.byte	1,5,38,9
+	.half	.L445-.L444
+	.byte	3,126,1,5,20,9
+	.half	.L18-.L445
+	.byte	1,5,35,9
+	.half	.L446-.L18
+	.byte	1,5,17,7,9
+	.half	.L447-.L446
+	.byte	3,5,1,5,35,9
+	.half	.L208-.L447
+	.byte	3,1,1,5,16,9
+	.half	.L210-.L208
+	.byte	3,2,1,5,30,9
+	.half	.L448-.L210
+	.byte	1,5,35,9
+	.half	.L449-.L448
+	.byte	1,5,11,9
+	.half	.L450-.L449
+	.byte	3,2,1,5,35,9
+	.half	.L451-.L450
+	.byte	1,5,18,9
+	.half	.L21-.L451
+	.byte	3,2,1,5,36,9
+	.half	.L452-.L21
+	.byte	1,5,42,9
+	.half	.L453-.L452
+	.byte	1,5,55,9
+	.half	.L454-.L453
+	.byte	1,5,24,9
+	.half	.L455-.L454
+	.byte	1,5,38,9
+	.half	.L456-.L455
+	.byte	3,126,1,5,20,9
+	.half	.L20-.L456
+	.byte	1,5,35,9
+	.half	.L457-.L20
+	.byte	1,5,17,7,9
+	.half	.L458-.L457
+	.byte	3,5,1,5,35,9
+	.half	.L213-.L458
+	.byte	3,1,1,5,16,9
+	.half	.L215-.L213
+	.byte	3,2,1,5,30,9
+	.half	.L459-.L215
+	.byte	1,5,35,9
+	.half	.L460-.L459
+	.byte	1,5,1,9
+	.half	.L461-.L460
+	.byte	3,1,1,7,9
+	.half	.L71-.L461
+	.byte	0,1,1
+.L432:
+	.sdecl	'.debug_ranges',debug,cluster('hmac_sha256_init')
+	.sect	'.debug_ranges'
+.L70:
+	.word	-1,.L31,0,.L71-.L31,0,0
+	.sdecl	'.debug_info',debug,cluster('hmac_sha256_update')
+	.sect	'.debug_info'
+.L72:
+	.word	278
+	.half	3
+	.word	.L73
+	.byte	4,1
+	.byte	'../code/kemu4/xf_asr/hmac_sha256.c',0
+	.byte	'TASKING VX-toolset for AURIX Development Studio (non-commercial): C compiler',0
+	.byte	'C:\\Users\\Ye\\Desktop\\hangzhou20\\ECC\\Debug\\',0,12,1
+	.word	.L75,.L74
+	.byte	2
+	.word	.L38
+	.byte	3
+	.byte	'hmac_sha256_update',0,1,184,1,6,1,1,1
+	.word	.L33,.L134,.L32
+	.byte	4
+	.byte	'hmac',0,1,184,1,42
+	.word	.L128,.L135
+	.byte	4
+	.byte	'm',0,1,184,1,63
+	.word	.L85,.L136
+	.byte	4
+	.byte	'mlen',0,1,184,1,75
+	.word	.L87,.L137
+	.byte	5
+	.word	.L33,.L134
+	.byte	0,0
+	.sdecl	'.debug_abbrev',debug,cluster('hmac_sha256_update')
+	.sect	'.debug_abbrev'
+.L73:
+	.byte	1,17,1,3,8,37,8,27,8,19,15,128,70,12,85,6,16,6,0,0,2,61,0,24,16,0,0,3,46,1,3,8,58,15,59,15,57,15,54,15
+	.byte	39,12,63,12,17,1,18,1,64,6,0,0,4,5,0,3,8,58,15,59,15,57,15,73,16,2,6,0,0,5,11,0,17,1,18,1,0,0,0
+	.sdecl	'.debug_line',debug,cluster('hmac_sha256_update')
+	.sect	'.debug_line'
+.L74:
+	.word	.L463-.L462
+.L462:
+	.half	3
+	.word	.L465-.L464
+.L464:
+	.byte	2,1,-4,9,10,0,1,1,1,1,0,0,0,1,0
+	.byte	'../code/kemu4/xf_asr/hmac_sha256.c',0,0,0,0,0
+.L465:
+	.byte	5,24,7,0,5,2
+	.word	.L33
+	.byte	3,185,1,1,5,34,9
+	.half	.L217-.L33
+	.byte	1,5,1,9
+	.half	.L218-.L217
+	.byte	3,1,1,7,9
+	.half	.L76-.L218
+	.byte	0,1,1
+.L463:
+	.sdecl	'.debug_ranges',debug,cluster('hmac_sha256_update')
+	.sect	'.debug_ranges'
+.L75:
+	.word	-1,.L33,0,.L76-.L33,0,0
+	.sdecl	'.debug_info',debug,cluster('hmac_sha256_final')
+	.sect	'.debug_info'
+.L77:
+	.word	278
+	.half	3
+	.word	.L78
+	.byte	4,1
+	.byte	'../code/kemu4/xf_asr/hmac_sha256.c',0
+	.byte	'TASKING VX-toolset for AURIX Development Studio (non-commercial): C compiler',0
+	.byte	'C:\\Users\\Ye\\Desktop\\hangzhou20\\ECC\\Debug\\',0,12,1
+	.word	.L80,.L79
+	.byte	2
+	.word	.L38
+	.byte	3
+	.byte	'hmac_sha256_final',0,1,189,1,6,1,1,1
+	.word	.L35,.L138,.L34
+	.byte	4
+	.byte	'hmac',0,1,189,1,41
+	.word	.L128,.L139
+	.byte	4
+	.byte	'md',0,1,189,1,56
+	.word	.L91,.L140
+	.byte	5
+	.word	.L35,.L138
+	.byte	6
+	.byte	'sha',0,1,191,1,17
+	.word	.L96,.L141
+	.byte	0,0,0
+	.sdecl	'.debug_abbrev',debug,cluster('hmac_sha256_final')
+	.sect	'.debug_abbrev'
+.L78:
+	.byte	1,17,1,3,8,37,8,27,8,19,15,128,70,12,85,6,16,6,0,0,2,61,0,24,16,0,0,3,46,1,3,8,58,15,59,15,57,15,54,15
+	.byte	39,12,63,12,17,1,18,1,64,6,0,0,4,5,0,3,8,58,15,59,15,57,15,73,16,2,6,0,0,5,11,1,17,1,18,1,0,0,6,52,0,3
+	.byte	8,58,15,59,15,57,15,73,16,2,6,0,0,0
+	.sdecl	'.debug_line',debug,cluster('hmac_sha256_final')
+	.sect	'.debug_line'
+.L79:
+	.word	.L467-.L466
+.L466:
+	.half	3
+	.word	.L469-.L468
+.L468:
+	.byte	2,1,-4,9,10,0,1,1,1,1,0,0,0,1,0
+	.byte	'../code/kemu4/xf_asr/hmac_sha256.c',0,0,0,0,0
+.L469:
+	.byte	5,6,7,0,5,2
+	.word	.L35
+	.byte	3,188,1,1,5,28,9
+	.half	.L222-.L35
+	.byte	3,2,1,5,23,9
+	.half	.L223-.L222
+	.byte	3,1,1,5,15,9
+	.half	.L220-.L223
+	.byte	3,2,1,5,24,9
+	.half	.L470-.L220
+	.byte	1,5,35,9
+	.half	.L471-.L470
+	.byte	1,5,16,9
+	.half	.L472-.L471
+	.byte	3,1,1,5,14,9
+	.half	.L473-.L472
+	.byte	1,5,28,9
+	.half	.L474-.L473
+	.byte	3,2,1,5,23,9
+	.half	.L225-.L474
+	.byte	3,1,1,5,15,9
+	.half	.L228-.L225
+	.byte	3,2,1,5,24,9
+	.half	.L475-.L228
+	.byte	1,5,35,9
+	.half	.L476-.L475
+	.byte	1,5,16,9
+	.half	.L477-.L476
+	.byte	3,1,1,5,14,9
+	.half	.L478-.L477
+	.byte	1,5,1,9
+	.half	.L479-.L478
+	.byte	3,1,1,7,9
+	.half	.L81-.L479
+	.byte	0,1,1
+.L467:
+	.sdecl	'.debug_ranges',debug,cluster('hmac_sha256_final')
+	.sect	'.debug_ranges'
+.L80:
+	.word	-1,.L35,0,.L81-.L35,0,0
+	.sdecl	'.debug_info',debug,cluster('K')
+	.sect	'.debug_info'
+.L82:
+	.word	186
+	.half	3
+	.word	.L83
+	.byte	4,1
+	.byte	'../code/kemu4/xf_asr/hmac_sha256.c',0
+	.byte	'TASKING VX-toolset for AURIX Development Studio (non-commercial): C compiler',0
+	.byte	'C:\\Users\\Ye\\Desktop\\hangzhou20\\ECC\\Debug\\',0,12,1,2
+	.word	.L38
+	.byte	3
+	.byte	'K',0,3,14,23
+	.word	.L142
+	.byte	5,3
+	.word	K
+	.byte	0
+	.sdecl	'.debug_abbrev',debug,cluster('K')
+	.sect	'.debug_abbrev'
+.L83:
+	.byte	1,17,1,3,8,37,8,27,8,19,15,128,70,12,0,0,2,61,0,24,16,0,0,3,52,0,3,8,58,15,59,15,57,15,73,16,2,9,0,0,0
+	.sdecl	'.debug_loc',debug,cluster('hmac_sha256')
+	.sect	'.debug_loc'
+.L89:
+	.word	-1,.L37,0,.L231-.L37
+	.half	1
+	.byte	101
+	.word	.L235-.L37,.L84-.L37
+	.half	1
+	.byte	108
+	.word	.L238-.L37,.L239-.L37
+	.half	1
+	.byte	101
+	.word	0,0
+.L90:
+	.word	-1,.L37,0,.L232-.L37
+	.half	1
+	.byte	85
+	.word	.L236-.L37,.L84-.L37
+	.half	1
+	.byte	95
+	.word	.L240-.L37,.L239-.L37
+	.half	1
+	.byte	84
+	.word	0,0
+.L92:
+	.word	-1,.L37,0,.L232-.L37
+	.half	1
+	.byte	102
+	.word	.L237-.L37,.L84-.L37
+	.half	1
+	.byte	109
+	.word	.L241-.L37,.L242-.L37
+	.half	1
+	.byte	101
+	.word	0,0
+.L94:
+	.word	-1,.L37,0,.L84-.L37
+	.half	3
+	.byte	145,152,126
+	.word	0,0
+.L36:
+	.word	-1,.L37,0,.L230-.L37
+	.half	2
+	.byte	138,0
+	.word	.L230-.L37,.L84-.L37
+	.half	3
+	.byte	138,232,1
+	.word	.L84-.L37,.L84-.L37
+	.half	2
+	.byte	138,0
+	.word	0,0
+.L86:
+	.word	-1,.L37,0,.L233-.L37
+	.half	1
+	.byte	100
+	.word	.L234-.L37,.L84-.L37
+	.half	1
+	.byte	111
+	.word	.L231-.L37,.L232-.L37
+	.half	1
+	.byte	101
+	.word	0,0
+.L88:
+	.word	-1,.L37,0,.L232-.L37
+	.half	1
+	.byte	84
+	.word	0,0
+	.sdecl	'.debug_loc',debug,cluster('hmac_sha256_final')
+	.sect	'.debug_loc'
+.L139:
+	.word	-1,.L35,0,.L219-.L35
+	.half	1
+	.byte	100
+	.word	.L221-.L35,.L138-.L35
+	.half	1
+	.byte	111
+	.word	0,0
+.L34:
+	.word	-1,.L35,0,.L138-.L35
+	.half	2
+	.byte	138,0
+	.word	0,0
+.L140:
+	.word	-1,.L35,0,.L220-.L35
+	.half	1
+	.byte	101
+	.word	.L222-.L35,.L138-.L35
+	.half	1
+	.byte	108
+	.word	.L226-.L35,.L225-.L35
+	.half	1
+	.byte	101
+	.word	.L229-.L35,.L228-.L35
+	.half	1
+	.byte	101
+	.word	0,0
+.L141:
+	.word	-1,.L35,.L223-.L35,.L138-.L35
+	.half	1
+	.byte	109
+	.word	.L219-.L35,.L220-.L35
+	.half	1
+	.byte	100
+	.word	.L224-.L35,.L225-.L35
+	.half	1
+	.byte	100
+	.word	.L227-.L35,.L228-.L35
+	.half	1
+	.byte	100
+	.word	0,0
+	.sdecl	'.debug_loc',debug,cluster('hmac_sha256_init')
+	.sect	'.debug_loc'
+.L129:
+	.word	-1,.L31,0,.L192-.L31
+	.half	1
+	.byte	100
+	.word	.L193-.L31,.L127-.L31
+	.half	1
+	.byte	108
+	.word	.L16-.L31,.L197-.L31
+	.half	1
+	.byte	100
+	.word	.L205-.L31,.L204-.L31
+	.half	1
+	.byte	101
+	.word	.L211-.L31,.L210-.L31
+	.half	1
+	.byte	101
+	.word	.L216-.L31,.L215-.L31
+	.half	1
+	.byte	101
+	.word	0,0
+.L30:
+	.word	-1,.L31,0,.L127-.L31
+	.half	2
+	.byte	138,0
+	.word	0,0
+.L133:
+	.word	-1,.L31,.L206-.L31,.L127-.L31
+	.half	1
+	.byte	95
+	.word	0,0
+.L130:
+	.word	-1,.L31,0,.L192-.L31
+	.half	1
+	.byte	101
+	.word	.L194-.L31,.L19-.L31
+	.half	1
+	.byte	111
+	.word	.L16-.L31,.L198-.L31
+	.half	1
+	.byte	101
+	.word	.L201-.L31,.L200-.L31
+	.half	1
+	.byte	101
+	.word	0,0
+.L131:
+	.word	-1,.L31,0,.L192-.L31
+	.half	1
+	.byte	84
+	.word	.L195-.L31,.L127-.L31
+	.half	1
+	.byte	88
+	.word	.L16-.L31,.L198-.L31
+	.half	1
+	.byte	84
+	.word	.L202-.L31,.L200-.L31
+	.half	1
+	.byte	84
+	.word	0,0
+.L132:
+	.word	-1,.L31,.L196-.L31,.L127-.L31
+	.half	1
+	.byte	109
+	.word	.L197-.L31,.L198-.L31
+	.half	1
+	.byte	100
+	.word	.L199-.L31,.L200-.L31
+	.half	1
+	.byte	100
+	.word	.L203-.L31,.L204-.L31
+	.half	1
+	.byte	100
+	.word	.L207-.L31,.L208-.L31
+	.half	1
+	.byte	100
+	.word	.L209-.L31,.L210-.L31
+	.half	1
+	.byte	100
+	.word	.L212-.L31,.L213-.L31
+	.half	1
+	.byte	100
+	.word	.L214-.L31,.L215-.L31
+	.half	1
+	.byte	100
+	.word	0,0
+	.sdecl	'.debug_loc',debug,cluster('hmac_sha256_update')
+	.sect	'.debug_loc'
+.L135:
+	.word	-1,.L33,0,.L217-.L33
+	.half	1
+	.byte	100
+	.word	0,0
+.L32:
+	.word	-1,.L33,0,.L134-.L33
+	.half	2
+	.byte	138,0
+	.word	0,0
+.L136:
+	.word	-1,.L33,0,.L218-.L33
+	.half	1
+	.byte	101
+	.word	0,0
+.L137:
+	.word	-1,.L33,0,.L218-.L33
+	.half	1
+	.byte	84
+	.word	0,0
+	.sdecl	'.debug_loc',debug,cluster('sha256_final')
+	.sect	'.debug_loc'
+.L120:
+	.word	-1,.L27,.L170-.L27,.L171-.L27
+	.half	5
+	.byte	144,32,157,32,0
+	.word	0,0
+.L117:
+	.word	-1,.L27,0,.L160-.L27
+	.half	1
+	.byte	101
+	.word	.L162-.L27,.L115-.L27
+	.half	1
+	.byte	109
+	.word	0,0
+.L118:
+	.word	-1,.L27,.L160-.L27,.L163-.L27
+	.half	1
+	.byte	82
+	.word	.L164-.L27,.L165-.L27
+	.half	1
+	.byte	82
+	.word	.L165-.L27,.L166-.L27
+	.half	1
+	.byte	95
+	.word	0,0
+.L116:
+	.word	-1,.L27,0,.L160-.L27
+	.half	1
+	.byte	100
+	.word	.L161-.L27,.L115-.L27
+	.half	1
+	.byte	108
+	.word	.L167-.L27,.L8-.L27
+	.half	1
+	.byte	100
+	.word	.L168-.L27,.L169-.L27
+	.half	1
+	.byte	100
+	.word	.L172-.L27,.L171-.L27
+	.half	1
+	.byte	100
+	.word	0,0
+.L26:
+	.word	-1,.L27,0,.L115-.L27
+	.half	2
+	.byte	138,0
+	.word	0,0
+	.sdecl	'.debug_loc',debug,cluster('sha256_init')
+	.sect	'.debug_loc'
+.L114:
+	.word	-1,.L25,0,.L113-.L25
+	.half	1
+	.byte	100
+	.word	0,0
+.L24:
+	.word	-1,.L25,0,.L113-.L25
+	.half	2
+	.byte	138,0
+	.word	0,0
+	.sdecl	'.debug_loc',debug,cluster('sha256_transform')
+	.sect	'.debug_loc'
+.L101:
+	.word	-1,.L23,.L146-.L23,.L95-.L23
+	.half	1
+	.byte	83
+	.word	0,0
+.L102:
+	.word	-1,.L23,.L148-.L23,.L95-.L23
+	.half	1
+	.byte	84
+	.word	0,0
+.L98:
+	.word	-1,.L23,0,.L95-.L23
+	.half	1
+	.byte	101
+	.word	0,0
+.L103:
+	.word	-1,.L23,.L149-.L23,.L95-.L23
+	.half	1
+	.byte	85
+	.word	0,0
+.L104:
+	.word	-1,.L23,.L150-.L23,.L95-.L23
+	.half	1
+	.byte	86
+	.word	0,0
+.L105:
+	.word	-1,.L23,.L151-.L23,.L95-.L23
+	.half	1
+	.byte	87
+	.word	0,0
+.L106:
+	.word	-1,.L23,.L152-.L23,.L95-.L23
+	.half	1
+	.byte	88
+	.word	0,0
+.L107:
+	.word	-1,.L23,.L153-.L23,.L95-.L23
+	.half	1
+	.byte	89
+	.word	0,0
+.L108:
+	.word	-1,.L23,.L154-.L23,.L155-.L23
+	.half	1
+	.byte	90
+	.word	.L159-.L23,.L95-.L23
+	.half	1
+	.byte	90
+	.word	0,0
+.L111:
+	.word	-1,.L23,.L145-.L23,.L146-.L23
+	.half	1
+	.byte	83
+	.word	.L156-.L23,.L95-.L23
+	.half	1
+	.byte	91
+	.word	0,0
+.L112:
+	.word	-1,.L23,.L147-.L23,.L5-.L23
+	.half	5
+	.byte	144,32,157,32,0
+	.word	0,0
+.L110:
+	.word	-1,.L23,0,.L95-.L23
+	.half	3
+	.byte	145,128,126
+	.word	0,0
+.L97:
+	.word	-1,.L23,0,.L3-.L23
+	.half	1
+	.byte	100
+	.word	.L144-.L23,.L95-.L23
+	.half	1
+	.byte	111
+	.word	0,0
+.L22:
+	.word	-1,.L23,0,.L143-.L23
+	.half	2
+	.byte	138,0
+	.word	.L143-.L23,.L95-.L23
+	.half	3
+	.byte	138,128,2
+	.word	.L95-.L23,.L95-.L23
+	.half	2
+	.byte	138,0
+	.word	0,0
+.L99:
+	.word	-1,.L23,.L157-.L23,.L6-.L23
+	.half	1
+	.byte	95
+	.word	0,0
+.L100:
+	.word	-1,.L23,.L158-.L23,.L6-.L23
+	.half	5
+	.byte	144,32,157,32,0
+	.word	0,0
+	.sdecl	'.debug_loc',debug,cluster('sha256_update')
+	.sect	'.debug_loc'
+.L124:
+	.word	-1,.L29,0,.L173-.L29
+	.half	1
+	.byte	84
+	.word	.L178-.L29,.L121-.L29
+	.half	1
+	.byte	88
+	.word	.L180-.L29,.L181-.L29
+	.half	1
+	.byte	82
+	.word	.L181-.L29,.L183-.L29
+	.half	1
+	.byte	84
+	.word	.L12-.L29,.L184-.L29
+	.half	1
+	.byte	82
+	.word	.L191-.L29,.L13-.L29
+	.half	1
+	.byte	84
+	.word	0,0
+.L123:
+	.word	-1,.L29,0,.L174-.L29
+	.half	1
+	.byte	101
+	.word	.L177-.L29,.L121-.L29
+	.half	1
+	.byte	108
+	.word	.L182-.L29,.L183-.L29
+	.half	1
+	.byte	101
+	.word	.L185-.L29,.L184-.L29
+	.half	1
+	.byte	101
+	.word	.L189-.L29,.L188-.L29
+	.half	1
+	.byte	101
+	.word	.L190-.L29,.L13-.L29
+	.half	1
+	.byte	101
+	.word	0,0
+.L125:
+	.word	0,0
+.L126:
+	.word	-1,.L29,.L174-.L29,.L179-.L29
+	.half	1
+	.byte	82
+	.word	.L179-.L29,.L121-.L29
+	.half	1
+	.byte	90
+	.word	0,0
+.L122:
+	.word	-1,.L29,0,.L174-.L29
+	.half	1
+	.byte	100
+	.word	.L175-.L29,.L176-.L29
+	.half	1
+	.byte	111
+	.word	.L12-.L29,.L13-.L29
+	.half	1
+	.byte	111
+	.word	.L186-.L29,.L11-.L29
+	.half	1
+	.byte	100
+	.word	.L187-.L29,.L188-.L29
+	.half	1
+	.byte	100
+	.word	0,0
+.L28:
+	.word	-1,.L29,0,.L121-.L29
+	.half	2
+	.byte	138,0
+	.word	0,0
+	.sdecl	'.debug_frame',debug
+	.sect	'.debug_frame'
+.L480:
+	.word	48
+	.word	-1
+	.byte	3,0,2,1,27,12,26,0,8,26,8,27,8,30,8,29,8,28,8,16,8,17,8,24,8,25,8,31,8,32,8,33,8,34,8,35,8,36,8,37,8,38
+	.byte	8,39
+	.sdecl	'.debug_frame',debug,cluster('sha256_transform')
+	.sect	'.debug_frame'
+	.word	44
+	.word	.L480,.L23,.L95-.L23
+	.byte	8,19,8,22,8,23,4
+	.word	(.L143-.L23)/2
+	.byte	19,128,2,22,26,4,19,138,128,2,4
+	.word	(.L95-.L143)/2
+	.byte	19,0,8,26,0,0
+	.sdecl	'.debug_frame',debug,cluster('sha256_init')
+	.sect	'.debug_frame'
+	.word	24
+	.word	.L480,.L25,.L113-.L25
+	.byte	8,18,8,19,8,21,8,22,8,23,0,0
+	.sdecl	'.debug_frame',debug,cluster('sha256_final')
+	.sect	'.debug_frame'
+	.word	12
+	.word	.L480,.L27,.L115-.L27
+	.sdecl	'.debug_frame',debug,cluster('sha256_update')
+	.sect	'.debug_frame'
+	.word	12
+	.word	.L480,.L29,.L121-.L29
+	.sdecl	'.debug_frame',debug,cluster('hmac_sha256_init')
+	.sect	'.debug_frame'
+	.word	12
+	.word	.L480,.L31,.L127-.L31
+	.sdecl	'.debug_frame',debug,cluster('hmac_sha256_update')
+	.sect	'.debug_frame'
+	.word	12
+	.word	.L480,.L33,.L134-.L33
+	.sdecl	'.debug_frame',debug,cluster('hmac_sha256_final')
+	.sect	'.debug_frame'
+	.word	12
+	.word	.L480,.L35,.L138-.L35
+	.sdecl	'.debug_frame',debug,cluster('hmac_sha256')
+	.sect	'.debug_frame'
+	.word	36
+	.word	.L480,.L37,.L84-.L37
+	.byte	4
+	.word	(.L230-.L37)/2
+	.byte	19,232,1,22,26,4,19,138,232,1,4
+	.word	(.L84-.L230)/2
+	.byte	19,0,8,26
+	; Module end

@@ -14,9 +14,12 @@
 #include "mode.h"
 #include "camera.h"
 #include "bldc.h"
+#include "kemu444.h"
+#include "asr_audio.h"
 
 void Init(void)
 {
+    audio_init();                               //初始化硅麦传感器
     IPS_Init();                                 // 初始化 1.14 寸 IPS 液晶屏幕显示
     Button_init();                              // 初始化按键
     Encoder_init();                             // 初始化编码器
@@ -35,4 +38,5 @@ void Init(void)
     UartReceiver_init();                        // 初始化串口接收机
     INS_Init();                                 // 初始化惯导系统
     Camera_Init();                              // 初始化摄像头
+    dot_matrix_screen_init();                   //初始化led
 }

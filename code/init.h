@@ -17,6 +17,8 @@
 #include "mode.h"
 #include "camera.h"
 #include "bldc.h"
+#include "kemu444.h"
+#include "asr_audio.h"
 
 void Init(void);
 
