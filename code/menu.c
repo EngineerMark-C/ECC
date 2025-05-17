@@ -1176,8 +1176,9 @@ void Voice_Led_Menu_Key_Process(void)
         if(key3_state == KEY_SHORT_PRESS) 
         {
             // 执行语音识别
-            sample_text = "Hello, World!One rainy afternoon, Lisa was looking for her house key. ";
+            sample_text = "VOICEING...";
             //sample_text = Voice_ctrl();
+            audio_loop();
             recording_flag = true;
             
             // 计算总行数（兼容全局visible_items）
@@ -1192,6 +1193,7 @@ void Voice_Led_Menu_Key_Process(void)
         }
         if(key4_state == KEY_SHORT_PRESS) 
         {
+            complete_command();
             menu_state = MUNU_Voice_Led;
             key_clear_state(KEY_4);
         }
