@@ -1,5 +1,8 @@
 #ifndef _menu_h_
 #define _menu_h_
+#include <string.h>
+
+#define LINE_CHAR_LIMIT 30                   // 每行字符限制
 
 void Button_init(void);
 void Menu(void);
@@ -19,6 +22,7 @@ void Display_Nav_Mode_Menu(void);
 void Display_S_Point(void);
 void Display_Camera(void);
 void Display_Boundary(void);
+void Display_Voice_Led(void);
 
 void Main_Menu_Key_Process(void);
 void Steer_Menu_Key_Process(void);
@@ -32,5 +36,6 @@ void Nav_Mode_Key_Process(void);
 void S_Point_Menu_Key_Process(void);
 void Camera_Menu_Key_Process(void);
 void Boundary_Menu_Key_Process(void);
+void Voice_Led_Menu_Key_Process(void);
 
 #endif

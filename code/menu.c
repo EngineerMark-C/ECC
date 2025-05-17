@@ -22,6 +22,7 @@ typedef enum {
     MENU_S_Point,        // S型走位显示状态
     MENU_Camera,         // 摄像头显示状态
     MUNU_Boundary,       // 边界显示状态
+    MUNU_Voice_Led,      // 语音识别操控led状态
 } MenuState;
 
 // 主菜单项定义
@@ -70,7 +71,8 @@ MainMenuItem main_menu_items[] = {
     {"Navigation Mode"},
     {"S Point"},
     {"Camera"},
-    {"Boundary"}
+    {"Boundary"},
+    {"Voice_Led"}
 };
 
 // 路径设置菜单项
@@ -129,6 +131,11 @@ uint8_t S_Point_Index = 0;                                         // S型走位
 uint8_t Camera_Choose = 0;                                         // 摄像头选择
 static MenuState last_state = MENU_MAIN;                           // 记录上次菜单状态
 static uint8_t need_clear = 1;                                     // 清屏标志
+static bool recording_flag = false;                                // 录音状态标志
+static const char* sample_text = NULL;                             // 语音识别结果指针
+//static const char* sample_text = "Hello, World!";
+static uint8_t text_line_count = 0;                               // 总行数
+static uint8_t text_start_line = 0;                               // 显示起始行
 
 // 添加全局按键状态变量声明
 static key_state_enum key1_state;
@@ -189,6 +196,9 @@ void Display_Menu(void)
             break;
         case MUNU_Boundary:
             Display_Boundary();
+            break;
+         case MUNU_Voice_Led:
+            Display_Voice_Led();
             break;
     }
 }
@@ -260,6 +270,9 @@ void Menu(void)
                 key_clear_state(KEY_4);
             }
             break;
+         case MUNU_Voice_Led:
+           Voice_Led_Menu_Key_Process();
+        break;
     }
     // 更新显示
     Display_Menu();
@@ -595,6 +608,8 @@ void Display_Boundary(void)
     ips114_show_string(0, 112, "KEY4:Back");
 }
 
+
+
 // 主菜单按键处理
 void Main_Menu_Key_Process(void)
 {
@@ -634,6 +649,7 @@ void Main_Menu_Key_Process(void)
             case 10: menu_state = MENU_S_Point; start_index = 0; break;
             case 11: menu_state = MENU_Camera; break;
             case 12: menu_state = MUNU_Boundary; current_item = 0; break;
+            case 13: menu_state = MUNU_Voice_Led; break;  // 新增
         }
         key_clear_state(KEY_3);
     }
@@ -1108,6 +1124,98 @@ void Boundary_Menu_Key_Process(void)
         {
             menu_state = MENU_MAIN;
             Save_Basic_Data();
+            key_clear_state(KEY_4);
+        }
+    }
+}
+
+//语音识别
+void Display_Voice_Led(void)
+{
+   if(need_clear) ips114_clear();
+
+    if(recording_flag && sample_text)
+    {
+        // 显示识别结果
+        ips114_show_string(0, 0, "Voice Recognition:");
+
+        // 计算显示范围
+        uint8_t end_line = text_start_line + visible_items;
+        if(end_line > text_line_count) end_line = text_line_count;
+
+        // 显示可见行（使用全局visible_items）
+        for(uint8_t i = text_start_line; i < end_line; i++)
+        {
+            uint8_t display_line = i - text_start_line;
+            char line_buffer[LINE_CHAR_LIMIT + 1];
+            strncpy(line_buffer, &sample_text[i * LINE_CHAR_LIMIT], LINE_CHAR_LIMIT);
+            line_buffer[LINE_CHAR_LIMIT] = '\0';
+            ips114_show_string(0, 16 + display_line*16, line_buffer);
+        }
+
+        // 显示滚动提示（当超过可见行数时）
+        if(text_line_count > visible_items)
+        {
+            ips114_show_string(200, 112, "SCROLL");
+        }
+    }
+    else
+    {
+        // 默认界面布局
+        ips114_show_string(0, 0, "Voice Control");
+        ips114_show_string(0, 32, "KEY3: Start Recording");
+        ips114_show_string(0, 64, "KEY4: BACK");
+    }
+}
+
+//
+void Voice_Led_Menu_Key_Process(void)
+{
+    if(!recording_flag) 
+    {
+        if(key3_state == KEY_SHORT_PRESS) 
+        {
+            // 执行语音识别
+            sample_text = "VOICEING... key3 to stop,key 4 to back";
+            //sample_text = Voice_ctrl();
+            audio_loop();
+            recording_flag = true;
+            
+            // 计算总行数（兼容全局visible_items）
+            //uint8_t text_len = strlen(sample_text);
+            size_t len = strlen(sample_text);
+            uint8_t text_len = (len > UINT8_MAX) ? UINT8_MAX : (uint8_t)len;
+            text_line_count = text_len / LINE_CHAR_LIMIT;
+            if(text_len % LINE_CHAR_LIMIT != 0) text_line_count++;
+            
+            text_start_line = 0;  // 重置滚动位置
+            key_clear_state(KEY_3);
+        }
+        if(key4_state == KEY_SHORT_PRESS) 
+        {
+            complete_command();
+            menu_state = MUNU_Voice_Led;
+            key_clear_state(KEY_4);
+        }
+    } 
+    else 
+    {
+        // 文本浏览模式
+        if(key1_state == KEY_SHORT_PRESS) 
+        {
+            if(text_start_line > 0) text_start_line--;
+            key_clear_state(KEY_1);
+        }
+        if(key2_state == KEY_SHORT_PRESS) 
+        {
+            if(text_start_line < (text_line_count - visible_items))
+                text_start_line++;
+            key_clear_state(KEY_2);
+        }
+        if(key4_state == KEY_SHORT_PRESS) 
+        {
+            recording_flag = false;
+            menu_state = MENU_MAIN;
             key_clear_state(KEY_4);
         }
     }
