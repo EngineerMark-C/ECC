@@ -1176,7 +1176,7 @@ void Voice_Led_Menu_Key_Process(void)
         if(key3_state == KEY_SHORT_PRESS) 
         {
             // 执行语音识别
-            sample_text = "VOICEING...";
+            sample_text = "VOICEING... key3 to stop,key 4 to back";
             //sample_text = Voice_ctrl();
             audio_loop();
             recording_flag = true;
